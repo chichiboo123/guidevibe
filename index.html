@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>가이드 바이브! ✌️✊✋</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <!-- 기존 Pretendard 폰트 -->
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet"/>
+  
+  <!-- 1. 요청하신 폰트 링크 모두 통합 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Diphylleia&family=Do+Hyeon&family=Dongle&family=Grandiflora+One&family=Gugi&family=Jua&family=Kirang+Haerang&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      /* [수정] 기본 폰트를 'Noto Sans KR'로 변경 */
+      font-family: 'Noto Sans KR', 'Pretendard', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      color: #334155; /* slate-800 */
+      background-color: #ECF7FF; /* 연한 하늘색 배경 (이미지 참고) */
+      background-image: radial-gradient(#ffffff33 1px, transparent 1px), radial-gradient(#ffffff33 1px, transparent 1px);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+    }
+    header {
+        background-color: #ECF7FF; /* 헤더도 배경과 동일하게 */
+        position: relative;
+        overflow: hidden;
+    }
+    /* 타이틀 폰트 적용 (유지) */
+    header h1 {
+      font-family: 'Black Han Sans', sans-serif;
+    }
+
+
+    .card {
+      border-radius: 1.5rem; /* 더 둥글게 */
+      box-shadow: 0 15px 35px rgba(0,0,0,.08); /* 그림자 강조 */
+      background-color: #FFFFFF; /* 카드 배경은 흰색 */
+    }
+    .pill {
+      border-radius: 9999px;
+    }
+    .hint {
+      font-size: .875rem;
+      opacity: .7;
+      color: #64748B; /* slate-500 */
+    }
+    .section-title {
+      font-weight: 700;
+      font-size: 1.25rem; /* 좀 더 크게 */
+      color: #1E293B; /* slate-900 */
+      display: flex;
+      align-items: center;
+      gap: 0.75rem; /* 간격 조정 */
+    }
+    .section-title .emoji-icon {
+      width: 2rem; /* 이미지 크기 조정 */
+      height: 2rem; /* 이미지 크기 조정 */
+      object-fit: contain;
+      flex-shrink: 0; /* 축소 방지 */
+      font-size: 2rem; /* 이모지 크기 */
+      line-height: 1;
+    }
+    
+    .swatch {
+      width: 38px; /* 이미지에 맞춰 크기 조정 */
+      height: 38px; /* 이미지에 맞춰 크기 조정 */
+      border-radius: 12px; /* 이미지에 맞춰 더 둥글게 */
+      border: 2px solid rgba(0,0,0,.08); /* 테두리 강조 */
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* 약간의 그림자 */
+    }
+    .swatch[aria-pressed="true"] {
+      outline: 4px solid #818CF8; /* indigo-300 느낌 */
+      border-color: transparent;
+      transform: scale(1.08); /* 선택 시 확대 */
+      box-shadow: 0 4px 8px rgba(129, 140, 248, 0.3); /* 선택 시 그림자 강조 */
+    }
+    .chip {
+      border-radius: 9999px;
+      border: 1px solid #CBD5E1; /* slate-300 */
+      background-color: #F8FAFC; /* slate-50 */
+      padding: .375rem .75rem; /* 패딩 조정 */
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .9rem;
+      color: #334155;
+      box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+    /* Input/Textarea 기본 스타일 */
+    input[type="text"], textarea, select {
+        border-radius: 0.75rem; /* rounded-xl 대신 좀 더 자연스러운 둥글기 */
+        border: 1px solid #CBD5E1; /* slate-300 */
+        padding: 0.625rem 1rem; /* 패딩 조정 */
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    /* select 태그에 화살표 아이콘 공간 확보 (Tailwind 기본값 활용) */
+    select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem; /* 화살표 아이콘 공간 확보 */
+    }
+    input[type="text"]:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: #93C5FD; /* blue-300 계열로 변경 (이미지 참고) */
+        box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.4); /* focus-ring 효과 */
+    }
+
+    /* 폰트 스와치(버튼) 스타일 */
+    .font-swatch {
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+        border: 2px solid rgba(0,0,0,.08);
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        text-align: center;
+    }
+    .font-swatch[data-font-id="dongle"] {
+        font-size: 1.5rem; line-height: 1; /* Dongle 폰트 크기 보정 */
+    }
+    .font-swatch[aria-pressed="true"] {
+      outline: 4px solid #818CF8; /* indigo-300 느낌 */
+      border-color: transparent;
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(129, 140, 248, 0.3);
+    }
+
+
+    /* 버튼 기본 스타일 */
+    .btn-primary {
+      background-color: #6366F1; /* indigo-500 (이미지 참고) */
+      color: white;
+      box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3); /* 그림자 추가 */
+      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .btn-primary:hover {
+      background-color: #4F46E5; /* indigo-600 */
+      box-shadow: 0 6px 12px rgba(99, 102, 241, 0.4);
+    }
+    .btn-primary:focus-visible {
+      outline: 3px solid rgba(99, 102, 241, 0.5);
+      outline-offset: 2px;
+    }
+    
+    /* 설명서 버튼 스타일 */
+    .btn-info {
+      background-color: #60A5FA; /* blue-400 */
+      color: white;
+      box-shadow: 0 4px 8px rgba(96, 165, 250, 0.3);
+      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .btn-info:hover {
+      background-color: #3B82F6; /* blue-500 */
+      box-shadow: 0 6px 12px rgba(96, 165, 250, 0.4);
+    }
+    .btn-info:focus-visible {
+      outline: 3px solid rgba(96, 165, 250, 0.5);
+      outline-offset: 2px;
+    }
+
+    .btn-secondary {
+      background-color: #CBD5E1; /* slate-300 (이미지 참고) */
+      color: #334155; /* slate-800 */
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .btn-secondary:hover {
+      background-color: #AAB7C6; /* slate-400 */
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+    }
+    .btn-secondary:focus-visible {
+      outline: 3px solid rgba(148, 163, 184, 0.5);
+      outline-offset: 2px;
+    }
+
+    .btn-accent {
+      background-color: #34D399; /* emerald-400 (이미지 참고) */
+      color: white;
+      box-shadow: 0 4px 8px rgba(52, 211, 153, 0.3);
+      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .btn-accent:hover {
+      background-color: #10B981; /* emerald-500 */
+      box-shadow: 0 6px 12px rgba(52, 211, 153, 0.4);
+    }
+    .btn-accent:focus-visible {
+      outline: 3px solid rgba(52, 211, 153, 0.5);
+      outline-offset: 2px;
+    }
+
+    .btn-dark {
+      background-color: #334155; /* slate-800 */
+      color: white;
+      box-shadow: 0 4px 8px rgba(30, 41, 59, 0.2);
+      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .btn-dark:hover {
+      background-color: #1E293B; /* slate-900 */
+      box-shadow: 0 6px 12px rgba(30, 41, 59, 0.3);
+    }
+    .btn-dark:focus-visible {
+      outline: 3px solid rgba(30, 41, 59, 0.5);
+      outline-offset: 2px;
+    }
+
+    .btn-danger {
+      background-color: #FECACA; /* rose-200 */
+      color: #DC2626; /* rose-600 */
+      box-shadow: none;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .btn-danger:hover {
+      background-color: #FCA5A5; /* rose-300 */
+    }
+    .btn-danger:focus-visible {
+      outline: 3px solid rgba(251, 113, 133, 0.5);
+      outline-offset: 2px;
+    }
+    
+    .item-card {
+        border-radius: 1rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        border: 1px solid;
+    }
+    .feature-item {
+      background-color: #FFFBEB; /* 연한 노란색 배경 (이미지 참고) */
+      border-color: #FCD34D; /* amber-300 테두리 (이미지 참고) */
+    }
+    .feature-item .remove {
+        background-color: #FEF3C7; /* amber-100 */
+        color: #F59E0B; /* amber-500 */
+        border: none;
+        box-shadow: none;
+    }
+    .feature-item .remove:hover {
+        background-color: #FDE68A; /* amber-200 */
+        color: #D97706; /* amber-600 */
+    }
+    .extra-item {
+        background-color: #EFF6FF; /* 연한 파란색 배경 (이미지 참고) */
+        border-color: #93C5FD; /* blue-300 테두리 (이미지 참고) */
+    }
+    .extra-item .remove {
+        background-color: #DBEAFE; /* blue-100 */
+        color: #3B82F6; /* blue-600 */
+        border: none;
+        box-shadow: none;
+    }
+    .extra-item .remove:hover {
+        background-color: #BFDBFE; /* blue-200 */
+        color: #2563EB; /* blue-700 */
+    }
+    
+    /* [추가] 페이지 구성 카드 스타일 */
+    .page-item {
+        background-color: #F0FDF4; /* 연한 녹색 배경 */
+        border-color: #86EFAC; /* green-300 테두리 */
+    }
+    .page-item .remove {
+        background-color: #DCFCE7; /* green-100 */
+        color: #22C55E; /* green-600 */
+        border: none;
+        box-shadow: none;
+    }
+    .page-item .remove:hover {
+        background-color: #BBF7D0; /* green-200 */
+        color: #16A34A; /* green-700 */
+    }
+
+
+    /* 모달 스타일 */
+    #customModal .card {
+        border-radius: 1.5rem;
+        box-shadow: 0 20px 50px rgba(0,0,0,.15);
+        background-color: #FFFFFF;
+    }
+    #modalMessage {
+        font-size: 1.125rem; /* 더 크게 */
+        line-height: 1.6;
+        color: #334155;
+    }
+    
+    /* 가이드 모달 스타일 */
+    #guideModal .card {
+        max-width: 40rem; /* 가이드를 위해 더 넓은 모달 */
+        max-height: 90vh; /* 화면 높이 제한 */
+        display: flex;
+        flex-direction: column;
+    }
+    #guideModalContent {
+        overflow-y: auto; /* 내용 많을 시 스크롤 */
+        text-align: left; /* 기본 왼쪽 정렬 */
+        line-height: 1.8; /* 줄 간격 */
+        padding-right: 1rem; /* 스크롤바 공간 */
+    }
+    /* 모바일에서 제목 크기 줄임 */
+    #guideModal h2 {
+        font-size: 1.75rem; /* 2xl */
+    }
+    @media (min-width: 768px) { /* md: */
+        #guideModal h2 {
+            font-size: 1.875rem; /* 3xl */
+        }
+    }
+
+    #guideModalContent h3 {
+        font-size: 1.125rem; /* 글씨 크기 축소 (1.25 -> 1.125) */
+        font-weight: 700;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #1E293B;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    #guideModalContent p {
+        font-size: 0.95rem; /* 글씨 크기 축소 (1.0 -> 0.95) */
+        color: #475569;
+        margin-bottom: 0.75rem;
+    }
+    #guideModalContent ul {
+        list-style-type: none;
+        padding-left: 0; /* 패딩 제거 */
+    }
+    #guideModalContent li {
+        font-size: 0.95rem; /* 글씨 크기 축소 (1.0 -> 0.95) */
+        color: #475569;
+        margin-bottom: 0.75rem; /* 간격 축소 */
+        display: grid; /* 그리드 레이아웃 사용 */
+        grid-template-columns: 1.5rem 1fr; /* 아이콘 / 텍스트 */
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    #guideModalContent li .emoji-icon {
+        font-size: 1.125rem; /* 글씨 크기 축소 (1.25 -> 1.125) */
+        margin-top: 0.125rem; /* 정렬 보정 */
+        flex-shrink: 0;
+        line-height: 1;
+        text-align: center;
+    }
+    #guideModalContent li div {
+        /* 텍스트 컨텐츠 */
+    }
+    
+    /* [추가] 개발자 정보 섹션 스타일 */
+    .developer-info {
+        background-color: #FFFBEB; /* 연한 노란색 */
+        border: 1px solid #FCD34D; /* 노란색 테두리 */
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-top: 2rem;
+        text-align: left;
+    }
+    .developer-info h4 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #D97706; /* 주황색 계열 */
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .developer-info p {
+        font-size: 0.9rem; /* 본문보다 살짝 작게 */
+        color: #475569;
+        margin-bottom: 0.5rem;
+        line-height: 1.6;
+    }
+    .developer-info a {
+        color: #6366F1; /* Indigo */
+        font-weight: 500;
+        text-decoration: underline;
+    }
+    .developer-info a:hover {
+        color: #4F46E5;
+    }
+
+  </style>
+</head>
+<body>
+  <header class="p-6 md:p-10 relative">
+    <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 relative z-10">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold flex items-center gap-2 text-slate-800">
+            가이드 바이브! <span class="text-4xl">✊✌️✋</span>
+        </h1>
+        <p class="text-slate-600 mt-2 text-lg">AI와 함께하는 나만의 앱 만들기</p>
+      </div>
+      <!-- 모바일 최적화: 모바일(flex-col) / 데스크탑(flex-row) -->
+      <div class="flex flex-col md:flex-row gap-3">
+        <button id="showGuide" class="pill px-5 py-2.5 btn-info text-lg font-semibold w-full md:w-auto">설명서</button>
+        <button id="prefillExample" class="pill px-5 py-2.5 btn-primary text-lg font-semibold w-full md:w-auto">예시 불러오기</button>
+        <button id="resetAll" class="pill px-5 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto">초기화</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 pb-24">
+    <section class="card bg-white p-6 md:p-10 space-y-10">
+      
+      <div>
+        <h2 class="section-title mb-5">
+            <span class="emoji-icon">☁️</span> 기본 정보
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-slate-700 font-semibold mb-2 text-base" for="appName">앱 이름</label>
+            <input id="appName" type="text" class="w-full" placeholder="예) 감정의 숲" />
+          </div>
+          <div>
+            <label class="block text-slate-700 font-semibold mb-2 text-base" for="audience">주요 사용자</label>
+            <input id="audience" type="text" class="w-full" placeholder="예) 감정을 관리하고 싶은 초등학생" />
+          </div>
+        </div>
+        <div class="mt-6">
+          <label class="block text-slate-700 font-semibold mb-2 text-base" for="theme">앱 소개하기</label>
+          <input id="theme" type="text" class="w-full" placeholder="예) 감정 날씨처럼 오늘의 기분을 가꾸는 어린이 앱" />
+        </div>
+      </div>
+
+      
+      <div>
+        <h2 class="section-title mb-5">
+            <span class="emoji-icon">🌈</span> 디자인
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
+          
+          <!-- 왼쪽 열: 분위기 + 색상 -->
+          <div class="space-y-6">
+            <div>
+              <label class="block text-slate-700 font-semibold mb-2 text-base" for="vibe">전체 분위기</label>
+              <input id="vibe" type="text" class="w-full" placeholder="예) 귀엽고 밝은 느낌" />
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <label class="block text-slate-700 font-semibold text-base">대표 색(최대 5색)</label>
+                <div class="flex items-center gap-2 text-sm">
+                  <label class="text-slate-600" for="paletteSelect">팔레트</label>
+                  <select id="paletteSelect" class="rounded-lg border border-slate-300 px-3 py-1.5">
+                    <option value="pastel">파스텔 (연한 색)</option>
+                    <option value="vivid">알록달록 (쨍한 색)</option>
+                    <option value="nature">자연 (숲/나무)</option>
+                    <option value="mono">무채색 (회색/검정)</option>
+                  </select>
+                </div>
+              </div>
+              <div id="paletteWrap" class="grid grid-cols-6 gap-3"></div>
+              <div class="mt-4 flex flex-wrap gap-3" id="pickedColors"></div>
+              <!-- 힌트 텍스트 삭제됨 -->
+            </div>
+          </div>
+          
+          <!-- 오른쪽 열: 글씨체 -->
+          <div>
+            <label class="block text-slate-700 font-semibold mb-2 text-base">글씨체 (최대 3개)</label>
+            <!-- 폰트 스와치 목록 -->
+            <div id="fontPaletteWrap" class="grid grid-cols-2 gap-2">
+              <!-- JS로 폰트 스와치(버튼)가 여기에 생성됩니다 -->
+            </div>
+            <!-- 선택된 폰트 칩 -->
+            <div id="pickedFonts" class="mt-3 flex flex-wrap gap-2"></div>
+            <!-- 힌트 텍스트 삭제됨 -->
+          </div>
+        </div>
+      </div>
+
+      
+      <div>
+        <h2 class="section-title mb-5">
+            <span class="emoji-icon">⭐</span> 주요 기능
+        </h2>
+        
+        <p class="hint mb-4">앱의 핵심이 되는 기능들을 적어주세요.</p>
+        <!-- 모바일 최적화: 모바일(flex-col) / 데스크탑(grid) -->
+        <div class="flex flex-col md:grid md:grid-cols-7 gap-4 items-start">
+          <input id="fName" type="text" class="md:col-span-3 w-full" placeholder="기능 이름"/>
+          <input id="fWhat" type="text" class="md:col-span-4 w-full" placeholder="설명(What)"/>
+          <input id="fHow" type="text" class="md:col-span-7 w-full" placeholder="동작/방법(How)"/>
+          <div class="md:col-span-6 w-full">
+            <input id="fCond" type="text" class="w-full" placeholder="추가 설명"/>
+          </div>
+          <!-- 모바일(w-full) / 데스크탑(self-end) -->
+          <button id="addFeature" class="pill px-5 py-2.5 btn-dark font-semibold w-full md:w-auto md:self-end">추가</button>
+        </div>
+        <div id="featureList" class="mt-6 space-y-4"></div>
+      </div>
+
+      
+      <div>
+        <h2 class="section-title mb-5">
+            <span class="emoji-icon">🎵</span> 보조 기능
+        </h2>
+        <p class="hint mb-4">추가로 있으면 좋은 기능을 적고 추가를 누르세요. 예) 효과음, 튜토리얼, 점수 저장 등</p>
+        <div class="flex gap-4 items-start">
+          <input id="xItem" type="text" class="flex-1" placeholder="보조 기능 작성"/>
+          <button id="addExtra" class="pill px-5 py-2.5 btn-dark font-semibold">추가</button>
+        </div>
+        <div id="extraList" class="mt-6 space-y-3"></div>
+      </div>
+
+      <!-- [추가] 페이지 구성 섹션 -->
+      <div>
+        <h2 class="section-title mb-5">
+            <span class="emoji-icon">📄</span> 페이지 구성 (심화)
+        </h2>
+        <p class="hint mb-4">앱이 어떤 페이지들로 이루어질지 기획해 보세요. (선택 사항)</p>
+        <div class="flex flex-col md:grid md:grid-cols-7 gap-4 items-start">
+          <input id="pName" type="text" class="md:col-span-2 w-full" placeholder="페이지 이름 (예: 1. 시작 화면)"/>
+          <input id="pDesc" type="text" class="md:col-span-4 w-full" placeholder="페이지 설명 (예: 앱 로고와 시작 버튼)"/>
+          <button id="addPage" class="pill px-5 py-2.5 btn-dark font-semibold w-full md:w-auto md:col-span-1">추가</button>
+        </div>
+        <div id="pageList" class="mt-6 space-y-3"></div>
+      </div>
+
+      
+      <div class="flex justify-center mt-8">
+        <button id="build" class="pill px-8 py-3 btn-accent text-xl font-bold">프롬프트 생성</button>
+      </div>
+
+      
+      <div>
+        <h2 class="section-title mb-5">
+            <span class="emoji-icon">🤖</span> AI 요청 문장(프롬프트)
+        </h2>
+        <textarea id="output" rows="18" class="w-full text-base" readonly></textarea>
+        <div class="flex justify-center gap-4 mt-5">
+          <button id="copyOut" class="pill px-5 py-2.5 btn-primary font-semibold">복사</button>
+          <button id="downloadOut" class="pill px-5 py-2.5 btn-secondary font-semibold">TXT로 저장</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-10 text-center text-slate-500">
+    <p><a href="https://litt.ly/chichiboo" target="_blank" class="underline hover:no-underline text-indigo-500 font-medium">created by. 교육뮤지컬 꿈꾸는 치수쌤</a></p>
+  </footer>
+
+  
+  <div id="customModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4 z-50 hidden">
+    <div class="card bg-white p-7 md:p-10 w-full max-w-sm text-center">
+      <p id="modalMessage" class="text-slate-700 text-xl font-semibold mb-8"></p>
+      <div class="flex justify-center gap-4">
+        <button id="modalCancel" class="pill px-6 py-2.5 btn-secondary text-lg font-semibold"></button>
+        <button id="modalConfirm" class="pill px-6 py-2.5 btn-primary text-lg font-semibold"></button>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- 가이드 모달 -->
+  <div id="guideModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4 z-50 hidden">
+    <div class="card bg-white p-7 md:p-10 w-full text-center">
+      <!-- 모달 제목 -->
+      <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl md:text-3xl font-bold text-indigo-600 flex items-center gap-2">
+              <span class="text-3xl md:text-4xl">💡</span> 가이드 바이브 설명서!
+          </h2>
+          <button id="closeGuide" class="text-3xl text-slate-400 hover:text-slate-600" aria-label="닫기">&times;</button>
+      </div>
+      
+      <!-- 모달 내용 (스크롤 가능) -->
+      <div id="guideModalContent" class="space-y-4">
+          <!-- [수정] 소개 문구 변경 및 가운데 정렬 -->
+          <p class="mb-4 text-center">
+            안녕, 여러분! 👋<br>
+            '가이드 바이브!'는 가위바위보를 하듯이<br>
+            쉽고 재밌게 너만의 멋진 앱 아이디어를<br>
+            AI에게 쉽게 설명해주기 위한 도구야.<br>
+            아래 순서대로 따라 해보자!
+          </p>
+          
+          <h3><span class="emoji-icon"></span> 1. 기본 정보 입력하기</h3>
+          <ul class="space-y-3"> <!-- 간격 추가 -->
+              <li class="guide-item">
+                  <span class="emoji-icon">🤔</span>
+                  <div><strong>앱 이름:</strong> 만들고 싶은 앱의 이름을 만들어봐. (예: 우주 탐험대)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon">🧑‍🤝‍🧑</span>
+                  <div><strong>주요 사용자:</strong> 이 앱을 누가 쓸까? (예: 별을 좋아하는 5학년)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon">💖</span>
+                  <div><strong>앱 소개하기:</strong> 어떤 앱인지 한 줄로 멋지게 소개해줘.</div>
+              </li>
+          </ul>
+
+          <h3><span class="emoji-icon"></span> 2. 디자인 정하기</h3>
+          <ul class="space-y-3">
+              <li class="guide-item">
+                  <span class="emoji-icon">🎨</span>
+                  <div><strong>전체 분위기:</strong> 앱이 어떤 느낌이면 좋을까? (예: 신나고 재미있는 느낌)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon">🖌️</span>
+                  <div><strong>대표 색:</strong> 마음에 드는 색을 5개까지 골라봐.</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon">✍️</span>
+                  <div><strong>글씨체:</strong> 앱에 어울리는 글씨체를 3개까지 골라봐.</div>
+              </li>
+          </ul>
+
+          <h3><span class="emoji-icon"></span> 3. 주요 기능 만들기</h3>
+          <ul class="space-y-3">
+              <li class="guide-item">
+                  <span class="emoji-icon">💡</span>
+                  <div><strong>기능 이름:</strong> 앱의 가장 중요한 기능을 알려줘. (예: 행성 찾기)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon">🗺️</span>
+                  <div><strong>설명(What):</strong> 이 기능이 무엇을 하는지 적어줘. (예: 행성 정보를 보여준다)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon">👉</span>
+                  <div><strong>동작/방법(How):</strong> 어떻게 사용하는 걸까? (예: 행성을 클릭하면 설명이 나온다)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon">✨</span>
+                  <div><strong>추가 설명:</strong> 더 필요한 게 있다면 적어줘.</div>
+              </li>
+          </ul>
+
+          <h3><span class="emoji-icon"></span> 4. 보조 기능 추가하기 (선택!)</h3>
+          <ul class="space-y-3">
+              <li class="guide-item">
+                  <span class="emoji-icon">🔊</span>
+                  <div>"배경음악", "점수 저장" 처럼 더 필요한 기능을 적어줘.</div>
+              </li>
+          </ul>
+
+          <!-- [추가] 설명서에 페이지 구성 항목 추가 -->
+          <h3><span class="emoji-icon"></span> 5. 페이지 구성하기 (심화!)</h3>
+          <ul class="space-y-3">
+              <li class="guide-item">
+                  <span class="emoji-icon">🏠</span>
+                  <div>앱이 어떤 화면(페이지)으로 보일지 순서대로 적어봐. (선택사항)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon"></span>
+                  <div>예) '1. 시작 화면', '2. 게임 화면', '3. 점수 화면' ...</div>
+              </li>
+          </ul>
+
+
+          <h3><span class="emoji-icon"></span> 6. 프롬프트 생성!</h3>
+          <ul class="space-y-3">
+              <li class="guide-item">
+                  <span class="emoji-icon">🚀</span>
+                  <div><strong>'프롬프트 생성'</strong> 버튼을 누르면 완성!</div>
+              </li>
+              <li class="guide-item">
+                  <span class="emoji-icon">📋</span>
+                  <div><strong>'복사'</strong> 버튼을 눌러서 선생님이나 AI에게 물어보러 가자!</div>
+              </li>
+          </ul>
+
+          <!-- [추가] 개발자 정보 섹션 -->
+          <div class="developer-info">
+              <h4><span class="emoji-icon">👷</span> 개발자</h4>
+              <p class="font-semibold text-lg text-slate-800">교육뮤지컬 꿈꾸는 치수쌤</p>
+              <p>교육뮤지컬을 고민하고, 창작하고, 실천합니다.</p>
+              <p>초등학교 학생들과 함께 꿈꾸는 교육뮤지컬 이야기를 기록합니다.</p>
+              <p>[세상에서 가장 쉬운 뮤지컬 수업], [뮤지컬 창작노트]의 저자입니다.</p>
+              <p>따뜻한 디지털 활용 교육에도 관심이 많습니다.</p>
+              <p class="mt-4"><span class="emoji-icon">🔗</span> <a href="https://litt.ly/chichiboo" target="_blank">https://litt.ly/chichiboo</a></p>
+          </div>
+
+      </div>
+
+      <!-- 모달 닫기 버튼 -->
+      <div class="flex justify-end gap-4 mt-8">
+        <button id="guideModalConfirm" class="pill px-6 py-2.5 btn-primary text-lg font-semibold">이해했어요!</button>
+      </div>
+    </div>
+  </div>
+  
+  
+  <template id="featureItemTpl">
+    <div class="card item-card feature-item border p-5 flex flex-col gap-3">
+      <div class="flex items-center justify-between">
+        <div class="font-semibold text-slate-800 text-lg flex items-center gap-2">
+            <span class="emoji-icon">☀️</span>
+            <span class="fi-name"></span>
+        </div>
+        <button class="remove pill px-4 py-2 text-sm btn-danger">삭제</button>
+      </div>
+      <div class="text-base text-slate-700 space-y-2">
+        <div><strong class="text-slate-600">What:</strong> <span class="fi-what"></span></div>
+        <div><strong class="text-slate-600">How:</strong> <span class="fi-how"></span></div>
+        <div><strong class="text-slate-600">추가 설명:</strong> <span class="fi-cond"></span></div>
+      </div>
+    </div>
+  </template>
+
+  
+  <template id="extraItemTpl">
+    <div class="card item-card extra-item border p-4 flex items-center justify-between">
+      <div class="text-slate-800 text-base flex items-center gap-2">
+            <span class="emoji-icon">🌱</span>
+            <span class="ex-text"></span>
+      </div>
+      <button class="remove pill px-4 py-2 text-sm btn-danger">삭제</button>
+    </div>
+  </template>
+
+  <!-- [추가] 페이지 구성 아이템 템플릿 -->
+  <template id="pageItemTpl">
+    <div class="card item-card page-item border p-4 flex items-center justify-between">
+      <div class="text-slate-800 text-base flex-1">
+          <div class="font-semibold text-slate-900 pi-name"></div>
+          <div class="text-sm text-slate-700 pi-desc"></div>
+      </div>
+      <button class="remove pill px-4 py-2 text-sm btn-danger ml-4">삭제</button>
+    </div>
+  </template>
+
+  <script>
+    const $ = (s,el=document)=>el.querySelector(s);
+    const $$ = (s,el=document)=>Array.from(el.querySelectorAll(s));
+
+    // ===== 맞춤 모달 로직 =====
+    const customModal = $("#customModal");
+    const modalMessage = $("#modalMessage");
+    const modalConfirm = $("#modalConfirm");
+    const modalCancel = $("#modalCancel");
+    let modalConfirmCallback = null;
+
+    function showModal(message, type = 'alert', onConfirm = null) {
+      modalMessage.textContent = message;
+      modalConfirmCallback = onConfirm;
+
+      if (type === 'alert') {
+        modalCancel.classList.add('hidden');
+        modalConfirm.textContent = '확인';
+      } else { // 'confirm' 유형
+        modalCancel.classList.remove('hidden');
+        modalConfirm.textContent = '확인';
+        modalCancel.textContent = '취소';
+      }
+      customModal.classList.remove('hidden');
+      modalConfirm.focus(); // 접근성을 위해 확인 버튼에 포커스
+    }
+
+    modalConfirm.addEventListener('click', () => {
+      customModal.classList.add('hidden');
+      if (modalConfirmCallback) {
+        modalConfirmCallback();
+        modalConfirmCallback = null;
+      }
+    });
+
+    modalCancel.addEventListener('click', () => {
+      customModal.classList.add('hidden');
+      modalConfirmCallback = null;
+    });
+    // 모달 외부 클릭 시 닫기
+    customModal.addEventListener('click', (e) => {
+        if (e.target === customModal) {
+            customModal.classList.add('hidden');
+            modalConfirmCallback = null;
+        }
+    });
+    // =============================
+
+
+    // ===== 가이드 모달 JS =====
+    const showGuideBtn = $("#showGuide");
+    const guideModal = $("#guideModal");
+    const closeGuideBtn = $("#closeGuide");
+    const guideModalConfirm = $("#guideModalConfirm");
+
+    showGuideBtn.addEventListener('click', () => {
+        guideModal.classList.remove('hidden');
+    });
+    
+    closeGuideBtn.addEventListener('click', () => {
+        guideModal.classList.add('hidden');
+    });
+
+    guideModalConfirm.addEventListener('click', () => {
+        guideModal.classList.add('hidden');
+    });
+
+    guideModal.addEventListener('click', (e) => {
+        if (e.target === guideModal) {
+            guideModal.classList.add('hidden');
+        }
+    });
+    // =============================
+
+
+    // ===== 폰트 선택 로직 (스와치 + 칩) =====
+    const FONT_MAP = [
+        { id: "noto-sans-kr", name: "Noto Sans KR", style: "font-family: 'Noto Sans KR', sans-serif;" },
+        { id: "nanum-gothic", name: "Nanum Gothic", style: "font-family: 'Nanum Gothic', sans-serif;" },
+        { id: "nanum-myeongjo", name: "Nanum Myeongjo", style: "font-family: 'Nanum Myeongjo', serif;" },
+        { id: "do-hyeon", name: "Do Hyeon", style: "font-family: 'Do Hyeon', sans-serif;" },
+        { id: "jua", name: "Jua", style: "font-family: 'Jua', sans-serif;" },
+        { id: "dongle", name: "Dongle", style: "font-family: 'Dongle', sans-serif;" },
+        { id: "gugi", name: "Gugi", style: "font-family: 'Gugi', sans-serif;" },
+        { id: "kirang-haerang", name: "Kirang Haerang", style: "font-family: 'Kirang Haerang', system-ui;" },
+        { id: "diphylleia", name: "Diphylleia", style: "font-family: 'Diphylleia', serif;" },
+        { id: "grandiflora-one", name: "Grandiflora One", style: "font-family: 'Grandiflora One', cursive;" }
+    ];
+    
+    // [추가] 폰트 CSS 정보
+    const FONT_CSS_INFO = {
+      "noto-sans-kr": ".noto-sans-kr-<uniquifier> { font-family: \"Noto Sans KR\", sans-serif; font-optical-sizing: auto; font-weight: <weight>; font-style: normal; }",
+      "nanum-gothic": ".nanum-gothic-regular { font-family: \"Nanum Gothic\", sans-serif; font-weight: 400; font-style: normal; }",
+      "nanum-myeongjo": ".nanum-myeongjo-regular { font-family: \"Nanum Myeongjo\", serif; font-weight: 400; font-style: normal; }",
+      "do-hyeon": ".do-hyeon-regular { font-family: \"Do Hyeon\", sans-serif; font-weight: 400; font-style: normal; }",
+      "jua": ".jua-regular { font-family: \"Jua\", sans-serif; font-weight: 400; font-style: normal; }",
+      "dongle": ".dongle-regular { font-family: \"Dongle\", sans-serif; font-weight: 400; font-style: normal; }",
+      "gugi": ".gugi-regular { font-family: \"Gugi\", sans-serif; font-weight: 400; font-style: normal; }",
+      "kirang-haerang": ".kirang-haerang-regular { font-family: \"Kirang Haerang\", system-ui; font-weight: 400; font-style: normal; }",
+      "diphylleia": ".diphylleia-regular { font-family: \"Diphylleia\", serif; font-weight: 400; font-style: normal; }",
+      "grandiflora-one": ".grandiflora-one-regular { font-family: \"Grandiflora One\", cursive; font-weight: 400; font-style: normal; }",
+      "black-han-sans": ".black-han-sans-regular { font-family: \"Black Han Sans\", sans-serif; font-weight: 400; font-style: normal; }" // 타이틀 폰트도 추가
+    };
+
+
+    const fontPaletteWrap = $("#fontPaletteWrap");
+    const pickedFonts = $("#pickedFonts");
+
+    function renderFontPalette() {
+        fontPaletteWrap.innerHTML = "";
+        FONT_MAP.forEach(font => {
+            const b = document.createElement("button");
+            b.className = "font-swatch";
+            b.style = font.style;
+            b.textContent = font.name;
+            b.dataset.fontId = font.id;
+            b.setAttribute("aria-label", font.name);
+            b.setAttribute("aria-pressed", "false");
+            b.addEventListener("click", () => toggleFontPick(font.id, b));
+            fontPaletteWrap.appendChild(b);
+        });
+    }
+
+    function toggleFontPick(fontId, btn) {
+        const max = 3;
+        const current = $$(".chip", pickedFonts).map(c => c.dataset.fontId);
+        const exists = current.includes(fontId);
+        const font = FONT_MAP.find(f => f.id === fontId);
+
+        if (!font) return;
+
+        if (!exists) {
+            if (current.length >= max) {
+                showModal(`글씨체는 최대 ${max}개까지 선택할 수 있어요.`);
+                return;
+            }
+            const chip = document.createElement("div");
+            chip.className = "chip";
+            chip.dataset.fontId = fontId;
+            // [수정] 칩 내부 텍스트에도 폰트 ID를 data 속성으로 저장
+            chip.innerHTML = `<span class="text-sm" style="${font.style}" data-font-id="${font.id}">${font.name}</span><button class="text-slate-400 hover:text-rose-600 font-bold ml-1" title="삭제" aria-label="${font.name} 삭제">×</button>`;
+            
+            chip.querySelector("button").addEventListener("click", () => {
+                toggleFontPick(fontId, btn); // 칩에서 삭제 시 스와치도 업데이트
+            });
+            
+            pickedFonts.appendChild(chip);
+            if (btn) btn.setAttribute("aria-pressed", "true");
+        } else {
+            const node = $$(".chip", pickedFonts).find(c => c.dataset.fontId === fontId);
+            if (node) node.remove();
+            
+            // 팔레트에서 해당 버튼 찾기 (칩에서 x 눌렀을 때)
+            const swatchBtn = btn || $$(".font-swatch", fontPaletteWrap).find(b => b.dataset.fontId === fontId);
+            if (swatchBtn) swatchBtn.setAttribute("aria-pressed", "false");
+        }
+    }
+    // =====================================
+
+
+    // ===== 팔레트 =====
+    const paletteWrap = $("#paletteWrap");
+    const pickedColors = $("#pickedColors");
+    const paletteSelect = $("#paletteSelect");
+        
+    const palettes = {
+      pastel:[
+        "#F9AAB0", "#A0D8EF", "#AEC9C3", "#B6E6B6", "#FFC0CB", "#E1BEE7",
+        "#F8F8A0", "#FEE89D", "#D0F0C0", "#B2EBF2", "#D1C4E9", "#FFECB3"
+      ],
+      vivid:["#F59E0B","#EF4444","#10B981","#3B82F6","#8B5CF6","#E11D48","#22C55E","#0EA5E9","#F43F5E","#84CC16","#F97316","#06B6D4"],
+      nature:["#2E7D32","#81C784","#1B5E20","#A5D6A7","#795548","#8D6E63","#33691E","#4CAF50","#9CCC65","#558B2F","#BCAAA4","#90A4AE"],
+      mono:["#111827","#1F2937","#374151","#4B5563","#6B7280","#9CA3AF","#D1D5DB","#E5E7EB","#F3F4F6","#FFFFFF","#0F172A","#CBD5E1"]
+    };
+
+    function renderPalette(name="pastel"){
+      paletteWrap.innerHTML = "";
+      (palettes[name]||[]).forEach(hex =>{
+        const b = document.createElement("button");
+        b.className = "swatch";
+        b.style.background = hex;
+        b.setAttribute("aria-label", hex);
+        b.setAttribute("aria-pressed","false");
+        b.addEventListener("click",()=>togglePick(hex,b));
+        paletteWrap.appendChild(b);
+      });
+    }
+
+    function togglePick(hex,btn){
+      const max = 5;
+      const current = $$(".chip", pickedColors).map(c=>c.dataset.hex);
+      const exists = current.includes(hex);
+      if(!exists){
+        if(current.length>=max){
+          showModal("대표 색상은 최대 5개까지 선택할 수 있어요.");
+          return;
+        }
+        const chip = document.createElement("div");
+        chip.className = "chip";
+        chip.dataset.hex = hex;
+        chip.innerHTML = `<span class="w-4 h-4 rounded-full" style="background:${hex}; border: 1px solid rgba(0,0,0,0.1);"></span><span class="text-sm">${hex}</span><button class="text-slate-400 hover:text-rose-600 font-bold ml-1" title="삭제" aria-label="선택된 색상 ${hex} 삭제">×</button>`;
+        chip.querySelector("button").addEventListener("click",()=>{
+            // 칩에서 삭제 시, 스와치 버튼도 업데이트
+            const swatchBtn = btn || $$(".swatch", paletteWrap).find(b => b.getAttribute("aria-label") === hex);
+            togglePick(hex, swatchBtn);
+        });
+        pickedColors.appendChild(chip);
+        if(btn) btn.setAttribute("aria-pressed","true");
+      }else{
+        const node = $$(".chip", pickedColors).find(c=>c.dataset.hex===hex);
+        if(node) node.remove();
+        if(btn) btn.setAttribute("aria-pressed","false");
+      }
+    }
+
+    paletteSelect.addEventListener("change", e=> renderPalette(e.target.value));
+    renderPalette();
+    renderFontPalette(); // 폰트 팔레트 렌더링
+
+    // ===== 기능 리스트 =====
+    const fName = $("#fName"), fWhat=$("#fWhat"), fHow=$("#fHow"), fCond=$("#fCond");
+    const addFeatureBtn = $("#addFeature");
+    const featureList = $("#featureList");
+    const featureTpl = $("#featureItemTpl");
+
+    function addFeatureItem(data){
+      const {name="(제목 미정)", what="-", how="-", cond="-"} = data||{};
+      const node = featureTpl.content.cloneNode(true);
+      const card = node.querySelector(".card");
+      card.querySelector(".fi-name").textContent = name;
+      card.querySelector(".fi-what").textContent = what;
+      card.querySelector(".fi-how").textContent = how;
+      card.querySelector(".fi-cond").textContent = cond;
+      card.querySelector(".remove").addEventListener("click",()=> card.remove());
+      featureList.appendChild(node);
+    }
+
+    addFeatureBtn.addEventListener("click",()=>{
+      const name = fName.value.trim();
+      const what = fWhat.value.trim();
+      const how = fHow.value.trim();
+      const cond = fCond.value.trim();
+      if(!name && !what && !how && !cond){
+        showModal("적어도 한 칸 이상 내용을 입력해 주세요.");
+        return;
+      }
+      addFeatureItem({name, what, how, cond});
+      fName.value = fWhat.value = fHow.value = fCond.value = "";
+      fName.focus();
+    });
+
+    // ===== 보조 기능 리스트 =====
+    const xItem = $("#xItem");
+    const addExtraBtn = $("#addExtra");
+    const extraList = $("#extraList");
+    const extraTpl = $("#extraItemTpl");
+
+    function addExtra(text){
+      const node = extraTpl.content.cloneNode(true);
+      const card = node.querySelector(".card");
+      card.querySelector(".ex-text").textContent = text;
+      card.querySelector(".remove").addEventListener("click",()=> card.remove());
+      extraList.appendChild(node);
+    }
+
+    addExtraBtn.addEventListener("click",()=>{
+      const t = xItem.value.trim();
+      if(!t){
+        showModal("보조 기능 내용을 입력해 주세요.");
+        return;
+      }
+      addExtra(t);
+      xItem.value = "";
+      xItem.focus();
+    });
+
+    // [추가] ===== 페이지 구성 리스트 =====
+    const pName = $("#pName"), pDesc=$("#pDesc");
+    const addPageBtn = $("#addPage");
+    const pageList = $("#pageList");
+    const pageTpl = $("#pageItemTpl");
+
+    function addPageItem(data){
+      const {name="(제목 미정)", desc="-"} = data||{};
+      const node = pageTpl.content.cloneNode(true);
+      const card = node.querySelector(".card");
+      card.querySelector(".pi-name").textContent = name;
+      card.querySelector(".pi-desc").textContent = desc;
+      card.querySelector(".remove").addEventListener("click",()=> card.remove());
+      pageList.appendChild(node);
+    }
+
+    addPageBtn.addEventListener("click",()=>{
+      const name = pName.value.trim();
+      const desc = pDesc.value.trim();
+      if(!name && !desc){
+        showModal("페이지 이름이나 설명을 입력해 주세요.");
+        return;
+      }
+      addPageItem({name, desc});
+      pName.value = pDesc.value = "";
+      pName.focus();
+    });
+    // ===================================
+
+
+    // ===== 프롬프트 생성 =====
+    const buildBtn = $("#build");
+    const copyOut = $("#copyOut");
+    const downloadOut = $("#downloadOut");
+    const output = $("#output");
+
+    function buildPrompt(){
+      const appName = $("#appName").value.trim()||"(미정)";
+      const audience = $("#audience").value.trim()||"(미정)";
+      const theme = $("#theme").value.trim()||"(미정)";
+      const vibe = $("#vibe").value.trim()||"(미정)";
+      
+      // [수정] 폰트 이름 및 CSS 정보 가져오기
+      const selectedFontChips = $$(".chip", pickedFonts);
+      const selectedFontIds = selectedFontChips.map(chip => chip.querySelector('span').dataset.fontId);
+      const selectedFontNames = selectedFontChips.map(chip => chip.querySelector('span').textContent);
+      
+      const fontName = selectedFontNames.length ? selectedFontNames.join(", ") : "(미정)";
+      
+      // 폰트 CSS 정보 생성
+      let fontCssInfo = "";
+      if (selectedFontIds.length > 0) {
+          fontCssInfo = "\n- 글씨체 CSS 정보 (참고용):\n" + selectedFontIds
+              .map(id => `  - ${id}: ${FONT_CSS_INFO[id] || "CSS 정보 없음"}`)
+              .join("\n");
+      }
+      // 타이틀 폰트 정보는 항상 포함 (기본값)
+      fontCssInfo += `\n  - black-han-sans (타이틀 기본): ${FONT_CSS_INFO["black-han-sans"]}`;
+      
+      
+      const colors = $$(".chip", pickedColors).map(c=>c.dataset.hex);
+
+      const features = $$("#featureList > .card").map(card=>({
+        name: card.querySelector(".fi-name").textContent,
+        what: card.querySelector(".fi-what").textContent,
+        how: card.querySelector(".fi-how").textContent,
+        cond: card.querySelector(".fi-cond").textContent,
+      }));
+
+      const extras = $$("#extraList > .card .ex-text").map(el=>el.textContent);
+      
+      // [추가] 페이지 구성 가져오기
+      const pages = $$("#pageList > .card").map(card=>({
+        name: card.querySelector(".pi-name").textContent,
+        desc: card.querySelector(".pi-desc").textContent,
+      }));
+
+
+      const lines = [];
+      lines.push("아래 구조화 정보를 바탕으로 '단일 HTML 파일(HTML/CSS/JS 내장)'로 작동 가능한 웹앱 코드를 만들어줘.");
+      lines.push("초등학생이 쉽게 쓰는 귀엽고 밝은 UI, 접근성(키보드 탐색/대체텍스트), 모바일 대응(Viewport)까지 반영해줘.");
+      lines.push("");
+      lines.push("1) 기본정보");
+      lines.push(`- 앱 이름: ${appName}`);
+      lines.push(`- 주요 사용자: ${audience}`);
+      lines.push(`- 앱 소개하기: ${theme}`);
+      lines.push("");
+      lines.push("2) 디자인");
+      lines.push(`- 전체 분위기: ${vibe}`);
+      // [수정] 폰트 프롬프트에 CSS 정보 추가
+      lines.push(`- 글씨체 (참고용): ${fontName}. (AI가 최종 판단하여 디자인에 어울리는 폰트 1~2개 선택)`);
+      lines.push(`- 대표 색상: ${colors.length? colors.join(", ") : "(미정)"}`);
+      if (fontCssInfo) {
+          lines.push(fontCssInfo);
+      }
+      lines.push("");
+      lines.push("3) 주요 기능");
+      if(features.length){
+        features.forEach((f,i)=>{
+          lines.push(`- 기능 ${i+1}. ${f.name} — What: ${f.what || "-"} / How: ${f.how || "-"} / 추가 설명: ${f.cond || "-"}`);
+        });
+      }else{
+        lines.push("- (미정)");
+      }
+      lines.push("");
+      lines.push("4) 보조 기능(선택)");
+      lines.push(`- ${extras.length? extras.join(", ") : "(없음)"}`);
+      lines.push("");
+      
+      // [추가] 프롬프트에 페이지 구성 섹션 추가
+      lines.push("5) 페이지 구성(선택)");
+      if(pages.length){
+        pages.forEach((p,i)=>{
+          lines.push(`- ${p.name || `페이지 ${i+1}`}: ${p.desc || "-"}`);
+        });
+      }else{
+        lines.push("- (AI 자율 구성)");
+      }
+      lines.push("");
+
+      lines.push("6) 구현 요구사항(중요)"); // [수정] 번호 변경
+      lines.push("- 모든 코드는 한 파일(HTML) 안에 작성.");
+      lines.push("- 외부 이미지 없이도 데모 가능하도록 placeholder 사용.");
+      lines.push("- [중요] 페이지 구성이 'AI 자율 구성'이 아닐 경우, 기획한 페이지를 기반으로 라우팅(탭 전환) 구성.");
+      lines.push("- 마이크/카메라 등 권한 요청은 클릭 시에만 발생하도록 구현.");
+      lines.push("- 주석으로 주요 코드 블록 설명 추가.");
+      lines.push("");
+      lines.push("7) 스타일 가이드"); // [수정] 번호 변경
+      // [수정] "pill 형태" 삭제
+      lines.push("- Tailwind CDN 사용 가능. 큰 아이콘과 명확한 레이블.");
+      lines.push("- 색상 팔레트는 대표 색상을 중심으로 2~4가지로 제한.");
+      lines.push("");
+      lines.push("8) 산출물 형식"); // [수정] 번호 변경
+      lines.push("- 하나의 <html> 문서로 제공. <style>과 <script>가 내부에 포함.");
+      lines.push("");
+      lines.push("감사합니다. 이제 위 요구사항을 충족하는 단일 HTML 파일 코드를 출력해주세요.");
+
+      output.value = lines.join("\n");
+      showModal("AI 요청 프롬프트가 생성되었습니다!");
+    }
+
+    buildBtn.addEventListener("click", buildPrompt);
+
+    // copy / download
+    copyOut.addEventListener("click", async()=>{
+      const text = output.value;
+      if(!text){
+        showModal("먼저 프롬프트를 생성해 주세요.");
+        return;
+      }
+      try{ 
+        await navigator.clipboard.writeText(text); 
+        showModal("프롬프트가 복사되었습니다!");
+      }
+      catch(e){
+        try {
+          output.select(); 
+          document.execCommand("copy"); 
+          showModal("프롬프트가 복사되었습니다!(fallback)");
+        } catch(err) {
+          showModal("복사에 실패했습니다. 직접 복사해주세요.");
+        }
+      }
+    });
+
+    downloadOut.addEventListener("click",()=>{
+      const text = output.value;
+      if(!text){
+        showModal("먼저 프롬프트를 생성해 주세요.");
+        return;
+      }
+      const blob = new Blob([text],{type:"text/plain;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "ai_app_prompt.txt"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // 예시 불러오기 (임의 생성 앱)
+    function prefillRandom(){
+      doReset(); // 확인 없이 폼 초기화
+      $("#appName").value = "감정의 숲";
+      $("#audience").value = "감정을 관리하고 싶은 초등학생";
+      $("#theme").value = "숲 속 친구들과 감정 날씨를 가꾸는 마음 돌봄 앱";
+      $("#vibe").value = "부드럽고 따뜻한 느낌";
+      
+      // 예시 글꼴을 'jua'로 설정
+      const juaSwatch = $$(".font-swatch", fontPaletteWrap).find(b => b.dataset.fontId === "jua");
+      if (juaSwatch) {
+          toggleFontPick("jua", juaSwatch);
+      }
+
+      paletteSelect.value = "pastel"; renderPalette("pastel"); // 이미지에 맞춰 Pastel 팔레트 선택
+      // 이미지에 보이는 색상들로 미리 선택 (팔레트 배열 순서와 일치시킬 필요 있음)
+      ["#F9AAB0", "#AEC9C3", "#B6E6B6", "#FFC0CB", "#E1BEE7"].forEach(hex=>{
+        const btn = Array.from(paletteWrap.children).find(b=>b.getAttribute("aria-label")===hex);
+        if(btn) togglePick(hex, btn);
+      });
+      addFeatureItem({name:"감정 날씨", what:"오늘 기분을 날씨 이모지로 기록", how:"선택/수정/삭제", cond:"하루 1회 기록, 주간 요약 제공"});
+      addFeatureItem({name:"숲 친구 챌린지", what:"간단한 마음 운동 과제", how:"타이머/체크리스트", cond:"연속 3일 완료 시 배지 지급"});
+      addExtra("잔잔한 배경음악(음소거 토글)");
+      
+      // [추가] 예시 페이지 구성
+      addPageItem({name: "1. 메인 화면", desc: "오늘의 감정 날씨 선택 및 챌린지 보기"});
+      addPageItem({name: "2. 감정 달력", desc: "이전 감정 기록을 달력으로 확인"});
+    }
+    document.getElementById('prefillExample').addEventListener('click', prefillRandom);
+
+    function doReset() {
+      // [수정] 페이지 구성 필드 추가
+      ['#appName','#audience','#theme','#vibe','#fName','#fWhat','#fHow','#fCond','#xItem', '#output', '#pName', '#pDesc'].forEach(sel=>{
+        const el=$(sel); if(el) el.value='';
+      });
+      
+      // [수정] 페이지 리스트 추가
+      ['#featureList','#extraList','#pickedColors', '#pageList'].forEach(sel=>{
+        const el=$(sel); if(el) el.innerHTML='';
+      });
+      $('#paletteSelect').value='pastel';
+      renderPalette('pastel'); // 팔레트 초기화 시 버튼 aria-pressed 상태도 초기화
+      // 모든 swatch 버튼의 aria-pressed를 false로 설정
+      $$('.swatch').forEach(btn => btn.setAttribute('aria-pressed', 'false'));
+      
+      // 폰트 칩 및 스와치 리셋
+      pickedFonts.innerHTML = "";
+      $$(".font-swatch", fontPaletteWrap).forEach(btn => btn.setAttribute("aria-pressed", "false"));
+    }
+
+    function resetForm(confirmAsk=true){
+      if(confirmAsk){
+        showModal('정말 모든 내용을 삭제할까요?', 'confirm', doReset);
+      } else {
+        doReset();
+      }
+    }
+    document.getElementById('resetAll').addEventListener('click',()=>resetForm(true));
+
+    // 접근성: Enter로 추가
+    ["#xItem"].forEach(sel=>{
+      $(sel).addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); document.getElementById('addExtra').click(); }});
+    });
+    // 주요 기능 입력 필드에서 Enter 키 입력 시 추가
+    ["#fName","#fWhat","#fHow","#fCond"].forEach(sel=>{
+      $(sel).addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); document.getElementById('addFeature').click(); }});
+    });
+    // [추가] 페이지 구성 입력 필드에서 Enter 키 입력 시 추가
+    ["#pName","#pDesc"].forEach(sel=>{
+      $(sel).addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); document.getElementById('addPage').click(); }});
+    });
+    
+  </script>
+</body>
+</html>
