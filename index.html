@@ -384,6 +384,28 @@
     .developer-info a:hover {
         color: #4F46E5;
     }
+    
+    /* [추가] JSON 버튼 스타일 */
+    .btn-icon {
+      background-color: #e2e8f0; /* slate-200 */
+      color: #334155; /* slate-800 */
+      width: 44px; /* 정방형 */
+      height: 44px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .btn-icon:hover {
+      background-color: #cbd5e1; /* slate-300 */
+    }
+    .btn-icon svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
 
   </style>
 </head>
@@ -396,13 +418,29 @@
         </h1>
         <p class="text-slate-600 mt-2 text-lg" data-lang="subtitle">AI와 함께하는 나만의 앱 만들기</p>
       </div>
-      <!-- 모바일 최적화: 모바일(flex-col) / 데스크탑(flex-row) -->
+      <!-- [수정] 버튼 순서 및 래퍼 변경 -->
       <div class="flex flex-col md:flex-row gap-3">
-        <!-- [추가] 언어 변경 버튼 -->
-        <button id="langToggle" class="pill px-4 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto" data-lang="btnLang">ENG</button>
-        <button id="showGuide" class="pill px-5 py-2.5 btn-info text-lg font-semibold w-full md:w-auto" data-lang="btnGuide">설명서</button>
-        <button id="prefillExample" class="pill px-5 py-2.5 btn-primary text-lg font-semibold w-full md:w-auto" data-lang="btnExample">예시 불러오기</button>
-        <button id="resetAll" class="pill px-5 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto" data-lang="btnReset">초기화</button>
+        <!-- 메인 버튼 그룹 -->
+        <div class="flex flex-col md:flex-row gap-3">
+            <button id="showGuide" class="pill px-5 py-2.5 btn-info text-lg font-semibold w-full md:w-auto" data-lang="btnGuide">설명</button>
+            <button id="prefillExample" class="pill px-5 py-2.5 btn-primary text-lg font-semibold w-full md:w-auto" data-lang="btnExample">예시</button>
+            <button id="resetAll" class="pill px-5 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto" data-lang="btnReset">리셋</button>
+        </div>
+        <!-- 아이콘 버튼 그룹 (우측 정렬) -->
+        <div class="flex gap-3 justify-center md:ml-auto">
+            <button id="langToggle" class="pill px-4 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto" data-lang="btnLang">ENG</button>
+            <button id="downloadJson" class="btn-icon" data-tooltip-key="tooltipDownload">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+            </button>
+            <input type="file" id="uploadJsonInput" accept=".json" class="hidden">
+            <button id="uploadJson" class="btn-icon" data-tooltip-key="tooltipUpload">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                </svg>
+            </button>
+        </div>
       </div>
     </div>
   </header>
@@ -731,6 +769,9 @@
   <script>
     const $ = (s,el=document)=>el.querySelector(s);
     const $$ = (s,el=document)=>Array.from(el.querySelectorAll(s));
+    
+    // [추가] 로컬 스토리지 키
+    const LOCAL_STORAGE_KEY = 'guideVibeData';
 
     // [추가] ===== 다국어 지원 =====
     let currentLang = 'kor'; // 기본 언어
@@ -741,9 +782,11 @@
             title: "가이드 바이브! <span class=\"text-4xl\">✊✌️✋</span>",
             subtitle: "AI와 함께하는 나만의 앱 만들기",
             btnLang: "ENG",
-            btnGuide: "설명서",
-            btnExample: "예시 불러오기",
-            btnReset: "초기화",
+            btnGuide: "설명",
+            btnExample: "예시",
+            btnReset: "리셋",
+            tooltipDownload: "내보내기 (JSON)",
+            tooltipUpload: "불러오기 (JSON)",
             sec1Title: "기본 정보",
             sec1LabelName: "앱 이름",
             sec1PlaceholderName: "예) 감정의 숲",
@@ -779,7 +822,7 @@
             sec7Title: "AI 요청 문장(프롬프트)",
             btnCopy: "복사",
             btnDownload: "TXT로 저장",
-            footerText: "created by. 교육뮤지컬 꿈꾸는 치수쌤",
+            footerText: "created by. Chisu Saem(Education&Musical)",
             modalConfirm: "확인",
             modalCancel: "취소",
             guideTitle: "가이드 바이브 설명서!",
@@ -827,7 +870,9 @@
             alertCopyFallback: "프롬프트가 복사되었습니다!(fallback)",
             alertCopyFail: "복사에 실패했습니다. 직접 복사해주세요.",
             alertNoPrompt: "먼저 프롬프트를 생성해 주세요.",
-            alertReset: "정말 모든 내용을 삭제할까요?"
+            alertReset: "정말 모든 내용을 삭제할까요?",
+            alertLoadSuccess: "데이터를 성공적으로 불러왔습니다!",
+            alertLoadFail: "데이터를 불러오는 데 실패했습니다. 파일 형식을 확인해주세요."
         },
         eng: {
             // [수정] 영어 타이틀 및 푸터
@@ -836,9 +881,11 @@
             footerText: "created by. Chisu Saem(Education&Musical)",
 
             btnLang: "KOR",
-            btnGuide: "Guide",
-            btnExample: "Load Example",
+            btnGuide: "Help",
+            btnExample: "Example",
             btnReset: "Reset",
+            tooltipDownload: "Export (JSON)",
+            tooltipUpload: "Import (JSON)",
             sec1Title: "Basic Info",
             sec1LabelName: "App Name",
             sec1PlaceholderName: "e.g.) Emotion Forest",
@@ -921,7 +968,9 @@
             alertCopyFallback: "Prompt copied (fallback)!",
             alertCopyFail: "Copy failed. Please copy manually.",
             alertNoPrompt: "Please generate a prompt first.",
-            alertReset: "Are you sure you want to delete everything?"
+            alertReset: "Are you sure you want to delete everything?",
+            alertLoadSuccess: "Data loaded successfully!",
+            alertLoadFail: "Failed to load data. Please check the file format."
         }
     };
     
@@ -944,6 +993,15 @@
                 el.innerHTML = t[key]; // <br> 태그 등 HTML 유지를 위해
             }
         });
+        
+        // [추가] 툴팁 번역 업데이트
+        $$("[data-tooltip-key]").forEach(el => {
+            const key = el.dataset.tooltipKey;
+            if (t[key]) {
+                el.title = t[key];
+            }
+        });
+
 
         // 동적으로 생성된 카드 내부의 텍스트 업데이트
         $$("#featureList .card").forEach(card => {
@@ -973,6 +1031,7 @@
     langToggleBtn.addEventListener('click', () => {
         const newLang = currentLang === 'kor' ? 'eng' : 'kor';
         setLanguage(newLang);
+        saveToLocalStorage(); // [추가] 언어 변경도 저장
     });
     // =============================
 
@@ -1100,7 +1159,10 @@
             const isPressed = $$(".chip", pickedFonts).some(c => c.dataset.fontId === font.id);
             b.setAttribute("aria-pressed", isPressed ? "true" : "false");
             
-            b.addEventListener("click", () => toggleFontPick(font.id, b));
+            b.addEventListener("click", () => {
+                toggleFontPick(font.id, b);
+                saveToLocalStorage(); // [추가] 저장
+            });
             fontPaletteWrap.appendChild(b);
         });
     }
@@ -1126,6 +1188,7 @@
             
             chip.querySelector("button").addEventListener("click", () => {
                 toggleFontPick(fontId, btn); // 칩에서 삭제 시 스와치도 업데이트
+                saveToLocalStorage(); // [추가] 저장
             });
             
             pickedFonts.appendChild(chip);
@@ -1164,13 +1227,15 @@
         b.className = "swatch";
         b.style.background = hex;
         b.setAttribute("aria-label", hex);
-        b.setAttribute("aria-pressed","false");
         
         // [수정] 이미 선택된 색상인지 확인
         const isPressed = $$(".chip", pickedColors).some(c => c.dataset.hex === hex);
         b.setAttribute("aria-pressed", isPressed ? "true" : "false");
 
-        b.addEventListener("click",()=>togglePick(hex,b));
+        b.addEventListener("click",()=> {
+            togglePick(hex,b);
+            saveToLocalStorage(); // [추가] 저장
+        });
         paletteWrap.appendChild(b);
       });
     }
@@ -1192,6 +1257,7 @@
             // 칩에서 삭제 시, 스와치 버튼도 업데이트
             const swatchBtn = btn || $$(".swatch", paletteWrap).find(b => b.getAttribute("aria-label") === hex);
             togglePick(hex, swatchBtn);
+            saveToLocalStorage(); // [추가] 저장
         });
         pickedColors.appendChild(chip);
         if(btn) btn.setAttribute("aria-pressed","true");
@@ -1204,14 +1270,11 @@
       }
     }
 
-    paletteSelect.addEventListener("change", e=> renderPalette(e.target.value));
-    
-    // [수정] 페이지 로드 시 기본 언어로 초기화
-    document.addEventListener("DOMContentLoaded", () => {
-        setLanguage(currentLang);
-        renderPalette();
+    paletteSelect.addEventListener("change", e => {
+        renderPalette(e.target.value);
+        saveToLocalStorage(); // [추가] 저장
     });
-
+    
     // ===== 기능 리스트 =====
     const fName = $("#fName"), fWhat=$("#fWhat"), fHow=$("#fHow"), fCond=$("#fCond");
     const addFeatureBtn = $("#addFeature");
@@ -1235,7 +1298,10 @@
       card.querySelector('[data-lang="tplCond"]').textContent = t.tplCond + ":";
       card.querySelector('[data-lang="tplDelete"]').textContent = t.tplDelete;
 
-      card.querySelector(".remove").addEventListener("click",()=> card.remove());
+      card.querySelector(".remove").addEventListener("click",()=> {
+          card.remove();
+          saveToLocalStorage(); // [추가] 저장
+      });
       featureList.appendChild(node);
     }
 
@@ -1251,6 +1317,7 @@
       addFeatureItem({name, what, how, cond});
       fName.value = fWhat.value = fHow.value = fCond.value = "";
       fName.focus();
+      saveToLocalStorage(); // [추가] 저장
     });
 
     // ===== 보조 기능 리스트 =====
@@ -1269,7 +1336,10 @@
       // [수정] 동적 텍스트 설정
       card.querySelector('[data-lang="tplDelete"]').textContent = t.tplDelete;
       
-      card.querySelector(".remove").addEventListener("click",()=> card.remove());
+      card.querySelector(".remove").addEventListener("click",()=> {
+          card.remove();
+          saveToLocalStorage(); // [추가] 저장
+      });
       extraList.appendChild(node);
     }
 
@@ -1282,6 +1352,7 @@
       addExtra(t);
       xItem.value = "";
       xItem.focus();
+      saveToLocalStorage(); // [추가] 저장
     });
 
     // [추가] ===== 페이지 구성 리스트 =====
@@ -1302,7 +1373,10 @@
       // [수정] 동적 텍스트 설정
       card.querySelector('[data-lang="tplDelete"]').textContent = t.tplDelete;
       
-      card.querySelector(".remove").addEventListener("click",()=> card.remove());
+      card.querySelector(".remove").addEventListener("click",()=> {
+          card.remove();
+          saveToLocalStorage(); // [추가] 저장
+      });
       pageList.appendChild(node);
     }
 
@@ -1316,6 +1390,7 @@
       addPageItem({name, desc});
       pName.value = pDesc.value = "";
       pName.focus();
+      saveToLocalStorage(); // [추가] 저장
     });
     // ===================================
 
@@ -1508,6 +1583,7 @@
           addPageItem({name: "1. Main Screen", desc: "Select today's mood weather and view challenges"});
           addPageItem({name: "2. Mood Calendar", desc: "Check past mood records in a calendar"});
       }
+      saveToLocalStorage(); // [추가] 예시 불러오기도 저장
     }
     document.getElementById('prefillExample').addEventListener('click', prefillRandom);
 
@@ -1529,16 +1605,174 @@
       // 폰트 칩 및 스와치 리셋
       pickedFonts.innerHTML = "";
       $$(".font-swatch", fontPaletteWrap).forEach(btn => btn.setAttribute("aria-pressed", "false"));
+      
+      output.value = ""; // [추가] 프롬프트 출력창도 클리어
     }
 
     function resetForm(confirmAsk=true){
       if(confirmAsk){
-        showModal('alertReset', 'confirm', doReset); // [수정] 번역 키 사용
+        showModal('alertReset', 'confirm', () => {
+            doReset();
+            localStorage.removeItem(LOCAL_STORAGE_KEY); // [추가] 로컬 스토리지 삭제
+        }); // [수정] 번역 키 사용 및 콜백 수정
       } else {
         doReset();
+        localStorage.removeItem(LOCAL_STORAGE_KEY); // [추가] 로컬 스토리지 삭제
       }
     }
     document.getElementById('resetAll').addEventListener('click',()=>resetForm(true));
+    
+    // [추가] ===== 로컬 스토리지 / JSON =====
+    
+    // 1. 데이터 수집 (JSON 객체로)
+    function getAppData() {
+        const data = {
+            lang: currentLang,
+            appName: $("#appName").value,
+            audience: $("#audience").value,
+            theme: $("#theme").value,
+            vibe: $("#vibe").value,
+            palette: paletteSelect.value,
+            pickedColors: $$(".chip", pickedColors).map(c => c.dataset.hex),
+            pickedFonts: $$(".chip", pickedFonts).map(c => c.dataset.fontId),
+            features: $$("#featureList > .card").map(card => ({
+                name: card.querySelector(".fi-name").textContent,
+                what: card.querySelector(".fi-what").textContent,
+                how: card.querySelector(".fi-how").textContent,
+                cond: card.querySelector(".fi-cond").textContent,
+            })),
+            extras: $$("#extraList > .card .ex-text").map(el => el.textContent),
+            pages: $$("#pageList > .card").map(card => ({
+                name: card.querySelector(".pi-name").textContent,
+                desc: card.querySelector(".pi-desc").textContent,
+            })),
+        };
+        return data;
+    }
+    
+    // 2. 데이터 로드 (JSON 객체로부터)
+    function loadAppData(data) {
+        if (!data) return;
+        
+        doReset(); // 폼을 먼저 초기화
+        
+        // 언어 설정
+        setLanguage(data.lang || 'kor');
+        
+        // 텍스트 필드
+        $("#appName").value = data.appName || "";
+        $("#audience").value = data.audience || "";
+        $("#theme").value = data.theme || "";
+        $("#vibe").value = data.vibe || "";
+        
+        // 팔레트
+        paletteSelect.value = data.palette || "pastel";
+        renderPalette(paletteSelect.value); // 팔레트를 먼저 렌더링
+        (data.pickedColors || []).forEach(hex => {
+            const btn = $$(".swatch", paletteWrap).find(b => b.getAttribute("aria-label") === hex);
+            togglePick(hex, btn);
+        });
+        
+        // 폰트
+        (data.pickedFonts || []).forEach(fontId => {
+            const btn = $$(".font-swatch", fontPaletteWrap).find(b => b.dataset.fontId === fontId);
+            toggleFontPick(fontId, btn);
+        });
+        
+        // 기능 리스트
+        (data.features || []).forEach(addFeatureItem);
+        (data.extras || []).forEach(addExtra);
+        (data.pages || []).forEach(addPageItem);
+    }
+    
+    // 3. 로컬 스토리지에 저장
+    function saveToLocalStorage() {
+        const data = getAppData();
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+    }
+    
+    // 4. 로컬 스토리지에서 로드
+    function loadFromLocalStorage() {
+        const dataStr = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (dataStr) {
+            try {
+                const data = JSON.parse(dataStr);
+                loadAppData(data);
+            } catch(e) {
+                console.error("Failed to parse local storage data:", e);
+                localStorage.removeItem(LOCAL_STORAGE_KEY); // 오류 발생 시 데이터 삭제
+            }
+        }
+    }
+    
+    // 5. JSON 다운로드
+    $("#downloadJson").addEventListener('click', () => {
+        const data = getAppData();
+        const dataStr = JSON.stringify(data, null, 2); // 예쁘게 포맷팅
+        const blob = new Blob([dataStr], {type: "application/json;charset=utf-8"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "guide_vibe_data.json";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    });
+    
+    // 6. JSON 업로드
+    const uploadJsonInput = $("#uploadJsonInput");
+    $("#uploadJson").addEventListener('click', () => {
+        uploadJsonInput.click(); // 숨겨진 input 클릭
+    });
+    
+    uploadJsonInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                loadAppData(data);
+                saveToLocalStorage(); // 불러온 데이터를 로컬 스토리지에도 저장
+                showModal('alertLoadSuccess');
+            } catch(err) {
+                showModal('alertLoadFail');
+                console.error("Failed to load JSON file:", err);
+            }
+        };
+        reader.readAsText(file);
+        
+        // 동일한 파일 다시 업로드 가능하도록 값 초기화
+        event.target.value = null; 
+    });
+    
+    // [수정] 페이지 로드 시 로컬 스토리지에서 데이터 로드
+    document.addEventListener("DOMContentLoaded", () => {
+        // 로컬 스토리지 로드를 먼저 수행 (이 안에 setLanguage 포함)
+        loadFromLocalStorage();
+        // 팔레트 렌더링 (loadAppData에서 이미 수행됨)
+        // renderPalette(paletteSelect.value); 
+        // 툴팁 설정 (setLanguage 안에 포함됨)
+        setLanguage(currentLang); 
+        
+        // 툴팁 번역 초기 설정
+        const t = translations[currentLang];
+        $$("[data-tooltip-key]").forEach(el => {
+            const key = el.dataset.tooltipKey;
+            if (t[key]) {
+                el.title = t[key];
+            }
+        });
+    });
+    
+    // [추가] 모든 입력 필드에 자동 저장 이벤트 리스너 추가
+    $$("input[type='text'], textarea, select").forEach(el => {
+        el.addEventListener('input', saveToLocalStorage);
+    });
+    // ===================================
+
 
     // 접근성: Enter로 추가
     ["#xItem"].forEach(sel=>{
