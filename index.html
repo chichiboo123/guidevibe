@@ -74,18 +74,19 @@
       font-family: 'Material Symbols Rounded';
       font-weight: normal;
       font-style: normal;
+      font-size: 1.25rem;
       line-height: 1;
       letter-spacing: normal;
       text-transform: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      display: inline-block;
+      vertical-align: middle;
       white-space: nowrap;
       word-wrap: normal;
       direction: ltr;
       -webkit-font-smoothing: antialiased;
-      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
       user-select: none;
+      flex-shrink: 0;
     }
     /* 섹션 타이틀용 아이콘: 둥근 배경 안에 배치 */
     .section-title .section-icon {
@@ -436,66 +437,66 @@
         color: #4F46E5;
     }
     
-    /* [추가] JSON 버튼 스타일 */
+    /* 유틸 아이콘 버튼 */
     .btn-icon {
-      background-color: #e2e8f0; /* slate-200 */
-      color: #334155; /* slate-800 */
-      width: 44px; /* 정방형 */
-      height: 44px;
-      padding: 0;
+      background-color: #e2e8f0;
+      color: #334155;
+      min-width: 40px;
+      height: 40px;
+      padding: 0 0.5rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border-radius: 9999px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: background-color 0.15s, box-shadow 0.15s;
+      gap: 0.125rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
     }
     .btn-icon:hover {
-      background-color: #cbd5e1; /* slate-300 */
-    }
-    .btn-icon svg {
-        width: 1.25rem;
-        height: 1.25rem;
+      background-color: #cbd5e1;
     }
 
   </style>
 </head>
 <body>
-  <header class="p-6 md:p-10 relative">
-    <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 relative z-10">
-      <div>
-        <h1 class="text-3xl md:text-4xl font-bold flex items-center gap-2 text-slate-800" data-lang="title">
-            가이드 바이브! <span class="text-4xl">✊✌️✋</span>
-        </h1>
-        <p class="text-slate-600 mt-2 text-lg" data-lang="subtitle">AI와 함께하는 나만의 앱 만들기</p>
+  <header class="px-6 pt-8 pb-6 md:px-10 md:pt-10 md:pb-8 relative">
+    <div class="max-w-4xl mx-auto relative z-10">
+      <!-- 상단: 타이틀 + 유틸 버튼(언어/저장/불러오기) -->
+      <div class="flex items-start justify-between gap-4 mb-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-800 leading-tight whitespace-nowrap" data-lang="title">
+              가이드 바이브! <span>✊✌️✋</span>
+          </h1>
+          <p class="text-slate-500 mt-1 text-sm md:text-base" data-lang="subtitle">AI와 함께하는 나만의 앱 만들기</p>
+        </div>
+        <!-- 우측 유틸 버튼 -->
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button id="langToggle" class="btn-icon" title="언어 전환">
+              <span class="material-symbols-rounded">language</span><span class="text-xs font-bold ml-0.5" data-lang="btnLang">ENG</span>
+          </button>
+          <button id="downloadJson" class="btn-icon" data-tooltip-key="tooltipDownload" aria-label="내보내기 JSON">
+              <span class="material-symbols-rounded">file_download</span>
+          </button>
+          <input type="file" id="uploadJsonInput" accept=".json" class="hidden">
+          <button id="uploadJson" class="btn-icon" data-tooltip-key="tooltipUpload" aria-label="불러오기 JSON">
+              <span class="material-symbols-rounded">file_upload</span>
+          </button>
+        </div>
       </div>
-      <!-- 헤더 버튼 영역 -->
-      <div class="flex flex-col md:flex-row gap-3 md:items-center">
-        <!-- 메인 버튼 그룹 -->
-        <div class="flex flex-col md:flex-row gap-3">
-            <button id="showGuide" class="pill px-5 py-2.5 btn-info text-lg font-semibold w-full md:w-auto inline-flex items-center justify-center gap-1.5">
-                <span class="material-symbols-rounded" style="font-size:1.25rem;">help</span><span data-lang="btnGuide">설명</span>
-            </button>
-            <button id="prefillExample" class="pill px-5 py-2.5 btn-primary text-lg font-semibold w-full md:w-auto inline-flex items-center justify-center gap-1.5">
-                <span class="material-symbols-rounded" style="font-size:1.25rem;">lightbulb</span><span data-lang="btnExample">예시</span>
-            </button>
-            <button id="resetAll" class="pill px-5 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto inline-flex items-center justify-center gap-1.5">
-                <span class="material-symbols-rounded" style="font-size:1.25rem;">restart_alt</span><span data-lang="btnReset">리셋</span>
-            </button>
-        </div>
-        <!-- 아이콘 버튼 그룹 (우측 정렬) -->
-        <div class="flex gap-3 justify-center md:ml-auto">
-            <button id="langToggle" class="pill px-4 py-2.5 btn-secondary text-base font-semibold inline-flex items-center justify-center gap-1.5">
-                <span class="material-symbols-rounded" style="font-size:1.25rem;">language</span><span data-lang="btnLang">ENG</span>
-            </button>
-            <button id="downloadJson" class="btn-icon" data-tooltip-key="tooltipDownload" aria-label="Export JSON">
-                <span class="material-symbols-rounded" style="font-size:1.4rem;">file_download</span>
-            </button>
-            <input type="file" id="uploadJsonInput" accept=".json" class="hidden">
-            <button id="uploadJson" class="btn-icon" data-tooltip-key="tooltipUpload" aria-label="Import JSON">
-                <span class="material-symbols-rounded" style="font-size:1.4rem;">file_upload</span>
-            </button>
-        </div>
+      <!-- 하단: 주요 액션 버튼 -->
+      <div class="flex gap-2">
+        <button id="showGuide" class="pill px-4 py-2 btn-info text-sm font-semibold inline-flex items-center gap-1.5 whitespace-nowrap">
+            <span class="material-symbols-rounded" style="font-size:1rem;">help</span><span data-lang="btnGuide">설명</span>
+        </button>
+        <button id="prefillExample" class="pill px-4 py-2 btn-primary text-sm font-semibold inline-flex items-center gap-1.5 whitespace-nowrap">
+            <span class="material-symbols-rounded" style="font-size:1rem;">lightbulb</span><span data-lang="btnExample">예시 불러오기</span>
+        </button>
+        <button id="resetAll" class="pill px-4 py-2 btn-secondary text-sm font-semibold inline-flex items-center gap-1.5 whitespace-nowrap">
+            <span class="material-symbols-rounded" style="font-size:1rem;">restart_alt</span><span data-lang="btnReset">초기화</span>
+        </button>
       </div>
     </div>
   </header>
@@ -849,9 +850,9 @@
             title: "가이드 바이브! <span class=\"text-4xl\">✊✌️✋</span>",
             subtitle: "AI와 함께하는 나만의 앱 만들기",
             btnLang: "ENG",
-            btnGuide: "설명",
-            btnExample: "예시",
-            btnReset: "리셋",
+            btnGuide: "설명서",
+            btnExample: "예시 불러오기",
+            btnReset: "초기화",
             tooltipDownload: "내보내기 (JSON)",
             tooltipUpload: "불러오기 (JSON)",
             sec1Title: "기본 정보",
@@ -949,8 +950,8 @@
             footerText: "created by. Chisu Saem(Education&Musical)",
 
             btnLang: "KOR",
-            btnGuide: "Help",
-            btnExample: "Example",
+            btnGuide: "Guide",
+            btnExample: "Load Example",
             btnReset: "Reset",
             tooltipDownload: "Export (JSON)",
             tooltipUpload: "Import (JSON)",
