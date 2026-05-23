@@ -14,6 +14,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Diphylleia&family=Do+Hyeon&family=Dongle&family=Grandiflora+One&family=Gugi&family=Jua&family=Kirang+Haerang&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
+  <!-- Google Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -65,6 +68,54 @@
       font-size: 2rem; /* 이모지 크기 */
       line-height: 1;
     }
+
+    /* Material Symbols 공통 */
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-weight: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      user-select: none;
+    }
+    /* 섹션 타이틀용 아이콘: 둥근 배경 안에 배치 */
+    .section-title .section-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1.5rem;
+      color: #4F46E5; /* indigo-600 */
+      background: linear-gradient(135deg, #EEF2FF, #DBEAFE);
+      border-radius: 0.875rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(99, 102, 241, 0.12);
+    }
+    /* 가이드 모달 아이콘 */
+    #guideModalContent li .material-symbols-rounded {
+      font-size: 1.25rem;
+      color: #6366F1;
+      margin-top: 0.125rem;
+      flex-shrink: 0;
+    }
+    #guideModalContent h3 .material-symbols-rounded {
+      font-size: 1.5rem;
+      color: #4F46E5;
+    }
+    /* 카드 안 작은 아이콘 */
+    .item-card .material-symbols-rounded {
+      font-size: 1.25rem;
+    }
+    .feature-item .card-icon { color: #D97706; }
+    .extra-item .card-icon { color: #2563EB; }
+    .page-item .card-icon { color: #16A34A; }
     
     .swatch {
       width: 38px; /* 이미지에 맞춰 크기 조정 */
@@ -418,27 +469,31 @@
         </h1>
         <p class="text-slate-600 mt-2 text-lg" data-lang="subtitle">AI와 함께하는 나만의 앱 만들기</p>
       </div>
-      <!-- [수정] 버튼 순서 및 래퍼 변경 -->
-      <div class="flex flex-col md:flex-row gap-3">
+      <!-- 헤더 버튼 영역 -->
+      <div class="flex flex-col md:flex-row gap-3 md:items-center">
         <!-- 메인 버튼 그룹 -->
         <div class="flex flex-col md:flex-row gap-3">
-            <button id="showGuide" class="pill px-5 py-2.5 btn-info text-lg font-semibold w-full md:w-auto" data-lang="btnGuide">설명</button>
-            <button id="prefillExample" class="pill px-5 py-2.5 btn-primary text-lg font-semibold w-full md:w-auto" data-lang="btnExample">예시</button>
-            <button id="resetAll" class="pill px-5 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto" data-lang="btnReset">리셋</button>
+            <button id="showGuide" class="pill px-5 py-2.5 btn-info text-lg font-semibold w-full md:w-auto inline-flex items-center justify-center gap-1.5">
+                <span class="material-symbols-rounded" style="font-size:1.25rem;">help</span><span data-lang="btnGuide">설명</span>
+            </button>
+            <button id="prefillExample" class="pill px-5 py-2.5 btn-primary text-lg font-semibold w-full md:w-auto inline-flex items-center justify-center gap-1.5">
+                <span class="material-symbols-rounded" style="font-size:1.25rem;">lightbulb</span><span data-lang="btnExample">예시</span>
+            </button>
+            <button id="resetAll" class="pill px-5 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto inline-flex items-center justify-center gap-1.5">
+                <span class="material-symbols-rounded" style="font-size:1.25rem;">restart_alt</span><span data-lang="btnReset">리셋</span>
+            </button>
         </div>
         <!-- 아이콘 버튼 그룹 (우측 정렬) -->
         <div class="flex gap-3 justify-center md:ml-auto">
-            <button id="langToggle" class="pill px-4 py-2.5 btn-secondary text-lg font-semibold w-full md:w-auto" data-lang="btnLang">ENG</button>
-            <button id="downloadJson" class="btn-icon" data-tooltip-key="tooltipDownload">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                </svg>
+            <button id="langToggle" class="pill px-4 py-2.5 btn-secondary text-base font-semibold inline-flex items-center justify-center gap-1.5">
+                <span class="material-symbols-rounded" style="font-size:1.25rem;">language</span><span data-lang="btnLang">ENG</span>
+            </button>
+            <button id="downloadJson" class="btn-icon" data-tooltip-key="tooltipDownload" aria-label="Export JSON">
+                <span class="material-symbols-rounded" style="font-size:1.4rem;">file_download</span>
             </button>
             <input type="file" id="uploadJsonInput" accept=".json" class="hidden">
-            <button id="uploadJson" class="btn-icon" data-tooltip-key="tooltipUpload">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                </svg>
+            <button id="uploadJson" class="btn-icon" data-tooltip-key="tooltipUpload" aria-label="Import JSON">
+                <span class="material-symbols-rounded" style="font-size:1.4rem;">file_upload</span>
             </button>
         </div>
       </div>
@@ -450,7 +505,7 @@
       
       <div>
         <h2 class="section-title mb-5">
-            <span class="emoji-icon">☁️</span> <span data-lang="sec1Title">기본 정보</span>
+            <span class="material-symbols-rounded section-icon">info</span> <span data-lang="sec1Title">기본 정보</span>
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -471,7 +526,7 @@
       
       <div>
         <h2 class="section-title mb-5">
-            <span class="emoji-icon">🌈</span> <span data-lang="sec2Title">디자인</span>
+            <span class="material-symbols-rounded section-icon">palette</span> <span data-lang="sec2Title">디자인</span>
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
           
@@ -518,7 +573,7 @@
       
       <div>
         <h2 class="section-title mb-5">
-            <span class="emoji-icon">⭐</span> <span data-lang="sec3Title">주요 기능</span>
+            <span class="material-symbols-rounded section-icon">star</span> <span data-lang="sec3Title">주요 기능</span>
         </h2>
         
         <p class="hint mb-4" data-lang="sec3Hint">앱의 핵심이 되는 기능들을 적어주세요.</p>
@@ -539,7 +594,7 @@
       
       <div>
         <h2 class="section-title mb-5">
-            <span class="emoji-icon">🎵</span> <span data-lang="sec4Title">보조 기능</span>
+            <span class="material-symbols-rounded section-icon">tune</span> <span data-lang="sec4Title">보조 기능</span>
         </h2>
         <p class="hint mb-4" data-lang="sec4Hint">추가로 있으면 좋은 기능을 적고 추가를 누르세요. 예) 효과음, 튜토리얼, 점수 저장 등</p>
         <div class="flex gap-4 items-start">
@@ -552,7 +607,7 @@
       <!-- [추가] 페이지 구성 섹션 -->
       <div>
         <h2 class="section-title mb-5">
-            <span class="emoji-icon">📄</span> <span data-lang="sec5Title">페이지 구성 (심화)</span>
+            <span class="material-symbols-rounded section-icon">dashboard</span> <span data-lang="sec5Title">페이지 구성 (심화)</span>
         </h2>
         <p class="hint mb-4" data-lang="sec5Hint">앱이 어떤 페이지들로 이루어질지 기획해 보세요. (선택 사항)</p>
         <div class="flex flex-col md:grid md:grid-cols-7 gap-4 items-start">
@@ -565,18 +620,24 @@
 
       
       <div class="flex justify-center mt-8">
-        <button id="build" class="pill px-8 py-3 btn-accent text-xl font-bold" data-lang="btnBuild">프롬프트 생성</button>
+        <button id="build" class="pill px-8 py-3 btn-accent text-xl font-bold inline-flex items-center justify-center gap-2">
+            <span class="material-symbols-rounded" style="font-size:1.5rem;">auto_awesome</span><span data-lang="btnBuild">프롬프트 생성</span>
+        </button>
       </div>
 
       
       <div>
         <h2 class="section-title mb-5">
-            <span class="emoji-icon">🤖</span> <span data-lang="sec7Title">AI 요청 문장(프롬프트)</span>
+            <span class="material-symbols-rounded section-icon">smart_toy</span> <span data-lang="sec7Title">AI 요청 문장(프롬프트)</span>
         </h2>
-        <textarea id="output" rows="18" class="w-full text-base" readonly></textarea>
+        <textarea id="output" rows="18" class="w-full text-base" readonly placeholder="여기에 AI에게 전달할 프롬프트가 표시됩니다. 위 내용을 채우고 ‘프롬프트 생성’ 버튼을 눌러보세요." data-lang="outputPlaceholder"></textarea>
         <div class="flex justify-center gap-4 mt-5">
-          <button id="copyOut" class="pill px-5 py-2.5 btn-primary font-semibold" data-lang="btnCopy">복사</button>
-          <button id="downloadOut" class="pill px-5 py-2.5 btn-secondary font-semibold" data-lang="btnDownload">TXT로 저장</button>
+          <button id="copyOut" class="pill px-5 py-2.5 btn-primary font-semibold inline-flex items-center gap-1.5">
+              <span class="material-symbols-rounded" style="font-size:1.25rem;">content_copy</span><span data-lang="btnCopy">복사</span>
+          </button>
+          <button id="downloadOut" class="pill px-5 py-2.5 btn-secondary font-semibold inline-flex items-center gap-1.5">
+              <span class="material-symbols-rounded" style="font-size:1.25rem;">download</span><span data-lang="btnDownload">TXT로 저장</span>
+          </button>
         </div>
       </div>
     </section>
@@ -604,124 +665,121 @@
       <!-- 모달 제목 -->
       <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl md:text-3xl font-bold text-indigo-600 flex items-center gap-2">
-              <span class="text-3xl md:text-4xl">💡</span> <span data-lang="guideTitle">가이드 바이브 설명서!</span>
+              <span class="material-symbols-rounded" style="font-size:2rem;">menu_book</span> <span data-lang="guideTitle">가이드 바이브 사용법</span>
           </h2>
-          <button id="closeGuide" class="text-3xl text-slate-400 hover:text-slate-600" aria-label="닫기">&times;</button>
+          <button id="closeGuide" class="text-slate-400 hover:text-slate-600 inline-flex items-center justify-center" aria-label="닫기">
+              <span class="material-symbols-rounded" style="font-size:1.75rem;">close</span>
+          </button>
       </div>
-      
+
       <!-- 모달 내용 (스크롤 가능) -->
       <div id="guideModalContent" class="space-y-4">
-          <!-- [수정] 소개 문구 변경 및 가운데 정렬 -->
           <p class="mb-4 text-center" data-lang="guideIntro">
-            안녕, 여러분! 👋<br>
-            '가이드 바이브!'는 가위바위보를 하듯이<br>
-            쉽고 재밌게 너만의 멋진 앱 아이디어를<br>
-            AI에게 쉽게 설명해주기 위한 도구야!<br>
-            아래 순서대로 따라 해보자!
+            가이드 바이브는 앱 아이디어를 정리해<br>
+            AI가 이해하기 쉬운 요청 문장(프롬프트)으로 바꿔주는 도구입니다.<br>
+            아래 순서대로 따라가 보세요.
           </p>
-          
-          <h3 data-lang="guideH1"><span class="emoji-icon">☁️</span> 1. 기본 정보 입력하기</h3>
-          <ul class="space-y-3"> <!-- 간격 추가 -->
-              <li class="guide-item">
-                  <span class="emoji-icon">🤔</span>
-                  <div data-lang="guideH1Item1"><strong>앱 이름:</strong> 만들고 싶은 앱의 이름을 지어보자! (예: 우주 탐험대)</div>
-              </li>
-              <li class="guide-item">
-                  <span class="emoji-icon">🧑‍🤝‍🧑</span>
-                  <div data-lang="guideH1Item2"><strong>주요 사용자:</strong> 이 앱을 누가 쓸까? (예: 별을 좋아하는 5학년)</div>
-              </li>
-              <li class="guide-item">
-                  <span class="emoji-icon">💖</span>
-                  <div data-lang="guideH1Item3"><strong>앱 소개하기:</strong> 어떤 앱인지 한 줄로 멋지게 소개해줘!</div>
-              </li>
-          </ul>
 
-          <h3 data-lang="guideH2"><span class="emoji-icon">🌈</span> 2. 디자인 정하기</h3>
+          <h3 data-lang="guideH1"><span class="material-symbols-rounded">info</span> 1. 기본 정보</h3>
           <ul class="space-y-3">
               <li class="guide-item">
-                  <span class="emoji-icon">🎨</span>
-                  <div data-lang="guideH2Item1"><strong>전체 분위기:</strong> 앱이 어떤 느낌이면 좋을까? (예: 신나고 재미있는 느낌)</div>
+                  <span class="material-symbols-rounded">apps</span>
+                  <div data-lang="guideH1Item1"><strong>앱 이름</strong> — 만들고 싶은 앱의 이름을 적습니다. (예: 우주 탐험대)</div>
               </li>
               <li class="guide-item">
-                  <span class="emoji-icon">🖌️</span>
-                  <div data-lang="guideH2Item2"><strong>대표 색:</strong> 마음에 드는 색을 5개까지 골라봐!</div>
+                  <span class="material-symbols-rounded">groups</span>
+                  <div data-lang="guideH1Item2"><strong>주요 사용자</strong> — 누가 사용할지를 적습니다. (예: 별을 좋아하는 5학년)</div>
               </li>
               <li class="guide-item">
-                  <span class="emoji-icon">✍️</span>
-                  <div data-lang="guideH2Item3"><strong>글씨체:</strong> 앱에 어울리는 글씨체를 3개까지 골라봐!</div>
+                  <span class="material-symbols-rounded">campaign</span>
+                  <div data-lang="guideH1Item3"><strong>앱 소개</strong> — 어떤 앱인지 한 줄로 소개합니다.</div>
               </li>
           </ul>
 
-          <h3 data-lang="guideH3"><span class="emoji-icon">⭐</span> 3. 주요 기능 만들기</h3>
+          <h3 data-lang="guideH2"><span class="material-symbols-rounded">palette</span> 2. 디자인</h3>
           <ul class="space-y-3">
               <li class="guide-item">
-                  <span class="emoji-icon">💡</span>
-                  <div data-lang="guideH3Item1"><strong>기능 이름:</strong> 앱의 가장 중요한 기능을 알려줘! (예: 행성 찾기)</div>
+                  <span class="material-symbols-rounded">mood</span>
+                  <div data-lang="guideH2Item1"><strong>전체 분위기</strong> — 앱의 느낌을 한 줄로 적습니다. (예: 신나고 재미있는 느낌)</div>
               </li>
               <li class="guide-item">
-                  <span class="emoji-icon">🗺️</span>
-                  <div data-lang="guideH3Item2"><strong>설명(What):</strong> 이 기능이 무엇을 하는지 적어줘. (예: 태양계 행성 정보를 보여줘요)</div>
+                  <span class="material-symbols-rounded">format_color_fill</span>
+                  <div data-lang="guideH2Item2"><strong>대표 색상</strong> — 최대 5개까지 선택할 수 있습니다.</div>
               </li>
               <li class="guide-item">
-                  <span class="emoji-icon">👉</span>
-                  <div data-lang="guideH3Item3"><strong>동작/방법(How):</strong> 어떻게 사용하는 걸까? (예: 행성 그림을 클릭하면 설명이 나와요)</div>
-              </li>
-              <li class="guide-item">
-                  <span class="emoji-icon">✨</span>
-                  <div data-lang="guideH3Item4"><strong>추가 설명:</strong> 더 필요한 게 있다면 적어줘!</div>
+                  <span class="material-symbols-rounded">text_fields</span>
+                  <div data-lang="guideH2Item3"><strong>글씨체</strong> — 어울리는 글씨체를 최대 3개까지 고릅니다.</div>
               </li>
           </ul>
 
-          <h3 data-lang="guideH4"><span class="emoji-icon">🎵</span> 4. 보조 기능 추가하기 (선택!)</h3>
+          <h3 data-lang="guideH3"><span class="material-symbols-rounded">star</span> 3. 주요 기능</h3>
           <ul class="space-y-3">
               <li class="guide-item">
-                  <span class="emoji-icon">🔊</span>
-                  <div data-lang="guideH4Item1">"신나는 배경음악", "점수 저장하기" 처럼 있으면 더 좋을 것 같은 기능을 적어줘!</div>
+                  <span class="material-symbols-rounded">lightbulb</span>
+                  <div data-lang="guideH3Item1"><strong>기능 이름</strong> — 앱의 핵심 기능 이름을 적습니다. (예: 행성 찾기)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="material-symbols-rounded">description</span>
+                  <div data-lang="guideH3Item2"><strong>설명 (What)</strong> — 이 기능이 무엇을 하는지 설명합니다. (예: 태양계 행성 정보를 보여줍니다)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="material-symbols-rounded">touch_app</span>
+                  <div data-lang="guideH3Item3"><strong>동작 방법 (How)</strong> — 어떻게 사용하는지 적습니다. (예: 행성을 클릭하면 설명이 나타납니다)</div>
+              </li>
+              <li class="guide-item">
+                  <span class="material-symbols-rounded">add_circle</span>
+                  <div data-lang="guideH3Item4"><strong>추가 설명</strong> — 보충이 필요한 내용을 적습니다. (선택)</div>
               </li>
           </ul>
 
-          <!-- [추가] 설명서에 페이지 구성 항목 추가 -->
-          <h3 data-lang="guideH5"><span class="emoji-icon">📄</span> 5. 페이지 구성하기 (심화!)</h3>
+          <h3 data-lang="guideH4"><span class="material-symbols-rounded">tune</span> 4. 보조 기능 (선택)</h3>
           <ul class="space-y-3">
               <li class="guide-item">
-                  <span class="emoji-icon">🏠</span>
-                  <div data-lang="guideH5Item1">앱이 어떤 화면(페이지)으로 보일지 순서대로 적어보자! (안 적으면 AI가 알아서 해줄 거야!)</div>
-              </li>
-              <li class="guide-item">
-                  <span class="emoji-icon">🖼️</span>
-                  <div data-lang="guideH5Item2">예) '1. 시작 화면', '2. 게임 화면', '3. 점수 화면' ...</div>
+                  <span class="material-symbols-rounded">music_note</span>
+                  <div data-lang="guideH4Item1">있으면 좋은 보조 기능을 적습니다. (예: 배경음악, 점수 저장, 튜토리얼)</div>
               </li>
           </ul>
 
-
-          <h3 data-lang="guideH6"><span class="emoji-icon">🤖</span> 6. 프롬프트 생성!</h3>
+          <h3 data-lang="guideH5"><span class="material-symbols-rounded">dashboard</span> 5. 페이지 구성 (심화)</h3>
           <ul class="space-y-3">
               <li class="guide-item">
-                  <span class="emoji-icon">🚀</span>
-                  <div data-lang="guideH6Item1"><strong>'프롬프트 생성'</strong> 버튼을 누르면, 너의 아이디어가 AI가 알아들을 수 있는 멋진 '요청 문장'으로 변신해!</div>
+                  <span class="material-symbols-rounded">view_carousel</span>
+                  <div data-lang="guideH5Item1">앱의 화면 순서를 적습니다. 비워두면 AI가 자율 구성합니다.</div>
               </li>
               <li class="guide-item">
-                  <span class="emoji-icon">📋</span>
-                  <div data-lang="guideH6Item2"><strong>'복사'</strong> 버튼을 눌러서 AI에게 바로 물어보러 가자!</div>
+                  <span class="material-symbols-rounded">format_list_numbered</span>
+                  <div data-lang="guideH5Item2">예시: 1. 시작 화면 / 2. 게임 화면 / 3. 점수 화면</div>
               </li>
           </ul>
 
-          <!-- [추가] 개발자 정보 섹션 -->
+          <h3 data-lang="guideH6"><span class="material-symbols-rounded">smart_toy</span> 6. 프롬프트 생성</h3>
+          <ul class="space-y-3">
+              <li class="guide-item">
+                  <span class="material-symbols-rounded">auto_awesome</span>
+                  <div data-lang="guideH6Item1"><strong>프롬프트 생성</strong> 버튼을 누르면 입력한 내용이 AI 요청 문장으로 변환됩니다.</div>
+              </li>
+              <li class="guide-item">
+                  <span class="material-symbols-rounded">content_copy</span>
+                  <div data-lang="guideH6Item2"><strong>복사</strong> 버튼으로 클립보드에 담아 AI 챗봇에 붙여 넣어 사용합니다.</div>
+              </li>
+          </ul>
+
+          <!-- 개발자 정보 섹션 -->
           <div class="developer-info">
-              <h4 data-lang="guideDevTitle"><span class="emoji-icon">👷</span> 개발자</h4>
+              <h4 data-lang="guideDevTitle"><span class="material-symbols-rounded" style="font-size:1.25rem;">person</span> 개발자</h4>
               <p class="font-semibold text-lg text-slate-800" data-lang="guideDevName">교육뮤지컬 꿈꾸는 치수쌤</p>
               <p data-lang="guideDevP1">교육뮤지컬을 고민하고, 창작하고, 실천합니다.</p>
               <p data-lang="guideDevP2">초등학교 학생들과 함께 꿈꾸는 교육뮤지컬 이야기를 기록합니다.</p>
               <p data-lang="guideDevP3">[세상에서 가장 쉬운 뮤지컬 수업], [뮤지컬 창작노트]의 저자입니다.</p>
               <p data-lang="guideDevP4">따뜻한 디지털 활용 교육에도 관심이 많습니다.</p>
-              <p class="mt-4"><span class="emoji-icon">🔗</span> <a href="https://litt.ly/chichiboo" target="_blank">https://litt.ly/chichiboo</a></p>
+              <p class="mt-4 inline-flex items-center gap-1.5"><span class="material-symbols-rounded" style="font-size:1.1rem;">link</span> <a href="https://litt.ly/chichiboo" target="_blank">https://litt.ly/chichiboo</a></p>
           </div>
 
       </div>
 
       <!-- 모달 닫기 버튼 -->
       <div class="flex justify-end gap-4 mt-8">
-        <button id="guideModalConfirm" class="pill px-6 py-2.5 btn-primary text-lg font-semibold" data-lang="guideBtnConfirm">이해했어요!</button>
+        <button id="guideModalConfirm" class="pill px-6 py-2.5 btn-primary text-lg font-semibold" data-lang="guideBtnConfirm">확인</button>
       </div>
     </div>
   </div>
@@ -731,10 +789,12 @@
     <div class="card item-card feature-item border p-5 flex flex-col gap-3">
       <div class="flex items-center justify-between">
         <div class="font-semibold text-slate-800 text-lg flex items-center gap-2">
-            <span class="emoji-icon">☀️</span>
+            <span class="material-symbols-rounded card-icon">stars</span>
             <span class="fi-name"></span>
         </div>
-        <button class="remove pill px-4 py-2 text-sm btn-danger" data-lang="tplDelete">삭제</button>
+        <button class="remove pill px-3 py-2 text-sm btn-danger inline-flex items-center gap-1" aria-label="삭제">
+            <span class="material-symbols-rounded" style="font-size:1.1rem;">delete</span><span data-lang="tplDelete">삭제</span>
+        </button>
       </div>
       <div class="text-base text-slate-700 space-y-2">
         <div><strong data-lang="tplWhat">What:</strong> <span class="fi-what"></span></div>
@@ -744,25 +804,32 @@
     </div>
   </template>
 
-  
+
   <template id="extraItemTpl">
     <div class="card item-card extra-item border p-4 flex items-center justify-between">
       <div class="text-slate-800 text-base flex items-center gap-2">
-            <span class="emoji-icon">🌱</span>
+            <span class="material-symbols-rounded card-icon">add_circle</span>
             <span class="ex-text"></span>
       </div>
-      <button class="remove pill px-4 py-2 text-sm btn-danger" data-lang="tplDelete">삭제</button>
+      <button class="remove pill px-3 py-2 text-sm btn-danger inline-flex items-center gap-1" aria-label="삭제">
+          <span class="material-symbols-rounded" style="font-size:1.1rem;">delete</span><span data-lang="tplDelete">삭제</span>
+      </button>
     </div>
   </template>
 
-  <!-- [추가] 페이지 구성 아이템 템플릿 -->
+  <!-- 페이지 구성 아이템 템플릿 -->
   <template id="pageItemTpl">
-    <div class="card item-card page-item border p-4 flex items-center justify-between">
-      <div class="text-slate-800 text-base flex-1">
-          <div class="font-semibold text-slate-900 pi-name"></div>
-          <div class="text-sm text-slate-700 pi-desc"></div>
+    <div class="card item-card page-item border p-4 flex items-center justify-between gap-3">
+      <div class="text-slate-800 text-base flex-1 flex items-start gap-2">
+          <span class="material-symbols-rounded card-icon mt-0.5">crop_landscape</span>
+          <div class="flex-1">
+              <div class="font-semibold text-slate-900 pi-name"></div>
+              <div class="text-sm text-slate-700 pi-desc"></div>
+          </div>
       </div>
-      <button class="remove pill px-4 py-2 text-sm btn-danger ml-4" data-lang="tplDelete">삭제</button>
+      <button class="remove pill px-3 py-2 text-sm btn-danger ml-4 inline-flex items-center gap-1" aria-label="삭제">
+          <span class="material-symbols-rounded" style="font-size:1.1rem;">delete</span><span data-lang="tplDelete">삭제</span>
+      </button>
     </div>
   </template>
 
@@ -825,36 +892,37 @@
             footerText: "created by. Chisu Saem(Education&Musical)",
             modalConfirm: "확인",
             modalCancel: "취소",
-            guideTitle: "가이드 바이브 설명서!",
-            guideIntro: "안녕, 여러분! 👋<br>'가이드 바이브!'는 가위바위보를 하듯이<br>쉽고 재밌게 너만의 멋진 앱 아이디어를<br>AI에게 쉽게 설명해주기 위한 도구야!<br>아래 순서대로 따라 해보자!",
-            guideH1: "1. 기본 정보 입력하기",
-            guideH1Item1: "<strong>앱 이름:</strong> 만들고 싶은 앱의 이름을 지어보자! (예: 우주 탐험대)",
-            guideH1Item2: "<strong>주요 사용자:</strong> 이 앱을 누가 쓸까? (예: 별을 좋아하는 5학년)",
-            guideH1Item3: "<strong>앱 소개하기:</strong> 어떤 앱인지 한 줄로 멋지게 소개해줘!",
-            guideH2: "2. 디자인 정하기",
-            guideH2Item1: "<strong>전체 분위기:</strong> 앱이 어떤 느낌이면 좋을까? (예: 신나고 재미있는 느낌)",
-            guideH2Item2: "<strong>대표 색:</strong> 마음에 드는 색을 5개까지 골라봐!",
-            guideH2Item3: "<strong>글씨체:</strong> 앱에 어울리는 글씨체를 3개까지 골라봐!",
-            guideH3: "3. 주요 기능 만들기",
-            guideH3Item1: "<strong>기능 이름:</strong> 앱의 가장 중요한 기능을 알려줘! (예: 행성 찾기)",
-            guideH3Item2: "<strong>설명(What):</strong> 이 기능이 무엇을 하는지 적어줘. (예: 태양계 행성 정보를 보여줘요)",
-            guideH3Item3: "<strong>동작/방법(How):</strong> 어떻게 사용하는 걸까? (예: 행성 그림을 클릭하면 설명이 나와요)",
-            guideH3Item4: "<strong>추가 설명:</strong> 더 필요한 게 있다면 적어줘!",
-            guideH4: "4. 보조 기능 추가하기 (선택!)",
-            guideH4Item1: "\"신나는 배경음악\", \"점수 저장하기\" 처럼 있으면 더 좋을 것 같은 기능을 적어줘!",
-            guideH5: "5. 페이지 구성하기 (심화!)",
-            guideH5Item1: "앱이 어떤 화면(페이지)으로 보일지 순서대로 적어보자! (안 적으면 AI가 알아서 해줄 거야!)",
-            guideH5Item2: "예) '1. 시작 화면', '2. 게임 화면', '3. 점수 화면' ...",
-            guideH6: "6. 프롬프트 생성!",
-            guideH6Item1: "<strong>'프롬프트 생성'</strong> 버튼을 누르면, 너의 아이디어가 AI가 알아들을 수 있는 멋진 '요청 문장'으로 변신해!",
-            guideH6Item2: "<strong>'복사'</strong> 버튼을 눌러서 AI에게 바로 물어보러 가자!",
+            guideTitle: "가이드 바이브 사용법",
+            outputPlaceholder: "여기에 AI에게 전달할 프롬프트가 표시됩니다. 위 내용을 채우고 ‘프롬프트 생성’ 버튼을 눌러보세요.",
+            guideIntro: "가이드 바이브는 앱 아이디어를 정리해<br>AI가 이해하기 쉬운 요청 문장(프롬프트)으로 바꿔주는 도구입니다.<br>아래 순서대로 따라가 보세요.",
+            guideH1: '<span class="material-symbols-rounded">info</span> 1. 기본 정보',
+            guideH1Item1: "<strong>앱 이름</strong> — 만들고 싶은 앱의 이름을 적습니다. (예: 우주 탐험대)",
+            guideH1Item2: "<strong>주요 사용자</strong> — 누가 사용할지를 적습니다. (예: 별을 좋아하는 5학년)",
+            guideH1Item3: "<strong>앱 소개</strong> — 어떤 앱인지 한 줄로 소개합니다.",
+            guideH2: '<span class="material-symbols-rounded">palette</span> 2. 디자인',
+            guideH2Item1: "<strong>전체 분위기</strong> — 앱의 느낌을 한 줄로 적습니다. (예: 신나고 재미있는 느낌)",
+            guideH2Item2: "<strong>대표 색상</strong> — 최대 5개까지 선택할 수 있습니다.",
+            guideH2Item3: "<strong>글씨체</strong> — 어울리는 글씨체를 최대 3개까지 고릅니다.",
+            guideH3: '<span class="material-symbols-rounded">star</span> 3. 주요 기능',
+            guideH3Item1: "<strong>기능 이름</strong> — 앱의 핵심 기능 이름을 적습니다. (예: 행성 찾기)",
+            guideH3Item2: "<strong>설명 (What)</strong> — 이 기능이 무엇을 하는지 설명합니다. (예: 태양계 행성 정보를 보여줍니다)",
+            guideH3Item3: "<strong>동작 방법 (How)</strong> — 어떻게 사용하는지 적습니다. (예: 행성을 클릭하면 설명이 나타납니다)",
+            guideH3Item4: "<strong>추가 설명</strong> — 보충이 필요한 내용을 적습니다. (선택)",
+            guideH4: '<span class="material-symbols-rounded">tune</span> 4. 보조 기능 (선택)',
+            guideH4Item1: "있으면 좋은 보조 기능을 적습니다. (예: 배경음악, 점수 저장, 튜토리얼)",
+            guideH5: '<span class="material-symbols-rounded">dashboard</span> 5. 페이지 구성 (심화)',
+            guideH5Item1: "앱의 화면 순서를 적습니다. 비워두면 AI가 자율 구성합니다.",
+            guideH5Item2: "예시: 1. 시작 화면 / 2. 게임 화면 / 3. 점수 화면",
+            guideH6: '<span class="material-symbols-rounded">smart_toy</span> 6. 프롬프트 생성',
+            guideH6Item1: "<strong>프롬프트 생성</strong> 버튼을 누르면 입력한 내용이 AI 요청 문장으로 변환됩니다.",
+            guideH6Item2: "<strong>복사</strong> 버튼으로 클립보드에 담아 AI 챗봇에 붙여 넣어 사용합니다.",
             guideDevTitle: "개발자",
             guideDevName: "교육뮤지컬 꿈꾸는 치수쌤",
             guideDevP1: "교육뮤지컬을 고민하고, 창작하고, 실천합니다.",
             guideDevP2: "초등학교 학생들과 함께 꿈꾸는 교육뮤지컬 이야기를 기록합니다.",
             guideDevP3: "[세상에서 가장 쉬운 뮤지컬 수업], [뮤지컬 창작노트]의 저자입니다.",
             guideDevP4: "따뜻한 디지털 활용 교육에도 관심이 많습니다.",
-            guideBtnConfirm: "이해했어요!",
+            guideBtnConfirm: "확인",
             tplWhat: "What",
             tplHow: "How",
             tplCond: "추가 설명",
@@ -923,36 +991,37 @@
             btnDownload: "Save as TXT",
             modalConfirm: "Confirm",
             modalCancel: "Cancel",
-            guideTitle: "Guide Vibe Manual!",
-            guideIntro: "Hello, everyone! 👋<br>'Guide Vibe!' is a tool to help you easily explain<br>your awesome app ideas to an AI, just like playing Rock, Paper, Scissors!<br>Let's follow the steps below!",
-            guideH1: "1. Enter Basic Info",
-            guideH1Item1: "<strong>App Name:</strong> Let's name your app! (e.g., Space Explorer)",
-            guideH1Item2: "<strong>Target Audience:</strong> Who will use this app? (e.g., 5th graders who love stars)",
-            guideH1Item3: "<strong>App Introduction:</strong> Describe your app in one cool sentence!",
-            guideH2: "2. Decide on Design",
-            guideH2Item1: "<strong>Overall Vibe:</strong> What should the app feel like? (e.g., Exciting and fun)",
-            guideH2Item2: "<strong>Main Colors:</strong> Pick up to 5 colors you like!",
-            guideH2Item3: "<strong>Fonts:</strong> Choose up to 3 fonts that fit the app!",
-            guideH3: "3. Create Main Features",
-            guideH3Item1: "<strong>Feature Name:</strong> What's the most important feature? (e.g., Find Planets)",
-            guideH3Item2: "<strong>Description (What):</strong> What does this feature do? (e.g., Shows info about planets)",
-            guideH3Item3: "<strong>Action/Method (How):</strong> How do you use it? (e.g., Click a planet to see details)",
-            guideH3Item4: "<strong>Additional Notes:</strong> Anything else to add?",
-            guideH4: "4. Add Extra Features (Optional!)",
-            guideH4Item1: "Add features that would be nice to have! (e.g., \"Background music\", \"Save score\")",
-            guideH5: "5. Plan Pages (Advanced!)",
-            guideH5Item1: "Let's list the screens (pages) for your app! (If you skip, AI will decide!)",
-            guideH5Item2: "e.g.) '1. Start Screen', '2. Game Screen', '3. Score Screen' ...",
-            guideH6: "6. Generate Prompt!",
-            guideH6Item1: "Click <strong>'Generate Prompt'</strong> to turn your ideas into a 'request' the AI can understand!",
-            guideH6Item2: "Click <strong>'Copy'</strong> and let's go ask the AI!",
+            guideTitle: "How to Use Guide Vibe",
+            outputPlaceholder: "Your AI prompt will appear here. Fill in the sections above and click ‘Generate Prompt’.",
+            guideIntro: "Guide Vibe helps you organize your app ideas<br>and turn them into a prompt the AI can understand.<br>Just follow the steps below.",
+            guideH1: '<span class="material-symbols-rounded">info</span> 1. Basic Info',
+            guideH1Item1: "<strong>App Name</strong> — The name of the app you want to build. (e.g., Space Explorer)",
+            guideH1Item2: "<strong>Target Audience</strong> — Who will use this app. (e.g., 5th graders who love stars)",
+            guideH1Item3: "<strong>App Introduction</strong> — Describe your app in one sentence.",
+            guideH2: '<span class="material-symbols-rounded">palette</span> 2. Design',
+            guideH2Item1: "<strong>Overall Vibe</strong> — The feel of the app, in one line. (e.g., Exciting and fun)",
+            guideH2Item2: "<strong>Main Colors</strong> — Pick up to 5 colors.",
+            guideH2Item3: "<strong>Fonts</strong> — Pick up to 3 fonts that fit your app.",
+            guideH3: '<span class="material-symbols-rounded">star</span> 3. Main Features',
+            guideH3Item1: "<strong>Feature Name</strong> — The name of a core feature. (e.g., Find Planets)",
+            guideH3Item2: "<strong>Description (What)</strong> — What this feature does. (e.g., Shows planet information)",
+            guideH3Item3: "<strong>Action (How)</strong> — How users interact with it. (e.g., Click a planet to see details)",
+            guideH3Item4: "<strong>Additional Notes</strong> — Anything else to add. (Optional)",
+            guideH4: '<span class="material-symbols-rounded">tune</span> 4. Extra Features (Optional)',
+            guideH4Item1: "Nice-to-have features. (e.g., background music, save score, tutorial)",
+            guideH5: '<span class="material-symbols-rounded">dashboard</span> 5. Page Layout (Advanced)',
+            guideH5Item1: "List the screens in order. Leave it blank and the AI will decide for you.",
+            guideH5Item2: "Example: 1. Start Screen / 2. Game Screen / 3. Score Screen",
+            guideH6: '<span class="material-symbols-rounded">smart_toy</span> 6. Generate Prompt',
+            guideH6Item1: "Click <strong>Generate Prompt</strong> to turn your inputs into an AI-ready request.",
+            guideH6Item2: "Use the <strong>Copy</strong> button to paste it into your favorite AI chatbot.",
             guideDevTitle: "Developer",
             guideDevName: "Edumusical Dream-JISU",
             guideDevP1: "Thinking, creating, and practicing educational musicals.",
             guideDevP2: "Recording stories of educational musicals with elementary students.",
             guideDevP3: "Author of [World's Easiest Musical Class] & [Musical Creation Note].",
             guideDevP4: "Also interested in warm-hearted digital education.",
-            guideBtnConfirm: "Got it!",
+            guideBtnConfirm: "Got it",
             tplWhat: "What",
             tplHow: "How",
             tplCond: "Notes",
@@ -1105,6 +1174,18 @@
 
     guideModal.addEventListener('click', (e) => {
         if (e.target === guideModal) {
+            guideModal.classList.add('hidden');
+        }
+    });
+
+    // ESC 키로 열려 있는 모달 닫기
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        if (!customModal.classList.contains('hidden')) {
+            customModal.classList.add('hidden');
+            modalConfirmCallback = null;
+        }
+        if (!guideModal.classList.contains('hidden')) {
             guideModal.classList.add('hidden');
         }
     });
@@ -1506,6 +1587,7 @@
       lines.push("감사합니다. 이제 위 요구사항을 충족하는 단일 HTML 파일 코드를 출력해주세요.");
 
       output.value = lines.join("\n");
+      output.scrollIntoView({ behavior: 'smooth', block: 'start' });
       showModal('alertBuildSuccess'); // [수정] 번역 키 사용
     }
 
