@@ -174,64 +174,71 @@
     }
     .pop-in { animation: popIn .35s cubic-bezier(.34, 1.56, .64, 1); }
 
-    /* ===== [추가] 화면 만들기: 추천 칩 ===== */
-    .preset-chip {
+    /* ===== [개편] 화면 만들기: 새 화면 버튼 + 아이디어 박스 ===== */
+    .add-screen-btn {
       display: inline-flex;
       align-items: center;
-      gap: .4rem;
-      padding: .5rem .9rem;
+      gap: .5rem;
+      padding: .85rem 1.6rem;
       border-radius: 9999px;
-      background: #F0FDF4;
-      border: 2px solid #BBF7D0;
-      color: #166534;
-      font-weight: 600;
-      font-size: .9rem;
+      background: linear-gradient(135deg, #34D399, #16A34A);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.05rem;
       cursor: pointer;
-      transition: all .15s ease-in-out;
+      box-shadow: 0 6px 14px rgba(22,163,74,.32);
+      transition: transform .12s, box-shadow .15s;
     }
-    .preset-chip:hover {
-      background: #DCFCE7;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 12px rgba(22,163,74,.2);
+    .add-screen-btn:hover { transform: translateY(-2px); box-shadow: 0 9px 20px rgba(22,163,74,.4); }
+    .add-screen-btn:active { transform: translateY(0); }
+    .add-screen-btn .material-symbols-rounded { font-size: 1.5rem; }
+    .page-idea-box {
+      background: #FFFBEB;
+      border: 1px dashed #FCD34D;
+      border-radius: .9rem;
+      padding: .7rem 1rem;
     }
-    .preset-chip:active { transform: translateY(0); }
-    .preset-chip .material-symbols-rounded { font-size: 1.15rem; color: #16A34A; }
 
-    /* ===== [추가] 화면 만들기: 스토리보드(휴대폰 모양 카드 + 흐름) ===== */
+    /* ===== [개편] 화면 만들기: 직접 편집 휴대폰 카드 + 흐름 ===== */
     .page-board {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem 1.7rem;
+      gap: 1.6rem 1.9rem;
       align-items: stretch;
     }
     .page-screen-card {
       position: relative;
-      width: 158px;
+      width: 178px;
       flex: 0 0 auto;
       display: flex;
       flex-direction: column;
       background: #fff;
       border: 2px solid #BBF7D0;
-      border-radius: 1.25rem;
-      padding: .75rem;
+      border-radius: 1.4rem;
+      padding: .8rem .7rem .65rem;
       box-shadow: 0 8px 20px rgba(22,163,74,.12);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .page-screen-card:focus-within {
+      border-color: #34D399;
+      box-shadow: 0 8px 22px rgba(22,163,74,.28);
     }
     /* 화면 사이의 흐름(이동) 화살표 — 앱 설계의 핵심 개념 시각화 */
     .page-screen-card:not(:first-child)::before {
       content: "→";
       position: absolute;
-      left: -1.3rem;
+      left: -1.45rem;
       top: 50%;
       transform: translateY(-50%);
       color: #16A34A;
       font-weight: 800;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       pointer-events: none;
     }
     .page-num {
       position: absolute;
-      top: -10px;
-      left: -10px;
+      top: -11px;
+      left: -11px;
       width: 30px;
       height: 30px;
       border-radius: 9999px;
@@ -250,47 +257,54 @@
       display: flex;
       flex-direction: column;
       border: 2px solid #CBD5E1;
-      border-radius: .9rem;
-      background: linear-gradient(165deg, #F0FDF4, #ffffff);
+      border-radius: 1rem;
+      background: #fff;
       overflow: hidden;
-      min-height: 120px;
+      min-height: 150px;
     }
+    /* 휴대폰 상단 제목 바 (실제 앱 헤더처럼) */
     .page-phone-top {
-      height: 14px;
-      background: #E2E8F0;
-      position: relative;
+      background: linear-gradient(135deg, #DCFCE7, #BBF7D0);
+      padding: .4rem .4rem;
       flex-shrink: 0;
-    }
-    .page-phone-top::after {
-      content: "";
-      position: absolute;
-      top: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 34px;
-      height: 5px;
-      border-radius: 9999px;
-      background: #94A3B8;
+      border-bottom: 1px solid #BBF7D0;
     }
     .page-phone-body {
       flex: 1;
-      padding: .6rem .55rem;
+      padding: .45rem;
       display: flex;
       flex-direction: column;
-      gap: .25rem;
     }
+    /* 화면 위에서 바로 글씨 쓰기 (직접 조작) */
     .page-screen-name {
+      width: 100%;
+      border: none !important;
+      background: transparent !important;
+      padding: .15rem .2rem !important;
       font-weight: 800;
       color: #14532D;
       font-size: .95rem;
-      line-height: 1.25;
-      word-break: keep-all;
+      text-align: center;
+      box-shadow: none !important;
     }
+    .page-screen-name::placeholder { color: #16A34A; opacity: .55; font-weight: 700; }
     .page-screen-desc {
-      font-size: .8rem;
-      color: #475569;
-      line-height: 1.3;
-      word-break: keep-all;
+      width: 100%;
+      flex: 1;
+      border: none !important;
+      background: transparent !important;
+      padding: .2rem !important;
+      font-size: .82rem;
+      color: #334155;
+      line-height: 1.4;
+      resize: none;
+      box-shadow: none !important;
+    }
+    .page-screen-desc::placeholder { color: #94A3B8; }
+    .page-screen-name:focus, .page-screen-desc:focus {
+      outline: none;
+      background: #F0FDF4 !important;
+      border-radius: .5rem;
     }
     .page-controls {
       display: flex;
@@ -780,31 +794,26 @@
         <h2 class="section-title mb-2">
             <span class="step-badge">5</span> <span class="material-symbols-rounded section-icon">smartphone</span> <span data-lang="sec5Title">화면 만들기</span>
         </h2>
-        <p class="hint mb-4" data-lang="sec5Hint">우리 앱은 어떤 화면들로 이루어질까요? 아래에서 화면을 눌러 추가하고, 화살표로 순서를 바꿔 보세요!</p>
+        <p class="hint mb-4" data-lang="sec5Hint">실제 앱처럼, 휴대폰 화면을 하나씩 만들어 보세요. 화면 위에 바로 글씨를 쓸 수 있어요! ✍️</p>
 
-        <!-- 화면 추천 칩: 클릭만으로 추가 (재인 > 회상) -->
-        <p class="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
-            <span class="material-symbols-rounded" style="font-size:1.1rem;color:#16A34A;">touch_app</span>
-            <span data-lang="sec5PresetLabel">눌러서 바로 추가하기</span>
-        </p>
-        <div id="pagePresetWrap" class="flex flex-wrap gap-2 mb-5"></div>
+        <!-- 새 화면 만들기: 단 하나의 큰 버튼 (선택 부담 제거 · 직접 조작) -->
+        <button id="addPage" type="button" class="add-screen-btn">
+            <span class="material-symbols-rounded">add_circle</span>
+            <span data-lang="sec5AddScreen">새 화면 만들기</span>
+        </button>
 
-        <!-- 직접 만들기 (접이식) -->
-        <details class="mb-5">
-          <summary class="cursor-pointer inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 select-none">
-              <span class="material-symbols-rounded" style="font-size:1.1rem;">edit</span>
-              <span data-lang="sec5CustomSummary">화면 직접 만들기</span>
+        <!-- 막막할 때 살짝 보는 아이디어 (접이식 · 강요하지 않음) -->
+        <details class="page-idea-box mt-3">
+          <summary class="cursor-pointer inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 select-none">
+              <span class="material-symbols-rounded" style="font-size:1.1rem;">lightbulb</span>
+              <span data-lang="sec5IdeaSummary">어떤 화면이 필요할지 모르겠다면?</span>
           </summary>
-          <div class="flex flex-col md:grid md:grid-cols-7 gap-3 items-start mt-3">
-            <input id="pName" type="text" class="md:col-span-2 w-full" placeholder="화면 이름 (예: 시작 화면)" data-lang="sec5PlaceholderName"/>
-            <input id="pDesc" type="text" class="md:col-span-4 w-full" placeholder="이 화면에서 무엇을 하나요? (예: 앱 로고와 시작 버튼)" data-lang="sec5PlaceholderDesc"/>
-            <button id="addPage" class="pill px-5 py-2.5 btn-dark font-semibold w-full md:w-auto md:col-span-1" data-lang="btnAdd">추가</button>
-          </div>
+          <p class="text-sm text-slate-600 mt-2 leading-relaxed" data-lang="sec5IdeaText">내 앱에서 하고 싶은 일을 떠올려 보세요. 예를 들어 ‘그림 그리기 앱’이라면 그림 그리는 화면, 저장한 그림을 보는 화면처럼요. 정답은 없어요 — 내 앱에 꼭 맞는 화면을 자유롭게 만들면 돼요! 🌟</p>
         </details>
 
         <!-- 스토리보드(화면 흐름) -->
-        <div id="pageList" class="page-board mt-2"></div>
-        <p id="pageEmptyHint" class="page-empty-hint mt-2" data-lang="sec5EmptyHint">아직 만든 화면이 없어요. 위에서 화면을 골라 추가해 보세요! 🖐️</p>
+        <div id="pageList" class="page-board mt-5"></div>
+        <p id="pageEmptyHint" class="page-empty-hint mt-2" data-lang="sec5EmptyHint">아직 만든 화면이 없어요. 위 ‘새 화면 만들기’를 눌러 첫 화면을 만들어 보세요! 🖐️</p>
       </div>
 
       
@@ -932,8 +941,8 @@
           <h3 data-lang="guideH5"><span class="material-symbols-rounded">smartphone</span> 5. 화면 만들기</h3>
           <ul class="space-y-3">
               <li class="guide-item">
-                  <span class="material-symbols-rounded">touch_app</span>
-                  <div data-lang="guideH5Item1">추천 화면(시작·메뉴·게임·결과 등)을 눌러 바로 추가하거나, ‘화면 직접 만들기’로 나만의 화면을 만듭니다.</div>
+                  <span class="material-symbols-rounded">edit</span>
+                  <div data-lang="guideH5Item1">‘새 화면 만들기’를 누르면 휴대폰 화면이 생겨요. 화면 위에 이름과 할 일을 바로 적어 보세요. 내 앱에 맞게 자유롭게요!</div>
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">swap_horiz</span>
@@ -1011,10 +1020,11 @@
     <div class="page-screen-card card">
       <div class="page-num"></div>
       <div class="page-phone">
-        <div class="page-phone-top"></div>
+        <div class="page-phone-top">
+            <input class="pi-name page-screen-name" type="text" placeholder="화면 이름" aria-label="화면 이름" />
+        </div>
         <div class="page-phone-body">
-            <div class="pi-name page-screen-name"></div>
-            <div class="pi-desc page-screen-desc"></div>
+            <textarea class="pi-desc page-screen-desc" rows="3" placeholder="이 화면에서 무엇을 하나요?" aria-label="화면 설명"></textarea>
         </div>
       </div>
       <div class="page-controls">
@@ -1080,12 +1090,13 @@
             sec4Hint: "추가로 있으면 좋은 기능을 적고 추가를 누르세요. 예) 효과음, 튜토리얼, 점수 저장 등",
             sec4PlaceholderItem: "보조 기능 작성",
             sec5Title: "화면 만들기",
-            sec5Hint: "우리 앱은 어떤 화면들로 이루어질까요? 아래에서 화면을 눌러 추가하고, 화살표로 순서를 바꿔 보세요!",
-            sec5PresetLabel: "눌러서 바로 추가하기",
-            sec5CustomSummary: "화면 직접 만들기",
-            sec5PlaceholderName: "화면 이름 (예: 시작 화면)",
-            sec5PlaceholderDesc: "이 화면에서 무엇을 하나요? (예: 앱 로고와 시작 버튼)",
-            sec5EmptyHint: "아직 만든 화면이 없어요. 위에서 화면을 골라 추가해 보세요! 🖐️",
+            sec5Hint: "실제 앱처럼, 휴대폰 화면을 하나씩 만들어 보세요. 화면 위에 바로 글씨를 쓸 수 있어요! ✍️",
+            sec5AddScreen: "새 화면 만들기",
+            sec5IdeaSummary: "어떤 화면이 필요할지 모르겠다면?",
+            sec5IdeaText: "내 앱에서 하고 싶은 일을 떠올려 보세요. 예를 들어 ‘그림 그리기 앱’이라면 그림 그리는 화면, 저장한 그림을 보는 화면처럼요. 정답은 없어요 — 내 앱에 꼭 맞는 화면을 자유롭게 만들면 돼요! 🌟",
+            pagePhName: "화면 이름",
+            pagePhDesc: "이 화면에서 무엇을 하나요?",
+            sec5EmptyHint: "아직 만든 화면이 없어요. 위 ‘새 화면 만들기’를 눌러 첫 화면을 만들어 보세요! 🖐️",
             pageMoveLeft: "앞으로 옮기기",
             pageMoveRight: "뒤로 옮기기",
             btnBuild: "프롬프트 생성",
@@ -1114,7 +1125,7 @@
             guideH4: '<span class="material-symbols-rounded">tune</span> 4. 보조 기능 (선택)',
             guideH4Item1: "있으면 좋은 보조 기능을 적습니다. (예: 배경음악, 점수 저장, 튜토리얼)",
             guideH5: '<span class="material-symbols-rounded">smartphone</span> 5. 화면 만들기',
-            guideH5Item1: "추천 화면(시작·메뉴·게임·결과 등)을 눌러 바로 추가하거나, ‘화면 직접 만들기’로 나만의 화면을 만듭니다.",
+            guideH5Item1: "‘새 화면 만들기’를 누르면 휴대폰 화면이 생겨요. 화면 위에 이름과 할 일을 바로 적어 보세요. 내 앱에 맞게 자유롭게요!",
             guideH5Item2: "화살표(◀ ▶)로 화면 순서를 바꾸면 번호가 자동으로 매겨져요. 비워두면 AI가 자율 구성합니다.",
             guideH6: '<span class="material-symbols-rounded">smart_toy</span> 6. 프롬프트 생성',
             guideH6Item1: "<strong>프롬프트 생성</strong> 버튼을 누르면 입력한 내용이 AI 요청 문장으로 변환됩니다.",
@@ -1185,12 +1196,13 @@
             sec4Hint: "Add extra features. e.g.) Sound effects, tutorial, save score",
             sec4PlaceholderItem: "Write an extra feature",
             sec5Title: "Build Your Screens",
-            sec5Hint: "What screens will your app have? Tap a screen below to add it, then reorder them with the arrows!",
-            sec5PresetLabel: "Tap to add instantly",
-            sec5CustomSummary: "Create a custom screen",
-            sec5PlaceholderName: "Screen name (e.g., Start Screen)",
-            sec5PlaceholderDesc: "What happens on this screen? (e.g., App logo and start button)",
-            sec5EmptyHint: "No screens yet. Pick one above to get started! 🖐️",
+            sec5Hint: "Just like a real app, build your phone screens one by one. You can type right on the screen! ✍️",
+            sec5AddScreen: "Add a New Screen",
+            sec5IdeaSummary: "Not sure what screens you need?",
+            sec5IdeaText: "Think about what you want to do in your app. For a drawing app, you might have a screen for drawing and a screen for viewing saved pictures. There's no right answer — make the screens that fit YOUR app! 🌟",
+            pagePhName: "Screen name",
+            pagePhDesc: "What happens on this screen?",
+            sec5EmptyHint: "No screens yet. Tap ‘Add a New Screen’ above to make your first one! 🖐️",
             pageMoveLeft: "Move earlier",
             pageMoveRight: "Move later",
             btnBuild: "Generate Prompt",
@@ -1218,7 +1230,7 @@
             guideH4: '<span class="material-symbols-rounded">tune</span> 4. Extra Features (Optional)',
             guideH4Item1: "Nice-to-have features. (e.g., background music, save score, tutorial)",
             guideH5: '<span class="material-symbols-rounded">smartphone</span> 5. Build Your Screens',
-            guideH5Item1: "Tap a suggested screen (Start, Menu, Game, Result, etc.) to add it instantly, or use ‘Create a custom screen’ to make your own.",
+            guideH5Item1: "Tap ‘Add a New Screen’ to create a phone screen, then type its name and what it does right on the screen. Make it fit your app!",
             guideH5Item2: "Use the arrows (◀ ▶) to reorder screens — numbers update automatically. Leave it blank and the AI will decide for you.",
             guideH6: '<span class="material-symbols-rounded">smart_toy</span> 6. Generate Prompt',
             guideH6Item1: "Click <strong>Generate Prompt</strong> to turn your inputs into an AI-ready request.",
@@ -1287,8 +1299,10 @@
             card.querySelector('[data-lang="tplCond"]').textContent = t.tplCond + ":";
             card.querySelector('[data-lang="tplDelete"]').textContent = t.tplDelete;
         });
-        // [개편] 화면 카드: 아이콘 버튼들의 aria-label 갱신
+        // [개편] 화면 카드: 입력칸 placeholder + 아이콘 버튼 aria-label 갱신
         $$("#pageList .card").forEach(card => {
+            const nm = card.querySelector(".pi-name"); if(nm) nm.placeholder = t.pagePhName;
+            const ds = card.querySelector(".pi-desc"); if(ds) ds.placeholder = t.pagePhDesc;
             const del = card.querySelector(".remove"); if(del) del.setAttribute("aria-label", t.tplDelete);
             const ml = card.querySelector(".move-left"); if(ml) ml.setAttribute("aria-label", t.pageMoveLeft);
             const mr = card.querySelector(".move-right"); if(mr) mr.setAttribute("aria-label", t.pageMoveRight);
@@ -1296,9 +1310,6 @@
         $$("#extraList .card").forEach(card => {
             card.querySelector('[data-lang="tplDelete"]').textContent = t.tplDelete;
         });
-
-        // [추가] 화면 추천 칩 다시 그리기 (새 언어로)
-        if (typeof renderPagePresets === "function") renderPagePresets();
 
         // 폰트 및 팔레트 이름 업데이트
         renderFontPalette(); // 폰트 스와치 다시 그리기 (새 언어로)
@@ -1652,41 +1663,11 @@
       saveToLocalStorage(); // [추가] 저장
     });
 
-    // [개편] ===== 화면 만들기 (구 '페이지 구성') =====
-    const pName = $("#pName"), pDesc=$("#pDesc");
+    // [개편] ===== 화면 만들기 (직접 편집 방식) =====
     const addPageBtn = $("#addPage");
     const pageList = $("#pageList");
     const pageTpl = $("#pageItemTpl");
-    const pagePresetWrap = $("#pagePresetWrap");
     const pageEmptyHint = $("#pageEmptyHint");
-
-    // 클릭 한 번으로 추가되는 추천 화면 (재인 > 회상: 빈칸 공포 줄이기)
-    const PAGE_PRESETS = [
-      { icon:"flag",            name:{kor:"시작 화면",      eng:"Start Screen"},   desc:{kor:"앱 이름과 시작 버튼이 있어요",   eng:"App name and a start button"} },
-      { icon:"home",            name:{kor:"메인 화면",      eng:"Home Screen"},    desc:{kor:"앱에서 가장 중심이 되는 화면",   eng:"The central screen of the app"} },
-      { icon:"menu",            name:{kor:"메뉴 화면",      eng:"Menu Screen"},    desc:{kor:"여러 가지 중에서 골라요",       eng:"Choose from several options"} },
-      { icon:"sports_esports",  name:{kor:"게임/활동 화면", eng:"Game/Activity"},  desc:{kor:"실제로 무언가를 하는 화면",     eng:"Where the main activity happens"} },
-      { icon:"emoji_events",    name:{kor:"결과 화면",      eng:"Result Screen"},  desc:{kor:"점수나 결과를 보여줘요",        eng:"Shows the score or result"} },
-      { icon:"calendar_month",  name:{kor:"기록/달력 화면", eng:"Record/Calendar"},desc:{kor:"지난 기록을 모아서 봐요",        eng:"See past records together"} },
-      { icon:"settings",        name:{kor:"설정 화면",      eng:"Settings"},       desc:{kor:"소리·색깔 등을 바꿔요",         eng:"Change sound, color, etc."} },
-      { icon:"help",            name:{kor:"도움말 화면",    eng:"Help Screen"},    desc:{kor:"사용 방법을 알려줘요",          eng:"Explains how to use the app"} },
-    ];
-
-    function renderPagePresets(){
-      if(!pagePresetWrap) return;
-      pagePresetWrap.innerHTML = "";
-      PAGE_PRESETS.forEach(p=>{
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className = "preset-chip";
-        b.innerHTML = `<span class="material-symbols-rounded">${p.icon}</span><span>${p.name[currentLang]}</span>`;
-        b.addEventListener("click",()=>{
-          addPageItem({name:p.name[currentLang], desc:p.desc[currentLang]});
-          saveToLocalStorage();
-        });
-        pagePresetWrap.appendChild(b);
-      });
-    }
 
     // 화면 번호 자동 매김 + 순서 이동 버튼 활성/비활성 + 빈 상태 안내
     function renumberPages(){
@@ -1702,15 +1683,25 @@
       if(pageEmptyHint) pageEmptyHint.classList.toggle("hidden", cards.length > 0);
     }
 
-    function addPageItem(data){
-      const {name="(제목 미정)", desc="-"} = data||{};
+    // 화면 카드 생성. autofocus=true면 새로 만든 빈 카드의 이름 칸에 바로 커서를 둠
+    function addPageItem(data, autofocus=false){
+      const {name="", desc=""} = data||{};
       const node = pageTpl.content.cloneNode(true);
       const t = translations[currentLang];
 
       const card = node.querySelector(".card");
       card.classList.add("pop-in");
-      card.querySelector(".pi-name").textContent = name;
-      card.querySelector(".pi-desc").textContent = desc;
+
+      const nameEl = card.querySelector(".pi-name");
+      const descEl = card.querySelector(".pi-desc");
+      nameEl.value = name;
+      descEl.value = desc;
+      nameEl.placeholder = t.pagePhName || "화면 이름";
+      descEl.placeholder = t.pagePhDesc || "이 화면에서 무엇을 하나요?";
+
+      // 화면 위에서 바로 글씨를 쓰면 즉시 저장 (직접 조작)
+      nameEl.addEventListener("input", saveToLocalStorage);
+      descEl.addEventListener("input", saveToLocalStorage);
 
       const leftBtn = card.querySelector(".move-left");
       const rightBtn = card.querySelector(".move-right");
@@ -1739,19 +1730,17 @@
 
       pageList.appendChild(node);
       renumberPages();
+
+      if(autofocus){
+        nameEl.focus();
+        nameEl.scrollIntoView({ behavior:"smooth", block:"nearest" });
+      }
     }
 
+    // '새 화면 만들기' → 빈 휴대폰 화면을 추가하고 바로 편집
     addPageBtn.addEventListener("click",()=>{
-      const name = pName.value.trim();
-      const desc = pDesc.value.trim();
-      if(!name && !desc){
-        showModal('alertMinPage'); // [수정] 번역 키 사용
-        return;
-      }
-      addPageItem({name, desc});
-      pName.value = pDesc.value = "";
-      pName.focus();
-      saveToLocalStorage(); // [추가] 저장
+      addPageItem({name:"", desc:""}, true);
+      saveToLocalStorage();
     });
     // ===================================
 
@@ -1800,10 +1789,10 @@
 
       const extras = $$("#extraList > .card .ex-text").map(el=>el.textContent);
       
-      // [추가] 페이지 구성 가져오기
+      // [개편] 화면 구성 가져오기 (직접 편집 입력값)
       const pages = $$("#pageList > .card").map(card=>({
-        name: card.querySelector(".pi-name").textContent,
-        desc: card.querySelector(".pi-desc").textContent,
+        name: card.querySelector(".pi-name").value.trim(),
+        desc: card.querySelector(".pi-desc").value.trim(),
       }));
 
 
@@ -1954,7 +1943,7 @@
 
     function doReset() {
       // [수정] 페이지 구성 필드 추가
-      ['#appName','#audience','#theme','#vibe','#fName','#fWhat','#fHow','#fCond','#xItem', '#output', '#pName', '#pDesc'].forEach(sel=>{
+      ['#appName','#audience','#theme','#vibe','#fName','#fWhat','#fHow','#fCond','#xItem', '#output'].forEach(sel=>{
         const el=$(sel); if(el) el.value='';
       });
       
@@ -2009,8 +1998,8 @@
             })),
             extras: $$("#extraList > .card .ex-text").map(el => el.textContent),
             pages: $$("#pageList > .card").map(card => ({
-                name: card.querySelector(".pi-name").textContent,
-                desc: card.querySelector(".pi-desc").textContent,
+                name: card.querySelector(".pi-name").value,
+                desc: card.querySelector(".pi-desc").value,
             })),
         };
         return data;
@@ -2048,7 +2037,7 @@
         // 기능 리스트
         (data.features || []).forEach(addFeatureItem);
         (data.extras || []).forEach(addExtra);
-        (data.pages || []).forEach(addPageItem);
+        (data.pages || []).forEach(p => addPageItem(p)); // autofocus 없이 복원 (index 전달 방지)
     }
     
     // 3. 로컬 스토리지에 저장
@@ -2151,11 +2140,7 @@
     ["#fName","#fWhat","#fHow","#fCond"].forEach(sel=>{
       $(sel).addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); document.getElementById('addFeature').click(); }});
     });
-    // [추가] 페이지 구성 입력 필드에서 Enter 키 입력 시 추가
-    ["#pName","#pDesc"].forEach(sel=>{
-      $(sel).addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); document.getElementById('addPage').click(); }});
-    });
-    
+
   </script>
 </body>
 </html>
