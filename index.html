@@ -200,20 +200,34 @@
     }
 
     /* ===== [개편] 화면 만들기: 직접 편집 휴대폰 카드 + 흐름 ===== */
-    /* 가로 스크롤 필름스트립: 줄바꿈 없이 항상 왼→오 정렬 (쏠림 방지) */
+    /* 줄바꿈(wrap) 배치 — 태블릿에서 가로 스크롤 없이 모든 화면이 보임 */
     .page-board {
       display: flex;
-      flex-wrap: nowrap;
-      gap: 1.9rem;
+      flex-wrap: wrap;
+      gap: 1.6rem 1.9rem;
       align-items: stretch;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding: 18px 8px 14px 16px;
-      scroll-behavior: smooth;
+      padding: 18px 6px 6px 16px;
     }
-    .page-board::-webkit-scrollbar { height: 8px; }
-    .page-board::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
-    .page-board::-webkit-scrollbar-track { background: transparent; }
+    /* 첫 화면(앱 진입 화면) 안내 callout */
+    .page-first-note {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      background: #EEF2FF;
+      border: 1px solid #C7D2FE;
+      border-radius: .9rem;
+      padding: .75rem 1rem;
+      font-size: .9rem;
+      color: #3730A3;
+      line-height: 1.5;
+    }
+    .page-first-note .material-symbols-rounded {
+      font-size: 1.25rem;
+      color: #4F46E5;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+    .page-first-note strong { color: #312E81; }
     .page-screen-card {
       position: relative;
       width: 178px;
@@ -231,11 +245,11 @@
       border-color: #34D399;
       box-shadow: 0 8px 22px rgba(22,163,74,.28);
     }
-    /* 화면 사이의 흐름(이동) 화살표 — 앱 설계의 핵심 개념 시각화 */
-    .page-screen-card:not(:first-child)::before {
+    /* 같은 줄의 다음 화면으로 가는 흐름 화살표 (JS가 has-flow로 제어 → 줄 끝에선 사라짐) */
+    .page-screen-card.has-flow::after {
       content: "→";
       position: absolute;
-      left: -1.45rem;
+      right: -1.45rem;
       top: 50%;
       transform: translateY(-50%);
       color: #16A34A;
@@ -243,6 +257,27 @@
       font-size: 1.2rem;
       pointer-events: none;
     }
+    /* 첫 화면 강조 + 태그 */
+    .page-screen-card.is-first {
+      border-color: #6366F1;
+      box-shadow: 0 8px 20px rgba(99,102,241,.18);
+    }
+    .page-first-tag {
+      display: none;
+      position: absolute;
+      top: -12px;
+      right: -6px;
+      background: #6366F1;
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 800;
+      padding: .15rem .5rem;
+      border-radius: 9999px;
+      box-shadow: 0 2px 5px rgba(99,102,241,.35);
+      z-index: 2;
+      white-space: nowrap;
+    }
+    .page-screen-card.is-first .page-first-tag { display: block; }
     .page-num {
       position: absolute;
       top: -11px;
@@ -839,11 +874,19 @@
         </h2>
         <p class="hint mb-4" data-lang="sec5Hint">실제 앱처럼, 휴대폰 화면을 하나씩 만들어 보세요. 화면 위에 바로 글씨를 쓸 수 있어요! ✍️</p>
 
-        <!-- 새 화면 만들기: 단 하나의 큰 버튼 (선택 부담 제거 · 직접 조작) -->
-        <button id="addPage" type="button" class="add-screen-btn">
-            <span class="material-symbols-rounded">add_circle</span>
-            <span data-lang="sec5AddScreen">새 화면 만들기</span>
-        </button>
+        <!-- 새 화면 만들기: 가운데 정렬된 큰 버튼 (선택 부담 제거 · 직접 조작) -->
+        <div class="flex justify-center">
+          <button id="addPage" type="button" class="add-screen-btn">
+              <span class="material-symbols-rounded">add_circle</span>
+              <span data-lang="sec5AddScreen">새 화면 만들기</span>
+          </button>
+        </div>
+
+        <!-- [추가] 첫 화면(앱을 켜면 처음 보이는 화면) 안내 -->
+        <div class="page-first-note mt-4">
+            <span class="material-symbols-rounded">home</span>
+            <span data-lang="sec5FirstNote"><strong>1번 화면</strong>은 앱을 켰을 때 가장 먼저 보이는 화면이에요. 앱 이름, 큰 그림, 시작 버튼처럼 ‘여기서 시작!’ 느낌을 주면 좋아요. 어떤 화면을 맨 앞에 둘지 먼저 정해 보세요!</span>
+        </div>
 
         <!-- 막막할 때 살짝 보는 아이디어 (접이식 · 강요하지 않음) -->
         <details class="page-idea-box mt-3">
@@ -1078,6 +1121,7 @@
   <template id="pageItemTpl">
     <div class="page-screen-card card">
       <div class="page-num"></div>
+      <div class="page-first-tag" data-lang="pageFirstTag">처음 화면</div>
       <div class="page-phone">
         <div class="page-phone-top">
             <input class="pi-name page-screen-name" type="text" placeholder="화면 이름" aria-label="화면 이름" />
@@ -1156,6 +1200,8 @@
             pagePhName: "화면 이름",
             pagePhDesc: "이 화면에서 무엇을 하나요?",
             sec5EmptyHint: "아직 만든 화면이 없어요. 위 ‘새 화면 만들기’를 눌러 첫 화면을 만들어 보세요! 🖐️",
+            sec5FirstNote: "<strong>1번 화면</strong>은 앱을 켰을 때 가장 먼저 보이는 화면이에요. 앱 이름, 큰 그림, 시작 버튼처럼 ‘여기서 시작!’ 느낌을 주면 좋아요. 어떤 화면을 맨 앞에 둘지 먼저 정해 보세요!",
+            pageFirstTag: "처음 화면",
             pageMoveLeft: "앞으로 옮기기",
             pageMoveRight: "뒤로 옮기기",
             btnBuild: "프롬프트 생성",
@@ -1264,6 +1310,8 @@
             pagePhName: "Screen name",
             pagePhDesc: "What happens on this screen?",
             sec5EmptyHint: "No screens yet. Tap ‘Add a New Screen’ above to make your first one! 🖐️",
+            sec5FirstNote: "<strong>Screen 1</strong> is the very first screen people see when they open your app. Give it a ‘start here!’ feel — like the app name, a big picture, or a start button. Decide what to put first!",
+            pageFirstTag: "First screen",
             pageMoveLeft: "Move earlier",
             pageMoveRight: "Move later",
             btnBuild: "Generate Prompt",
@@ -1369,6 +1417,7 @@
             const del = card.querySelector(".remove"); if(del) del.setAttribute("aria-label", t.tplDelete);
             const ml = card.querySelector(".move-left"); if(ml) ml.setAttribute("aria-label", t.pageMoveLeft);
             const mr = card.querySelector(".move-right"); if(mr) mr.setAttribute("aria-label", t.pageMoveRight);
+            const tg = card.querySelector(".page-first-tag"); if(tg) tg.textContent = t.pageFirstTag;
         });
         $$("#extraList .card").forEach(card => {
             card.querySelector('[data-lang="tplDelete"]').textContent = t.tplDelete;
@@ -1736,8 +1785,9 @@
     const pageTpl = $("#pageItemTpl");
     const pageEmptyHint = $("#pageEmptyHint");
 
-    // 화면 번호 자동 매김 + 순서 이동 버튼 활성/비활성 + 빈 상태 안내
+    // 화면 번호 자동 매김 + 순서 이동 버튼 활성/비활성 + 첫 화면 표시 + 빈 상태 안내
     function renumberPages(){
+      const t = translations[currentLang];
       const cards = $$("#pageList > .card");
       cards.forEach((card,i)=>{
         const num = card.querySelector(".page-num");
@@ -1746,8 +1796,23 @@
         const right = card.querySelector(".move-right");
         if(left)  left.disabled  = (i === 0);
         if(right) right.disabled = (i === cards.length-1);
+        // 1번 카드 = 앱을 켜면 처음 보이는 화면
+        card.classList.toggle("is-first", i === 0);
+        const tag = card.querySelector(".page-first-tag");
+        if(tag) tag.textContent = t.pageFirstTag || "처음 화면";
       });
       if(pageEmptyHint) pageEmptyHint.classList.toggle("hidden", cards.length > 0);
+      updateFlowArrows();
+    }
+
+    // 같은 줄에 이웃한 카드 사이에만 흐름 화살표(→)를 표시 (줄 끝/마지막은 숨김)
+    function updateFlowArrows(){
+      const cards = $$("#pageList > .card");
+      cards.forEach((card,i)=>{
+        const next = cards[i+1];
+        const sameRow = next && Math.abs(card.offsetTop - next.offsetTop) < 4;
+        card.classList.toggle("has-flow", !!sameRow);
+      });
     }
 
     // 화면 카드 생성. autofocus=true면 새로 만든 빈 카드의 이름 칸에 바로 커서를 둠
@@ -1809,6 +1874,14 @@
       addPageItem({name:"", desc:""}, true);
       saveToLocalStorage();
     });
+
+    // 화면 폭이 바뀌면(태블릿 회전 등)·폰트 로드 후 흐름 화살표 다시 계산
+    let _flowResizeTO;
+    window.addEventListener("resize", () => {
+      clearTimeout(_flowResizeTO);
+      _flowResizeTO = setTimeout(updateFlowArrows, 150);
+    });
+    window.addEventListener("load", updateFlowArrows);
     // ===================================
 
 
