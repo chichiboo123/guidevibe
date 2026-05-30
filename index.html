@@ -200,12 +200,20 @@
     }
 
     /* ===== [개편] 화면 만들기: 직접 편집 휴대폰 카드 + 흐름 ===== */
+    /* 가로 스크롤 필름스트립: 줄바꿈 없이 항상 왼→오 정렬 (쏠림 방지) */
     .page-board {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1.6rem 1.9rem;
+      flex-wrap: nowrap;
+      gap: 1.9rem;
       align-items: stretch;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 18px 8px 14px 16px;
+      scroll-behavior: smooth;
     }
+    .page-board::-webkit-scrollbar { height: 8px; }
+    .page-board::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+    .page-board::-webkit-scrollbar-track { background: transparent; }
     .page-screen-card {
       position: relative;
       width: 178px;
@@ -342,6 +350,41 @@
       border-radius: 1rem;
       background: #F8FAFC;
     }
+
+    /* ===== [추가] 예시 선택 모달 옵션 카드 ===== */
+    .example-option {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      text-align: left;
+      padding: .85rem 1rem;
+      border-radius: 1rem;
+      border: 2px solid #E2E8F0;
+      background: #fff;
+      cursor: pointer;
+      transition: all .15s ease-in-out;
+    }
+    .example-option:hover {
+      border-color: #818CF8;
+      background: #EEF2FF;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(99,102,241,.18);
+    }
+    .example-option-icon {
+      width: 2.75rem;
+      height: 2.75rem;
+      flex-shrink: 0;
+      border-radius: .9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #EEF2FF, #DBEAFE);
+      color: #4F46E5;
+    }
+    .example-option-icon .material-symbols-rounded { font-size: 1.6rem; }
+    .example-option-text { display: flex; flex-direction: column; min-width: 0; }
+    .example-option-name { font-weight: 800; color: #1E293B; font-size: 1.05rem; }
+    .example-option-sub { font-size: .85rem; color: #64748B; }
 
     input[type="text"], textarea, select {
         border-radius: 0.75rem; /* rounded-xl 대신 좀 더 자연스러운 둥글기 */
@@ -981,8 +1024,24 @@
       </div>
     </div>
   </div>
-  
-  
+
+  <!-- [추가] 예시 선택 모달 -->
+  <div id="exampleModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4 z-50 hidden">
+    <div class="card bg-white p-7 md:p-9 w-full max-w-lg">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="text-xl md:text-2xl font-bold text-indigo-600 flex items-center gap-2">
+            <span class="material-symbols-rounded" style="font-size:1.75rem;">lightbulb</span> <span data-lang="exTitle">예시 불러오기</span>
+        </h2>
+        <button id="closeExample" class="text-slate-400 hover:text-slate-600 inline-flex items-center justify-center" aria-label="닫기">
+            <span class="material-symbols-rounded" style="font-size:1.75rem;">close</span>
+        </button>
+      </div>
+      <p class="hint mb-5" data-lang="exDesc">마음에 드는 앱을 골라 보세요. 우리가 아는 앱이 어떻게 만들어지는지 한눈에 볼 수 있어요!</p>
+      <div id="exampleList" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+    </div>
+  </div>
+
+
   <template id="featureItemTpl">
     <div class="card item-card feature-item border p-5 flex flex-col gap-3">
       <div class="flex items-center justify-between">
@@ -1106,6 +1165,8 @@
             footerText: "created by. Chisu Saem(Education&Musical)",
             modalConfirm: "확인",
             modalCancel: "취소",
+            exTitle: "예시 불러오기",
+            exDesc: "마음에 드는 앱을 골라 보세요. 우리가 아는 앱이 어떻게 만들어지는지 한눈에 볼 수 있어요!",
             guideTitle: "가이드 바이브 사용법",
             outputPlaceholder: "여기에 AI에게 전달할 프롬프트가 표시됩니다. 위 내용을 채우고 ‘프롬프트 생성’ 버튼을 눌러보세요.",
             guideIntro: "가이드 바이브는 앱 아이디어를 정리해<br>AI가 이해하기 쉬운 요청 문장(프롬프트)으로 바꿔주는 도구입니다.<br>아래 순서대로 따라가 보세요.",
@@ -1211,6 +1272,8 @@
             btnDownload: "Save as TXT",
             modalConfirm: "Confirm",
             modalCancel: "Cancel",
+            exTitle: "Load an Example",
+            exDesc: "Pick an app you like. See at a glance how the apps you know are built!",
             guideTitle: "How to Use Guide Vibe",
             outputPlaceholder: "Your AI prompt will appear here. Fill in the sections above and click ‘Generate Prompt’.",
             guideIntro: "Guide Vibe helps you organize your app ideas<br>and turn them into a prompt the AI can understand.<br>Just follow the steps below.",
@@ -1412,6 +1475,10 @@
         }
         if (!guideModal.classList.contains('hidden')) {
             guideModal.classList.add('hidden');
+        }
+        const exModal = $("#exampleModal");
+        if (exModal && !exModal.classList.contains('hidden')) {
+            exModal.classList.add('hidden');
         }
     });
     // =============================
@@ -1897,49 +1964,255 @@
       a.href = url; a.download = "ai_app_prompt.txt"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
     });
 
-    // 예시 불러오기 (임의 생성 앱)
-    function prefillRandom(){
-      doReset(); // 확인 없이 폼 초기화
-      
-      // [수정] 예시 데이터를 현재 언어로 설정 (placeholder와 맞추기)
-      const t = translations[currentLang];
-      $("#appName").value = t.sec1PlaceholderName.replace("예) ", "").replace("e.g.) ", "");
-      $("#audience").value = t.sec1PlaceholderAudience.replace("예) ", "").replace("e.g.) ", "");
-      $("#theme").value = t.sec1PlaceholderTheme.replace("예) ", "").replace("e.g.) ", "");
-      $("#vibe").value = t.sec2PlaceholderVibe.replace("예) ", "").replace("e.g.) ", "");
-      
-      // 예시 글꼴을 'jua'로 설정
-      const juaSwatch = $$(".font-swatch", fontPaletteWrap).find(b => b.dataset.fontId === "jua");
-      if (juaSwatch) {
-          toggleFontPick("jua", juaSwatch);
-      }
+    // ===== [개편] 예시 불러오기: 여러 앱 중 선택 =====
+    // 어린이 시선에서 쉽게 분석한 범용 앱 예시 모음
+    const EXAMPLES = {
+      forest: {
+        icon: "eco",
+        label: { kor: "감정의 숲", eng: "Emotion Forest" },
+        sub:   { kor: "오늘의 기분을 기록하는 앱", eng: "A mood diary app" },
+        palette: "pastel",
+        colors: ["#F9AAB0", "#AEC9C3", "#B6E6B6", "#FFC0CB", "#E1BEE7"],
+        fonts: ["jua"],
+        kor: {
+          appName: "감정의 숲",
+          audience: "감정을 관리하고 싶은 초등학생",
+          theme: "감정 날씨처럼 오늘의 기분을 가꾸는 어린이 앱",
+          vibe: "귀엽고 밝은 느낌",
+          features: [
+            {name:"감정 날씨", what:"오늘 기분을 날씨 이모지로 기록해요", how:"날씨를 고르고 저장해요", cond:"하루 1번 기록, 한 주 요약을 보여줘요"},
+            {name:"숲 친구 챌린지", what:"간단한 마음 운동을 해요", how:"타이머와 체크리스트로 따라 해요", cond:"3일 연속 성공하면 배지를 받아요"},
+          ],
+          extras: ["잔잔한 배경 음악(켜고 끄기)", "응원 메시지"],
+          pages: [
+            {name:"시작 화면", desc:"앱 로고와 시작 버튼이 보여요"},
+            {name:"메인 화면", desc:"오늘의 감정 날씨를 고르고 챌린지를 봐요"},
+            {name:"감정 달력", desc:"지난 감정 기록을 달력으로 봐요"},
+          ],
+        },
+        eng: {
+          appName: "Emotion Forest",
+          audience: "Students who want to manage their feelings",
+          theme: "A kids' app to grow today's mood like weather",
+          vibe: "Cute and bright",
+          features: [
+            {name:"Mood Weather", what:"Record today's mood with a weather emoji", how:"Pick the weather and save it", cond:"Once a day, shows a weekly summary"},
+            {name:"Forest Friend Challenge", what:"Do a simple mindfulness task", how:"Follow along with a timer and checklist", cond:"Get a badge after 3 days in a row"},
+          ],
+          extras: ["Calm background music (on/off)", "Cheer-up messages"],
+          pages: [
+            {name:"Start Screen", desc:"Shows the app logo and a start button"},
+            {name:"Main Screen", desc:"Pick today's mood weather and see challenges"},
+            {name:"Mood Calendar", desc:"See past mood records on a calendar"},
+          ],
+        },
+      },
 
-      paletteSelect.value = "pastel"; renderPalette("pastel"); // 이미지에 맞춰 Pastel 팔레트 선택
-      // 이미지에 보이는 색상들로 미리 선택 (팔레트 배열 순서와 일치시킬 필요 있음)
-      ["#F9AAB0", "#AEC9C3", "#B6E6B6", "#FFC0CB", "#E1BEE7"].forEach(hex=>{
-        const btn = Array.from(paletteWrap.children).find(b=>b.getAttribute("aria-label")===hex);
+      youtube: {
+        icon: "smart_display",
+        label: { kor: "유튜브", eng: "YouTube" },
+        sub:   { kor: "영상을 보고 좋아하는 영상 앱", eng: "A video-watching app" },
+        palette: "vivid",
+        colors: ["#EF4444", "#F43F5E"],
+        fonts: ["do-hyeon"],
+        kor: {
+          appName: "유튜브 (동영상 앱)",
+          audience: "영상 보는 걸 좋아하는 어린이",
+          theme: "보고 싶은 영상을 찾아서 보고, 좋아요와 구독을 하는 앱",
+          vibe: "빨강과 흰색의 깔끔하고 신나는 느낌",
+          features: [
+            {name:"영상 보기", what:"여러 가지 영상을 골라서 봐요", how:"영상을 누르면 재생돼요", cond:"전체 화면으로도 볼 수 있어요"},
+            {name:"검색하기", what:"보고 싶은 영상을 찾아요", how:"돋보기에 검색어를 써요", cond:"인기 영상도 추천해 줘요"},
+            {name:"좋아요·구독", what:"마음에 드는 채널을 구독해요", how:"좋아요와 구독 버튼을 눌러요", cond:"새 영상이 올라오면 알려줘요"},
+          ],
+          extras: ["댓글 달기", "다음 영상 자동 추천", "시청 기록"],
+          pages: [
+            {name:"시작 화면", desc:"인기 영상 목록이 쭉 보여요"},
+            {name:"검색 화면", desc:"보고 싶은 영상을 검색해요"},
+            {name:"영상 재생 화면", desc:"영상을 크게 보고 좋아요를 눌러요"},
+            {name:"내 채널 화면", desc:"구독한 채널과 시청 기록을 봐요"},
+          ],
+        },
+        eng: {
+          appName: "YouTube (Video App)",
+          audience: "Kids who love watching videos",
+          theme: "Find videos to watch, then like and subscribe",
+          vibe: "Clean and exciting with red and white",
+          features: [
+            {name:"Watch Videos", what:"Pick and watch many videos", how:"Tap a video to play it", cond:"You can watch in full screen too"},
+            {name:"Search", what:"Find the video you want", how:"Type in the search box", cond:"It also suggests popular videos"},
+            {name:"Like & Subscribe", what:"Subscribe to channels you like", how:"Tap the like and subscribe buttons", cond:"It tells you when new videos arrive"},
+          ],
+          extras: ["Write comments", "Auto-suggest next video", "Watch history"],
+          pages: [
+            {name:"Home Screen", desc:"Shows a list of popular videos"},
+            {name:"Search Screen", desc:"Search for videos to watch"},
+            {name:"Player Screen", desc:"Watch the video big and tap like"},
+            {name:"My Channel", desc:"See subscribed channels and history"},
+          ],
+        },
+      },
+
+      kakao: {
+        icon: "chat_bubble",
+        label: { kor: "카카오톡", eng: "KakaoTalk" },
+        sub:   { kor: "친구와 이야기하는 채팅 앱", eng: "A chatting app" },
+        palette: "vivid",
+        colors: ["#F59E0B", "#F97316"],
+        fonts: ["jua"],
+        kor: {
+          appName: "카카오톡 (채팅 앱)",
+          audience: "친구·가족과 이야기하고 싶은 사람",
+          theme: "친구에게 메시지를 보내고 사진도 주고받는 채팅 앱",
+          vibe: "노란색의 친근하고 귀여운 느낌",
+          features: [
+            {name:"채팅하기", what:"친구와 메시지를 주고받아요", how:"글자를 쓰고 보내기 버튼을 눌러요", cond:"사진과 이모티콘도 보낼 수 있어요"},
+            {name:"친구 목록", what:"내 친구들을 한눈에 봐요", how:"친구 이름을 누르면 대화가 시작돼요", cond:"검색으로 친구를 찾을 수 있어요"},
+            {name:"프로필 꾸미기", what:"내 사진과 상태 메시지를 바꿔요", how:"내 프로필을 눌러 수정해요", cond:"기분을 한 줄로 적을 수 있어요"},
+          ],
+          extras: ["이모티콘", "알림 소리", "여러 명이 함께하는 그룹 채팅"],
+          pages: [
+            {name:"친구 목록 화면", desc:"내 친구들이 쭉 보여요"},
+            {name:"채팅 목록 화면", desc:"지금까지 한 대화방들이 보여요"},
+            {name:"채팅 화면", desc:"친구와 메시지를 주고받아요"},
+            {name:"내 프로필 화면", desc:"내 사진과 상태 메시지를 바꿔요"},
+          ],
+        },
+        eng: {
+          appName: "KakaoTalk (Chat App)",
+          audience: "People who want to talk with friends and family",
+          theme: "Send messages and share photos with friends",
+          vibe: "Friendly and cute with yellow",
+          features: [
+            {name:"Chatting", what:"Send and receive messages with friends", how:"Type and tap the send button", cond:"You can also send photos and emojis"},
+            {name:"Friend List", what:"See all your friends at a glance", how:"Tap a name to start a chat", cond:"You can search to find a friend"},
+            {name:"Profile", what:"Change your photo and status message", how:"Tap your profile to edit", cond:"Write your mood in one line"},
+          ],
+          extras: ["Emojis", "Notification sounds", "Group chats with many people"],
+          pages: [
+            {name:"Friend List", desc:"Shows all your friends"},
+            {name:"Chat List", desc:"Shows your chat rooms so far"},
+            {name:"Chat Screen", desc:"Send and receive messages with a friend"},
+            {name:"My Profile", desc:"Change your photo and status message"},
+          ],
+        },
+      },
+
+      tiktok: {
+        icon: "music_note",
+        label: { kor: "틱톡", eng: "TikTok" },
+        sub:   { kor: "짧은 영상을 보고 만드는 앱", eng: "A short-video app" },
+        palette: "vivid",
+        colors: ["#0EA5E9", "#F43F5E"],
+        fonts: ["gugi"],
+        kor: {
+          appName: "틱톡 (짧은 영상 앱)",
+          audience: "짧고 재미있는 영상을 좋아하는 어린이",
+          theme: "짧은 영상을 위아래로 넘기며 보고, 나도 영상을 만드는 앱",
+          vibe: "검정 배경에 알록달록하고 통통 튀는 느낌",
+          features: [
+            {name:"영상 넘겨 보기", what:"짧은 영상을 위아래로 넘기며 봐요", how:"화면을 위로 쓸어 올려요", cond:"자동으로 다음 영상이 나와요"},
+            {name:"영상 만들기", what:"나만의 짧은 영상을 찍어요", how:"카메라 버튼을 누르고 촬영해요", cond:"음악을 넣을 수 있어요"},
+            {name:"좋아요·팔로우", what:"재미있는 영상에 하트를 눌러요", how:"하트와 팔로우 버튼을 눌러요", cond:"좋아한 영상을 모아 볼 수 있어요"},
+          ],
+          extras: ["배경 음악", "영상 효과(필터)", "공유하기"],
+          pages: [
+            {name:"영상 보기 화면", desc:"짧은 영상이 하나씩 나와요"},
+            {name:"탐색 화면", desc:"인기 있는 영상을 찾아봐요"},
+            {name:"영상 만들기 화면", desc:"카메라로 영상을 찍어요"},
+            {name:"내 프로필 화면", desc:"내가 만든 영상과 팔로워를 봐요"},
+          ],
+        },
+        eng: {
+          appName: "TikTok (Short Video App)",
+          audience: "Kids who love short, fun videos",
+          theme: "Swipe through short videos and make your own",
+          vibe: "Colorful and bouncy on a black background",
+          features: [
+            {name:"Swipe Videos", what:"Swipe up and down through short videos", how:"Swipe the screen upward", cond:"The next video plays automatically"},
+            {name:"Make a Video", what:"Record your own short video", how:"Tap the camera button and film", cond:"You can add music"},
+            {name:"Like & Follow", what:"Tap a heart on fun videos", how:"Tap the heart and follow buttons", cond:"Collect the videos you liked"},
+          ],
+          extras: ["Background music", "Video effects (filters)", "Share"],
+          pages: [
+            {name:"Video Screen", desc:"Short videos appear one by one"},
+            {name:"Explore Screen", desc:"Find popular videos"},
+            {name:"Create Screen", desc:"Record a video with the camera"},
+            {name:"My Profile", desc:"See your videos and followers"},
+          ],
+        },
+      },
+    };
+
+    // 선택한 예시를 폼에 채우기
+    function loadExample(key){
+      const ex = EXAMPLES[key];
+      if(!ex) return;
+      doReset();
+      const d = ex[currentLang] || ex.kor;
+
+      $("#appName").value = d.appName;
+      $("#audience").value = d.audience;
+      $("#theme").value = d.theme;
+      $("#vibe").value = d.vibe;
+
+      // 글씨체
+      (ex.fonts || []).forEach(id => {
+        const sw = $$(".font-swatch", fontPaletteWrap).find(b => b.dataset.fontId === id);
+        if(sw) toggleFontPick(id, sw);
+      });
+
+      // 팔레트 + 색상
+      paletteSelect.value = ex.palette;
+      renderPalette(ex.palette);
+      (ex.colors || []).forEach(hex => {
+        const btn = Array.from(paletteWrap.children).find(b => b.getAttribute("aria-label") === hex);
         if(btn) togglePick(hex, btn);
       });
-      
-      // [수정] 예시 데이터도 언어에 맞게
-      if(currentLang === 'kor') {
-          addFeatureItem({name:"감정 날씨", what:"오늘 기분을 날씨 이모지로 기록", how:"선택/수정/삭제", cond:"하루 1회 기록, 주간 요약 제공"});
-          addFeatureItem({name:"숲 친구 챌린지", what:"간단한 마음 운동 과제", how:"타이머/체크리스트", cond:"연속 3일 완료 시 배지 지급"});
-          addExtra("잔잔한 배경음악(음소거 토글)");
-          addPageItem({name: "시작 화면", desc: "앱 로고와 시작 버튼이 보여요"});
-          addPageItem({name: "메인 화면", desc: "오늘의 감정 날씨 선택 및 챌린지 보기"});
-          addPageItem({name: "감정 달력", desc: "이전 감정 기록을 달력으로 확인"});
-      } else {
-          addFeatureItem({name:"Mood Weather", what:"Record today's mood with a weather emoji", how:"Select/Edit/Delete", cond:"Record once a day, weekly summary provided"});
-          addFeatureItem({name:"Forest Friend Challenge", what:"Simple mindfulness tasks", how:"Timer/Checklist", cond:"Get a badge for 3 consecutive days"});
-          addExtra("Calm BGM (Mute toggle)");
-          addPageItem({name: "Start Screen", desc: "Shows the app logo and a start button"});
-          addPageItem({name: "Main Screen", desc: "Select today's mood weather and view challenges"});
-          addPageItem({name: "Mood Calendar", desc: "Check past mood records in a calendar"});
-      }
-      saveToLocalStorage(); // [추가] 예시 불러오기도 저장
+
+      // 기능 / 보조 기능 / 화면
+      (d.features || []).forEach(f => addFeatureItem(f));
+      (d.extras || []).forEach(x => addExtra(x));
+      (d.pages || []).forEach(p => addPageItem(p));
+
+      saveToLocalStorage();
     }
-    document.getElementById('prefillExample').addEventListener('click', prefillRandom);
+
+    // ===== 예시 선택 모달 =====
+    const exampleModal = $("#exampleModal");
+    const exampleList = $("#exampleList");
+    const closeExampleBtn = $("#closeExample");
+
+    function renderExampleOptions(){
+      if(!exampleList) return;
+      exampleList.innerHTML = "";
+      Object.keys(EXAMPLES).forEach(key => {
+        const ex = EXAMPLES[key];
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "example-option";
+        b.innerHTML = `
+          <span class="example-option-icon"><span class="material-symbols-rounded">${ex.icon}</span></span>
+          <span class="example-option-text">
+            <span class="example-option-name">${ex.label[currentLang]}</span>
+            <span class="example-option-sub">${ex.sub[currentLang]}</span>
+          </span>`;
+        b.addEventListener("click", () => {
+          loadExample(key);
+          exampleModal.classList.add("hidden");
+        });
+        exampleList.appendChild(b);
+      });
+    }
+
+    function openExampleModal(){
+      renderExampleOptions();
+      exampleModal.classList.remove("hidden");
+    }
+
+    document.getElementById('prefillExample').addEventListener('click', openExampleModal);
+    closeExampleBtn.addEventListener('click', () => exampleModal.classList.add('hidden'));
+    exampleModal.addEventListener('click', (e) => { if(e.target === exampleModal) exampleModal.classList.add('hidden'); });
 
     function doReset() {
       // [수정] 페이지 구성 필드 추가
