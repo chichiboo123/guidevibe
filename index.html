@@ -431,6 +431,51 @@
     .example-option-name { font-weight: 800; color: #1E293B; font-size: 1.05rem; }
     .example-option-sub { font-size: .85rem; color: #64748B; }
 
+    /* ===== [추가] 주요 기능 작성 예시 모달 ===== */
+    .fe-ex-card {
+      border: 2px solid #E0E7FF;
+      background: #F8FAFF;
+      border-radius: 1rem;
+      padding: .5rem 1.1rem;
+    }
+    .fe-ex-row {
+      display: flex;
+      flex-direction: column;
+      gap: .15rem;
+      padding: .7rem 0;
+    }
+    .fe-ex-row + .fe-ex-row { border-top: 1px dashed #D9E0F5; }
+    .fe-ex-label {
+      font-size: .8rem;
+      font-weight: 800;
+      color: #6366F1;
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+    }
+    .fe-ex-label.fe-ex-user::before { content: "🙋"; }
+    .fe-ex-label.fe-ex-app::before { content: "📱"; }
+    .fe-ex-value {
+      font-size: 1.02rem;
+      color: #1E293B;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .fe-ex-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+      background: #FFFBEB;
+      border: 1px dashed #FCD34D;
+      border-radius: .9rem;
+      padding: .7rem 1rem;
+      font-size: .9rem;
+      color: #92400E;
+      line-height: 1.5;
+    }
+    .fe-ex-tip .material-symbols-rounded { color: #D97706; font-size: 1.3rem; flex-shrink: 0; }
+    .fe-ex-tip strong { color: #6366F1; }
+
     input[type="text"], textarea, select {
         border-radius: 0.75rem; /* rounded-xl 대신 좀 더 자연스러운 둥글기 */
         border: 1px solid #CBD5E1; /* slate-300 */
@@ -845,10 +890,15 @@
 
       
       <div>
-        <h2 class="section-title mb-5">
-            <span class="step-badge">3</span> <span class="material-symbols-rounded section-icon">star</span> <span data-lang="sec3Title">주요 기능</span>
-        </h2>
-        
+        <div class="flex items-center justify-between gap-3 mb-5">
+          <h2 class="section-title">
+              <span class="step-badge">3</span> <span class="material-symbols-rounded section-icon">star</span> <span data-lang="sec3Title">주요 기능</span>
+          </h2>
+          <button id="showFeatureExample" type="button" class="pill px-4 py-2 btn-info text-sm font-semibold inline-flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
+              <span class="material-symbols-rounded" style="font-size:1.1rem;">lightbulb</span><span data-lang="feExBtn">예시 보기</span>
+          </button>
+        </div>
+
         <p class="hint mb-4" data-lang="sec3Hint">'사용자가 하는 행동'과 '앱이 해 주는 결과'를 구분해서 적어 보세요. 기능 이름만 써도 괜찮아요!</p>
         <!-- 모바일 최적화: 모바일(flex-col) / 데스크탑(grid) -->
         <div class="flex flex-col md:grid md:grid-cols-7 gap-4 items-start">
@@ -938,7 +988,7 @@
   </main>
 
   <footer class="py-10 text-center text-slate-500">
-    <p><a href="https://litt.ly/chichiboo" target="_blank" class="underline hover:no-underline text-indigo-500 font-medium" data-lang="footerText">created by. 교육뮤지컬 꿈꾸는 치수쌤</a></p>
+    <p><a href="https://litt.ly/chichiboo" target="_blank" class="underline hover:no-underline text-indigo-500 font-medium" data-lang="footerText">Created by. 교육뮤지컬 꿈꾸는 치수쌤</a></p>
   </footer>
 
   
@@ -1094,6 +1144,49 @@
     </div>
   </div>
 
+  <!-- [추가] 주요 기능 작성 예시 모달 -->
+  <div id="featureExampleModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4 z-50 hidden">
+    <div class="card bg-white p-7 md:p-9 w-full max-w-lg">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="text-xl md:text-2xl font-bold text-indigo-600 flex items-center gap-2">
+            <span class="material-symbols-rounded" style="font-size:1.75rem;">lightbulb</span> <span data-lang="feExTitle">주요 기능 작성 예시</span>
+        </h2>
+        <button id="closeFeatureExample" class="text-slate-400 hover:text-slate-600 inline-flex items-center justify-center" aria-label="닫기">
+            <span class="material-symbols-rounded" style="font-size:1.75rem;">close</span>
+        </button>
+      </div>
+      <p class="hint mb-5" data-lang="feExIntro">‘사용자가 하는 행동’과 ‘앱이 해 주는 결과’를 나눠서 적으면 쉬워요. 아래 예시처럼 적어 보세요!</p>
+
+      <div class="fe-ex-card">
+        <div class="fe-ex-row">
+            <span class="fe-ex-label" data-lang="feExLabelName">기능 이름</span>
+            <span class="fe-ex-value" data-lang="feExValName">감정 날씨</span>
+        </div>
+        <div class="fe-ex-row">
+            <span class="fe-ex-label fe-ex-user" data-lang="feExLabelWhat">사용자는 무엇을 하나요?</span>
+            <span class="fe-ex-value" data-lang="feExValWhat">오늘 기분과 어울리는 날씨를 골라요.</span>
+        </div>
+        <div class="fe-ex-row">
+            <span class="fe-ex-label fe-ex-app" data-lang="feExLabelHow">앱은 무엇을 해 주나요?</span>
+            <span class="fe-ex-value" data-lang="feExValHow">고른 기분을 저장하고 지난 기록을 보여 줘요.</span>
+        </div>
+        <div class="fe-ex-row">
+            <span class="fe-ex-label" data-lang="feExLabelCond">더 넣고 싶은 내용 (선택)</span>
+            <span class="fe-ex-value" data-lang="feExValCond">일주일 동안의 기분을 한눈에 보여 줘요.</span>
+        </div>
+      </div>
+
+      <div class="fe-ex-tip mt-4">
+        <span class="material-symbols-rounded">tips_and_updates</span>
+        <span data-lang="feExTip"><strong>사용자</strong>는 내가 하는 행동, <strong>앱</strong>은 그에 대한 결과예요. 둘을 나눠 생각하면 쉬워요!</span>
+      </div>
+
+      <div class="flex justify-center mt-6">
+        <button id="featureExampleConfirm" class="pill px-6 py-2.5 btn-primary text-lg font-semibold" data-lang="feExConfirm">알겠어요</button>
+      </div>
+    </div>
+  </div>
+
 
   <template id="featureItemTpl">
     <div class="card item-card feature-item border p-5 flex flex-col gap-3">
@@ -1193,11 +1286,24 @@
             paletteMono: "무채색 (회색/검정)",
             sec2LabelFont: "글씨체 (최대 3개)",
             sec3Title: "주요 기능",
+            feExBtn: "예시 보기",
+            feExTitle: "주요 기능 작성 예시",
+            feExIntro: "‘사용자가 하는 행동’과 ‘앱이 해 주는 결과’를 나눠서 적으면 쉬워요. 아래 예시처럼 적어 보세요!",
+            feExLabelName: "기능 이름",
+            feExValName: "감정 날씨",
+            feExLabelWhat: "사용자는 무엇을 하나요?",
+            feExValWhat: "오늘 기분과 어울리는 날씨를 골라요.",
+            feExLabelHow: "앱은 무엇을 해 주나요?",
+            feExValHow: "고른 기분을 저장하고 지난 기록을 보여 줘요.",
+            feExLabelCond: "더 넣고 싶은 내용 (선택)",
+            feExValCond: "일주일 동안의 기분을 한눈에 보여 줘요.",
+            feExTip: "<strong>사용자</strong>는 내가 하는 행동, <strong>앱</strong>은 그에 대한 결과예요. 둘을 나눠 생각하면 쉬워요!",
+            feExConfirm: "알겠어요",
             sec3Hint: "'사용자가 하는 행동'과 '앱이 해 주는 결과'를 구분해서 적어 보세요. 기능 이름만 써도 괜찮아요!",
-            sec3PlaceholderName: "기능 이름 (예: 감정 날씨)",
-            sec3PlaceholderWhat: "사용자는 무엇을 하나요? (예: 오늘 기분과 어울리는 날씨를 골라요)",
-            sec3PlaceholderHow: "앱은 무엇을 해 주나요? (예: 고른 기분을 저장하고 지난 기록을 보여 줘요)",
-            sec3PlaceholderCond: "더 넣고 싶은 내용 (예: 일주일 기분을 한눈에 보여 줘요) (선택)",
+            sec3PlaceholderName: "기능 이름",
+            sec3PlaceholderWhat: "사용자는 무엇을 하나요?",
+            sec3PlaceholderHow: "앱은 무엇을 해 주나요?",
+            sec3PlaceholderCond: "더 넣고 싶은 내용 (선택)",
             btnAdd: "추가",
             sec4Title: "보조 기능",
             sec4Hint: "있으면 좋은 기능을 적고 ‘추가’를 눌러요. 예) 효과음, 사용법 안내, 점수 저장 등",
@@ -1218,7 +1324,7 @@
             sec7Title: "AI 요청 문장(프롬프트)",
             btnCopy: "복사",
             btnDownload: "TXT로 저장",
-            footerText: "created by. Chisu Saem(Education&Musical)",
+            footerText: "Created by. 교육뮤지컬 꿈꾸는 치수쌤",
             modalConfirm: "확인",
             modalCancel: "취소",
             exTitle: "예시 불러오기",
@@ -1303,11 +1409,24 @@
             paletteMono: "Mono (Grays/Black)",
             sec2LabelFont: "Fonts (Max 3)",
             sec3Title: "Main Features",
+            feExBtn: "See Example",
+            feExTitle: "How to Write Main Features",
+            feExIntro: "It's easy when you separate ‘what the user does’ from ‘what the app does’. Try it like the example below!",
+            feExLabelName: "Feature Name",
+            feExValName: "Mood Weather",
+            feExLabelWhat: "What does the user do?",
+            feExValWhat: "Pick a weather that matches today's mood.",
+            feExLabelHow: "What does the app do?",
+            feExValHow: "Saves the mood and shows past records.",
+            feExLabelCond: "Anything to add? (optional)",
+            feExValCond: "Show a week of moods at a glance.",
+            feExTip: "<strong>User</strong> is what you do, <strong>App</strong> is what happens because of it. Split them and it's easy!",
+            feExConfirm: "Got it",
             sec3Hint: "Separate what the USER does from what the APP does. Feature name alone is fine!",
-            sec3PlaceholderName: "Feature Name (e.g., Mood Weather)",
-            sec3PlaceholderWhat: "What does the user do? (e.g., Pick a weather that matches today's mood)",
-            sec3PlaceholderHow: "What does the app do? (e.g., Saves the mood and shows past records)",
-            sec3PlaceholderCond: "Anything to add? (e.g., Show a week of moods at a glance) (optional)",
+            sec3PlaceholderName: "Feature Name",
+            sec3PlaceholderWhat: "What does the user do?",
+            sec3PlaceholderHow: "What does the app do?",
+            sec3PlaceholderCond: "Anything to add? (optional)",
             btnAdd: "Add",
             sec4Title: "Extra Features",
             sec4Hint: "Add nice-to-have features and tap ‘Add’. e.g.) Sound effects, how-to guide, save score",
@@ -1539,6 +1658,19 @@
         if (exModal && !exModal.classList.contains('hidden')) {
             exModal.classList.add('hidden');
         }
+        const feExModal = $("#featureExampleModal");
+        if (feExModal && !feExModal.classList.contains('hidden')) {
+            feExModal.classList.add('hidden');
+        }
+    });
+
+    // ===== [추가] 주요 기능 작성 예시 모달 =====
+    const featureExampleModal = $("#featureExampleModal");
+    $("#showFeatureExample").addEventListener('click', () => featureExampleModal.classList.remove('hidden'));
+    $("#closeFeatureExample").addEventListener('click', () => featureExampleModal.classList.add('hidden'));
+    $("#featureExampleConfirm").addEventListener('click', () => featureExampleModal.classList.add('hidden'));
+    featureExampleModal.addEventListener('click', (e) => {
+        if (e.target === featureExampleModal) featureExampleModal.classList.add('hidden');
     });
     // =============================
 
