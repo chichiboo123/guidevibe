@@ -849,14 +849,14 @@
             <span class="step-badge">3</span> <span class="material-symbols-rounded section-icon">star</span> <span data-lang="sec3Title">주요 기능</span>
         </h2>
         
-        <p class="hint mb-4" data-lang="sec3Hint">내 앱에서 가장 중요한 기능을 적어요. 한 칸만 채워도 괜찮아요!</p>
+        <p class="hint mb-4" data-lang="sec3Hint">'사용자가 하는 행동'과 '앱이 해 주는 결과'를 구분해서 적어 보세요. 기능 이름만 써도 괜찮아요!</p>
         <!-- 모바일 최적화: 모바일(flex-col) / 데스크탑(grid) -->
         <div class="flex flex-col md:grid md:grid-cols-7 gap-4 items-start">
           <input id="fName" type="text" class="md:col-span-3 w-full" placeholder="기능 이름" data-lang="sec3PlaceholderName"/>
-          <input id="fWhat" type="text" class="md:col-span-4 w-full" placeholder="무엇을 하나요?" data-lang="sec3PlaceholderWhat"/>
-          <input id="fHow" type="text" class="md:col-span-7 w-full" placeholder="어떻게 하나요?" data-lang="sec3PlaceholderHow"/>
+          <input id="fWhat" type="text" class="md:col-span-4 w-full" placeholder="사용자는 무엇을 하나요?" data-lang="sec3PlaceholderWhat"/>
+          <input id="fHow" type="text" class="md:col-span-7 w-full" placeholder="앱은 무엇을 해 주나요?" data-lang="sec3PlaceholderHow"/>
           <div class="md:col-span-6 w-full">
-            <input id="fCond" type="text" class="w-full" placeholder="더 하고 싶은 말 (안 써도 돼요)" data-lang="sec3PlaceholderCond"/>
+            <input id="fCond" type="text" class="w-full" placeholder="더 넣고 싶은 내용 (선택)" data-lang="sec3PlaceholderCond"/>
           </div>
           <!-- 모바일(w-full) / 데스크탑(self-end) -->
           <button id="addFeature" class="pill px-5 py-2.5 btn-dark font-semibold w-full md:w-auto md:self-end" data-lang="btnAdd">추가</button>
@@ -1014,15 +1014,15 @@
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">description</span>
-                  <div data-lang="guideH3Item2"><strong>무엇을 하나요?</strong> — 이 기능이 무엇을 하는지 적어요. (예: 행성 정보를 보여줘요)</div>
+                  <div data-lang="guideH3Item2"><strong>사용자는 무엇을 하나요?</strong> — 내가(사용자가) 이 기능에서 어떤 행동을 하는지 적어요. (예: 오늘 기분과 어울리는 날씨를 골라요)</div>
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">touch_app</span>
-                  <div data-lang="guideH3Item3"><strong>어떻게 하나요?</strong> — 어떻게 사용하는지 적어요. (예: 행성을 누르면 설명이 나와요)</div>
+                  <div data-lang="guideH3Item3"><strong>앱은 무엇을 해 주나요?</strong> — 앱이 그에 대해 보여 주거나 처리하는 결과를 적어요. (예: 고른 기분을 저장하고 지난 기록을 보여 줘요)</div>
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">add_circle</span>
-                  <div data-lang="guideH3Item4"><strong>더 하고 싶은 말</strong> — 더 적고 싶은 내용을 적어요. (안 써도 돼요)</div>
+                  <div data-lang="guideH3Item4"><strong>더 넣고 싶은 내용</strong> — 추가로 넣고 싶은 아이디어를 적어요. (예: 일주일 기분을 한눈에 보여 줘요) (선택)</div>
               </li>
           </ul>
 
@@ -1107,9 +1107,9 @@
         </button>
       </div>
       <div class="text-base text-slate-700 space-y-2">
-        <div><strong data-lang="tplWhat">무엇을:</strong> <span class="fi-what"></span></div>
-        <div><strong data-lang="tplHow">어떻게:</strong> <span class="fi-how"></span></div>
-        <div><strong data-lang="tplCond">더 하고 싶은 말:</strong> <span class="fi-cond"></span></div>
+        <div><strong data-lang="tplWhat">사용자:</strong> <span class="fi-what"></span></div>
+        <div><strong data-lang="tplHow">앱:</strong> <span class="fi-how"></span></div>
+        <div><strong data-lang="tplCond">더 넣고 싶은 내용:</strong> <span class="fi-cond"></span></div>
       </div>
     </div>
   </template>
@@ -1193,11 +1193,11 @@
             paletteMono: "무채색 (회색/검정)",
             sec2LabelFont: "글씨체 (최대 3개)",
             sec3Title: "주요 기능",
-            sec3Hint: "내 앱에서 가장 중요한 기능을 적어요. 한 칸만 채워도 괜찮아요!",
-            sec3PlaceholderName: "기능 이름",
-            sec3PlaceholderWhat: "무엇을 하나요?",
-            sec3PlaceholderHow: "어떻게 하나요?",
-            sec3PlaceholderCond: "더 하고 싶은 말 (안 써도 돼요)",
+            sec3Hint: "'사용자가 하는 행동'과 '앱이 해 주는 결과'를 구분해서 적어 보세요. 기능 이름만 써도 괜찮아요!",
+            sec3PlaceholderName: "기능 이름 (예: 감정 날씨)",
+            sec3PlaceholderWhat: "사용자는 무엇을 하나요? (예: 오늘 기분과 어울리는 날씨를 골라요)",
+            sec3PlaceholderHow: "앱은 무엇을 해 주나요? (예: 고른 기분을 저장하고 지난 기록을 보여 줘요)",
+            sec3PlaceholderCond: "더 넣고 싶은 내용 (예: 일주일 기분을 한눈에 보여 줘요) (선택)",
             btnAdd: "추가",
             sec4Title: "보조 기능",
             sec4Hint: "있으면 좋은 기능을 적고 ‘추가’를 눌러요. 예) 효과음, 사용법 안내, 점수 저장 등",
@@ -1235,10 +1235,10 @@
             guideH2Item2: "<strong>대표 색상</strong> — 최대 5개까지 선택할 수 있습니다.",
             guideH2Item3: "<strong>글씨체</strong> — 어울리는 글씨체를 최대 3개까지 고릅니다.",
             guideH3: '<span class="material-symbols-rounded">star</span> 3. 주요 기능',
-            guideH3Item1: "<strong>기능 이름</strong> — 앱에서 가장 중요한 기능 이름을 적어요. (예: 행성 찾기)",
-            guideH3Item2: "<strong>무엇을 하나요?</strong> — 이 기능이 무엇을 하는지 적어요. (예: 행성 정보를 보여줘요)",
-            guideH3Item3: "<strong>어떻게 하나요?</strong> — 어떻게 사용하는지 적어요. (예: 행성을 누르면 설명이 나와요)",
-            guideH3Item4: "<strong>더 하고 싶은 말</strong> — 더 적고 싶은 내용을 적어요. (안 써도 돼요)",
+            guideH3Item1: "<strong>기능 이름</strong> — 앱에서 가장 중요한 기능 이름을 적어요. (예: 감정 날씨)",
+            guideH3Item2: "<strong>사용자는 무엇을 하나요?</strong> — 내가(사용자가) 이 기능에서 어떤 행동을 하는지 적어요. (예: 오늘 기분과 어울리는 날씨를 골라요)",
+            guideH3Item3: "<strong>앱은 무엇을 해 주나요?</strong> — 앱이 보여 주거나 처리하는 결과를 적어요. (예: 고른 기분을 저장하고 지난 기록을 보여 줘요)",
+            guideH3Item4: "<strong>더 넣고 싶은 내용</strong> — 추가 아이디어를 적어요. (예: 일주일 기분을 한눈에 보여 줘요) (선택)",
             guideH4: '<span class="material-symbols-rounded">tune</span> 4. 보조 기능 (선택)',
             guideH4Item1: "있으면 좋은 기능을 적어요. (예: 배경음악, 점수 저장, 사용법 안내)",
             guideH5: '<span class="material-symbols-rounded">smartphone</span> 5. 화면 만들기',
@@ -1254,9 +1254,9 @@
             guideDevP3: "[세상에서 가장 쉬운 뮤지컬 수업], [뮤지컬 창작노트]의 저자입니다.",
             guideDevP4: "따뜻한 디지털 활용 교육에도 관심이 많습니다.",
             guideBtnConfirm: "확인",
-            tplWhat: "무엇을",
-            tplHow: "어떻게",
-            tplCond: "더 하고 싶은 말",
+            tplWhat: "사용자",
+            tplHow: "앱",
+            tplCond: "더 넣고 싶은 내용",
             tplDelete: "삭제",
             // 알림 메시지
             alertMaxColor: "대표 색상은 최대 5개까지 선택할 수 있어요.",
@@ -1303,11 +1303,11 @@
             paletteMono: "Mono (Grays/Black)",
             sec2LabelFont: "Fonts (Max 3)",
             sec3Title: "Main Features",
-            sec3Hint: "Write the most important features of your app. One field is enough!",
-            sec3PlaceholderName: "Feature Name",
-            sec3PlaceholderWhat: "What does it do?",
-            sec3PlaceholderHow: "How do you use it?",
-            sec3PlaceholderCond: "Anything to add? (optional)",
+            sec3Hint: "Separate what the USER does from what the APP does. Feature name alone is fine!",
+            sec3PlaceholderName: "Feature Name (e.g., Mood Weather)",
+            sec3PlaceholderWhat: "What does the user do? (e.g., Pick a weather that matches today's mood)",
+            sec3PlaceholderHow: "What does the app do? (e.g., Saves the mood and shows past records)",
+            sec3PlaceholderCond: "Anything to add? (e.g., Show a week of moods at a glance) (optional)",
             btnAdd: "Add",
             sec4Title: "Extra Features",
             sec4Hint: "Add nice-to-have features and tap ‘Add’. e.g.) Sound effects, how-to guide, save score",
@@ -1344,10 +1344,10 @@
             guideH2Item2: "<strong>Main Colors</strong> — Pick up to 5 colors.",
             guideH2Item3: "<strong>Fonts</strong> — Pick up to 3 fonts that fit your app.",
             guideH3: '<span class="material-symbols-rounded">star</span> 3. Main Features',
-            guideH3Item1: "<strong>Feature Name</strong> — The name of a core feature. (e.g., Find Planets)",
-            guideH3Item2: "<strong>What does it do?</strong> — What this feature does. (e.g., Shows planet information)",
-            guideH3Item3: "<strong>How do you use it?</strong> — How users interact with it. (e.g., Tap a planet to see details)",
-            guideH3Item4: "<strong>Anything to add?</strong> — Anything else you want to add. (Optional)",
+            guideH3Item1: "<strong>Feature Name</strong> — The name of a core feature. (e.g., Mood Weather)",
+            guideH3Item2: "<strong>What does the user do?</strong> — What action does the user take? (e.g., Pick a weather that matches today's mood)",
+            guideH3Item3: "<strong>What does the app do?</strong> — What does the app show or process? (e.g., Saves the mood and shows past records)",
+            guideH3Item4: "<strong>Anything to add?</strong> — Any extra ideas? (e.g., Show a week of moods at a glance) (Optional)",
             guideH4: '<span class="material-symbols-rounded">tune</span> 4. Extra Features (Optional)',
             guideH4Item1: "Nice-to-have features. (e.g., background music, save score, how-to guide)",
             guideH5: '<span class="material-symbols-rounded">smartphone</span> 5. Build Your Screens',
@@ -1363,8 +1363,8 @@
             guideDevP3: "Author of [World's Easiest Musical Class] & [Musical Creation Note].",
             guideDevP4: "Also interested in warm-hearted digital education.",
             guideBtnConfirm: "Got it",
-            tplWhat: "What it does",
-            tplHow: "How to use",
+            tplWhat: "User",
+            tplHow: "App",
             tplCond: "More",
             tplDelete: "Delete",
             // 알림 메시지
@@ -1967,7 +1967,7 @@
       lines.push("3) 주요 기능");
       if(features.length){
         features.forEach((f,i)=>{
-          lines.push(`- 기능 ${i+1}. ${f.name} — What: ${f.what || "-"} / How: ${f.how || "-"} / 추가 설명: ${f.cond || "-"}`);
+          lines.push(`- 기능 ${i+1}. ${f.name} — 사용자 행동: ${f.what || "-"} / 앱 처리 결과: ${f.how || "-"} / 추가: ${f.cond || "-"}`);
         });
       }else{
         lines.push("- (미정)");
