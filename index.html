@@ -149,6 +149,16 @@
       color: #334155;
       box-shadow: 0 1px 2px rgba(0,0,0,.05);
     }
+    /* [개선] 아동 소근육 고려: 칩 삭제(×) 버튼 탭 영역 확대 */
+    .chip > button {
+      min-width: 28px;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      line-height: 1;
+    }
     /* Input/Textarea 기본 스타일 */
     /* ===== [추가] 단계 배지 ===== */
     .step-badge {
@@ -326,7 +336,7 @@
       padding: .15rem .2rem !important;
       font-weight: 800;
       color: #14532D;
-      font-size: .95rem;
+      font-size: 1.05rem; /* [개선] 아동 가독성 향상 */
       text-align: center;
       box-shadow: none !important;
     }
@@ -337,9 +347,9 @@
       border: none !important;
       background: transparent !important;
       padding: .2rem !important;
-      font-size: .82rem;
+      font-size: .92rem; /* [개선] 아동 가독성 향상 (약 13px → 약 15px) */
       color: #334155;
-      line-height: 1.4;
+      line-height: 1.45;
       resize: none;
       box-shadow: none !important;
     }
@@ -356,8 +366,8 @@
       margin-top: .6rem;
     }
     .page-ctrl-btn {
-      width: 32px;
-      height: 32px;
+      width: 44px;  /* [개선] 아동 소근육 고려: 32px → 44px (권장 탭 타깃) */
+      height: 44px;
       border-radius: 9999px;
       background: #F1F5F9;
       color: #475569;
@@ -367,7 +377,7 @@
       cursor: pointer;
       transition: background .15s, transform .1s;
     }
-    .page-ctrl-btn .material-symbols-rounded { font-size: 1.1rem; }
+    .page-ctrl-btn .material-symbols-rounded { font-size: 1.45rem; }
     .page-ctrl-btn:hover { background: #E2E8F0; }
     .page-ctrl-btn:active { transform: scale(.92); }
     .page-ctrl-btn:disabled { opacity: .3; cursor: not-allowed; }
@@ -776,7 +786,7 @@
             <input id="appName" type="text" class="w-full" placeholder="예) 감정의 숲" data-lang="sec1PlaceholderName" />
           </div>
           <div>
-            <label class="block text-slate-700 font-semibold mb-2 text-base" for="audience" data-lang="sec1LabelAudience">주요 사용자</label>
+            <label class="block text-slate-700 font-semibold mb-2 text-base" for="audience" data-lang="sec1LabelAudience">누가 쓰나요?</label>
             <input id="audience" type="text" class="w-full" placeholder="예) 감정을 관리하고 싶은 초등학생" data-lang="sec1PlaceholderAudience" />
           </div>
         </div>
@@ -839,14 +849,14 @@
             <span class="step-badge">3</span> <span class="material-symbols-rounded section-icon">star</span> <span data-lang="sec3Title">주요 기능</span>
         </h2>
         
-        <p class="hint mb-4" data-lang="sec3Hint">앱의 핵심이 되는 기능들을 적어주세요.</p>
+        <p class="hint mb-4" data-lang="sec3Hint">내 앱에서 가장 중요한 기능을 적어요. 한 칸만 채워도 괜찮아요!</p>
         <!-- 모바일 최적화: 모바일(flex-col) / 데스크탑(grid) -->
         <div class="flex flex-col md:grid md:grid-cols-7 gap-4 items-start">
           <input id="fName" type="text" class="md:col-span-3 w-full" placeholder="기능 이름" data-lang="sec3PlaceholderName"/>
-          <input id="fWhat" type="text" class="md:col-span-4 w-full" placeholder="설명(What)" data-lang="sec3PlaceholderWhat"/>
-          <input id="fHow" type="text" class="md:col-span-7 w-full" placeholder="동작/방법(How)" data-lang="sec3PlaceholderHow"/>
+          <input id="fWhat" type="text" class="md:col-span-4 w-full" placeholder="무엇을 하나요?" data-lang="sec3PlaceholderWhat"/>
+          <input id="fHow" type="text" class="md:col-span-7 w-full" placeholder="어떻게 하나요?" data-lang="sec3PlaceholderHow"/>
           <div class="md:col-span-6 w-full">
-            <input id="fCond" type="text" class="w-full" placeholder="추가 설명" data-lang="sec3PlaceholderCond"/>
+            <input id="fCond" type="text" class="w-full" placeholder="더 하고 싶은 말 (안 써도 돼요)" data-lang="sec3PlaceholderCond"/>
           </div>
           <!-- 모바일(w-full) / 데스크탑(self-end) -->
           <button id="addFeature" class="pill px-5 py-2.5 btn-dark font-semibold w-full md:w-auto md:self-end" data-lang="btnAdd">추가</button>
@@ -859,9 +869,9 @@
         <h2 class="section-title mb-5">
             <span class="step-badge">4</span> <span class="material-symbols-rounded section-icon">tune</span> <span data-lang="sec4Title">보조 기능</span>
         </h2>
-        <p class="hint mb-4" data-lang="sec4Hint">추가로 있으면 좋은 기능을 적고 추가를 누르세요. 예) 효과음, 튜토리얼, 점수 저장 등</p>
+        <p class="hint mb-4" data-lang="sec4Hint">있으면 좋은 기능을 적고 ‘추가’를 눌러요. 예) 효과음, 사용법 안내, 점수 저장 등</p>
         <div class="flex gap-4 items-start">
-          <input id="xItem" type="text" class="flex-1" placeholder="보조 기능 작성" data-lang="sec4PlaceholderItem"/>
+          <input id="xItem" type="text" class="flex-1" placeholder="있으면 좋은 기능 (예: 효과음)" data-lang="sec4PlaceholderItem"/>
           <button id="addExtra" class="pill px-5 py-2.5 btn-dark font-semibold" data-lang="btnAdd">추가</button>
         </div>
         <div id="extraList" class="mt-6 space-y-3"></div>
@@ -972,7 +982,7 @@
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">groups</span>
-                  <div data-lang="guideH1Item2"><strong>주요 사용자</strong> — 누가 사용할지를 적습니다. (예: 별을 좋아하는 5학년)</div>
+                  <div data-lang="guideH1Item2"><strong>누가 쓰나요?</strong> — 누가 사용할지를 적어요. (예: 별을 좋아하는 5학년)</div>
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">campaign</span>
@@ -1000,19 +1010,19 @@
           <ul class="space-y-3">
               <li class="guide-item">
                   <span class="material-symbols-rounded">lightbulb</span>
-                  <div data-lang="guideH3Item1"><strong>기능 이름</strong> — 앱의 핵심 기능 이름을 적습니다. (예: 행성 찾기)</div>
+                  <div data-lang="guideH3Item1"><strong>기능 이름</strong> — 앱에서 가장 중요한 기능 이름을 적어요. (예: 행성 찾기)</div>
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">description</span>
-                  <div data-lang="guideH3Item2"><strong>설명 (What)</strong> — 이 기능이 무엇을 하는지 설명합니다. (예: 태양계 행성 정보를 보여줍니다)</div>
+                  <div data-lang="guideH3Item2"><strong>무엇을 하나요?</strong> — 이 기능이 무엇을 하는지 적어요. (예: 행성 정보를 보여줘요)</div>
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">touch_app</span>
-                  <div data-lang="guideH3Item3"><strong>동작 방법 (How)</strong> — 어떻게 사용하는지 적습니다. (예: 행성을 클릭하면 설명이 나타납니다)</div>
+                  <div data-lang="guideH3Item3"><strong>어떻게 하나요?</strong> — 어떻게 사용하는지 적어요. (예: 행성을 누르면 설명이 나와요)</div>
               </li>
               <li class="guide-item">
                   <span class="material-symbols-rounded">add_circle</span>
-                  <div data-lang="guideH3Item4"><strong>추가 설명</strong> — 보충이 필요한 내용을 적습니다. (선택)</div>
+                  <div data-lang="guideH3Item4"><strong>더 하고 싶은 말</strong> — 더 적고 싶은 내용을 적어요. (안 써도 돼요)</div>
               </li>
           </ul>
 
@@ -1020,7 +1030,7 @@
           <ul class="space-y-3">
               <li class="guide-item">
                   <span class="material-symbols-rounded">music_note</span>
-                  <div data-lang="guideH4Item1">있으면 좋은 보조 기능을 적습니다. (예: 배경음악, 점수 저장, 튜토리얼)</div>
+                  <div data-lang="guideH4Item1">있으면 좋은 기능을 적어요. (예: 배경음악, 점수 저장, 사용법 안내)</div>
               </li>
           </ul>
 
@@ -1097,9 +1107,9 @@
         </button>
       </div>
       <div class="text-base text-slate-700 space-y-2">
-        <div><strong data-lang="tplWhat">What:</strong> <span class="fi-what"></span></div>
-        <div><strong data-lang="tplHow">How:</strong> <span class="fi-how"></span></div>
-        <div><strong data-lang="tplCond">추가 설명:</strong> <span class="fi-cond"></span></div>
+        <div><strong data-lang="tplWhat">무엇을:</strong> <span class="fi-what"></span></div>
+        <div><strong data-lang="tplHow">어떻게:</strong> <span class="fi-how"></span></div>
+        <div><strong data-lang="tplCond">더 하고 싶은 말:</strong> <span class="fi-cond"></span></div>
       </div>
     </div>
   </template>
@@ -1168,7 +1178,7 @@
             sec1Title: "기본 정보",
             sec1LabelName: "앱 이름",
             sec1PlaceholderName: "예) 감정의 숲",
-            sec1LabelAudience: "주요 사용자",
+            sec1LabelAudience: "누가 쓰나요?",
             sec1PlaceholderAudience: "예) 감정을 관리하고 싶은 초등학생",
             sec1LabelTheme: "앱 소개하기",
             sec1PlaceholderTheme: "예) 감정 날씨처럼 오늘의 기분을 가꾸는 어린이 앱",
@@ -1183,15 +1193,15 @@
             paletteMono: "무채색 (회색/검정)",
             sec2LabelFont: "글씨체 (최대 3개)",
             sec3Title: "주요 기능",
-            sec3Hint: "앱의 핵심이 되는 기능들을 적어주세요.",
+            sec3Hint: "내 앱에서 가장 중요한 기능을 적어요. 한 칸만 채워도 괜찮아요!",
             sec3PlaceholderName: "기능 이름",
-            sec3PlaceholderWhat: "설명(What)",
-            sec3PlaceholderHow: "동작/방법(How)",
-            sec3PlaceholderCond: "추가 설명",
+            sec3PlaceholderWhat: "무엇을 하나요?",
+            sec3PlaceholderHow: "어떻게 하나요?",
+            sec3PlaceholderCond: "더 하고 싶은 말 (안 써도 돼요)",
             btnAdd: "추가",
             sec4Title: "보조 기능",
-            sec4Hint: "추가로 있으면 좋은 기능을 적고 추가를 누르세요. 예) 효과음, 튜토리얼, 점수 저장 등",
-            sec4PlaceholderItem: "보조 기능 작성",
+            sec4Hint: "있으면 좋은 기능을 적고 ‘추가’를 눌러요. 예) 효과음, 사용법 안내, 점수 저장 등",
+            sec4PlaceholderItem: "있으면 좋은 기능 (예: 효과음)",
             sec5Title: "화면 만들기",
             sec5Hint: "실제 앱처럼, 휴대폰 화면을 하나씩 만들어 보세요. 화면 위에 바로 글씨를 쓸 수 있어요! ✍️",
             sec5AddScreen: "새 화면 만들기",
@@ -1218,19 +1228,19 @@
             guideIntro: "가이드 바이브는 앱 아이디어를 정리해<br>AI가 이해하기 쉬운 요청 문장(프롬프트)으로 바꿔주는 도구입니다.<br>아래 순서대로 따라가 보세요.",
             guideH1: '<span class="material-symbols-rounded">info</span> 1. 기본 정보',
             guideH1Item1: "<strong>앱 이름</strong> — 만들고 싶은 앱의 이름을 적습니다. (예: 우주 탐험대)",
-            guideH1Item2: "<strong>주요 사용자</strong> — 누가 사용할지를 적습니다. (예: 별을 좋아하는 5학년)",
+            guideH1Item2: "<strong>누가 쓰나요?</strong> — 누가 사용할지를 적어요. (예: 별을 좋아하는 5학년)",
             guideH1Item3: "<strong>앱 소개</strong> — 어떤 앱인지 한 줄로 소개합니다.",
             guideH2: '<span class="material-symbols-rounded">palette</span> 2. 디자인',
             guideH2Item1: "<strong>전체 분위기</strong> — 앱의 느낌을 한 줄로 적습니다. (예: 신나고 재미있는 느낌)",
             guideH2Item2: "<strong>대표 색상</strong> — 최대 5개까지 선택할 수 있습니다.",
             guideH2Item3: "<strong>글씨체</strong> — 어울리는 글씨체를 최대 3개까지 고릅니다.",
             guideH3: '<span class="material-symbols-rounded">star</span> 3. 주요 기능',
-            guideH3Item1: "<strong>기능 이름</strong> — 앱의 핵심 기능 이름을 적습니다. (예: 행성 찾기)",
-            guideH3Item2: "<strong>설명 (What)</strong> — 이 기능이 무엇을 하는지 설명합니다. (예: 태양계 행성 정보를 보여줍니다)",
-            guideH3Item3: "<strong>동작 방법 (How)</strong> — 어떻게 사용하는지 적습니다. (예: 행성을 클릭하면 설명이 나타납니다)",
-            guideH3Item4: "<strong>추가 설명</strong> — 보충이 필요한 내용을 적습니다. (선택)",
+            guideH3Item1: "<strong>기능 이름</strong> — 앱에서 가장 중요한 기능 이름을 적어요. (예: 행성 찾기)",
+            guideH3Item2: "<strong>무엇을 하나요?</strong> — 이 기능이 무엇을 하는지 적어요. (예: 행성 정보를 보여줘요)",
+            guideH3Item3: "<strong>어떻게 하나요?</strong> — 어떻게 사용하는지 적어요. (예: 행성을 누르면 설명이 나와요)",
+            guideH3Item4: "<strong>더 하고 싶은 말</strong> — 더 적고 싶은 내용을 적어요. (안 써도 돼요)",
             guideH4: '<span class="material-symbols-rounded">tune</span> 4. 보조 기능 (선택)',
-            guideH4Item1: "있으면 좋은 보조 기능을 적습니다. (예: 배경음악, 점수 저장, 튜토리얼)",
+            guideH4Item1: "있으면 좋은 기능을 적어요. (예: 배경음악, 점수 저장, 사용법 안내)",
             guideH5: '<span class="material-symbols-rounded">smartphone</span> 5. 화면 만들기',
             guideH5Item1: "‘새 화면 만들기’를 누르면 휴대폰 화면이 생겨요. 화면 위에 이름과 할 일을 바로 적어 보세요. 내 앱에 맞게 자유롭게요!",
             guideH5Item2: "화살표(◀ ▶)로 화면 순서를 바꾸면 번호가 자동으로 매겨져요. 비워두면 AI가 자율 구성합니다.",
@@ -1244,9 +1254,9 @@
             guideDevP3: "[세상에서 가장 쉬운 뮤지컬 수업], [뮤지컬 창작노트]의 저자입니다.",
             guideDevP4: "따뜻한 디지털 활용 교육에도 관심이 많습니다.",
             guideBtnConfirm: "확인",
-            tplWhat: "What",
-            tplHow: "How",
-            tplCond: "추가 설명",
+            tplWhat: "무엇을",
+            tplHow: "어떻게",
+            tplCond: "더 하고 싶은 말",
             tplDelete: "삭제",
             // 알림 메시지
             alertMaxColor: "대표 색상은 최대 5개까지 선택할 수 있어요.",
@@ -1278,7 +1288,7 @@
             sec1Title: "Basic Info",
             sec1LabelName: "App Name",
             sec1PlaceholderName: "e.g.) Emotion Forest",
-            sec1LabelAudience: "Target Audience",
+            sec1LabelAudience: "Who uses it?",
             sec1PlaceholderAudience: "e.g.) Students who want to manage emotions",
             sec1LabelTheme: "App Introduction",
             sec1PlaceholderTheme: "e.g.) A kids' app for managing today's mood like weather",
@@ -1293,15 +1303,15 @@
             paletteMono: "Mono (Grays/Black)",
             sec2LabelFont: "Fonts (Max 3)",
             sec3Title: "Main Features",
-            sec3Hint: "Describe the core features of your app.",
+            sec3Hint: "Write the most important features of your app. One field is enough!",
             sec3PlaceholderName: "Feature Name",
-            sec3PlaceholderWhat: "Description (What)",
-            sec3PlaceholderHow: "Action/Method (How)",
-            sec3PlaceholderCond: "Additional Notes",
+            sec3PlaceholderWhat: "What does it do?",
+            sec3PlaceholderHow: "How do you use it?",
+            sec3PlaceholderCond: "Anything to add? (optional)",
             btnAdd: "Add",
             sec4Title: "Extra Features",
-            sec4Hint: "Add extra features. e.g.) Sound effects, tutorial, save score",
-            sec4PlaceholderItem: "Write an extra feature",
+            sec4Hint: "Add nice-to-have features and tap ‘Add’. e.g.) Sound effects, how-to guide, save score",
+            sec4PlaceholderItem: "Nice-to-have (e.g., sound)",
             sec5Title: "Build Your Screens",
             sec5Hint: "Just like a real app, build your phone screens one by one. You can type right on the screen! ✍️",
             sec5AddScreen: "Add a New Screen",
@@ -1327,7 +1337,7 @@
             guideIntro: "Guide Vibe helps you organize your app ideas<br>and turn them into a prompt the AI can understand.<br>Just follow the steps below.",
             guideH1: '<span class="material-symbols-rounded">info</span> 1. Basic Info',
             guideH1Item1: "<strong>App Name</strong> — The name of the app you want to build. (e.g., Space Explorer)",
-            guideH1Item2: "<strong>Target Audience</strong> — Who will use this app. (e.g., 5th graders who love stars)",
+            guideH1Item2: "<strong>Who uses it?</strong> — Who will use this app. (e.g., 5th graders who love stars)",
             guideH1Item3: "<strong>App Introduction</strong> — Describe your app in one sentence.",
             guideH2: '<span class="material-symbols-rounded">palette</span> 2. Design',
             guideH2Item1: "<strong>Overall Vibe</strong> — The feel of the app, in one line. (e.g., Exciting and fun)",
@@ -1335,11 +1345,11 @@
             guideH2Item3: "<strong>Fonts</strong> — Pick up to 3 fonts that fit your app.",
             guideH3: '<span class="material-symbols-rounded">star</span> 3. Main Features',
             guideH3Item1: "<strong>Feature Name</strong> — The name of a core feature. (e.g., Find Planets)",
-            guideH3Item2: "<strong>Description (What)</strong> — What this feature does. (e.g., Shows planet information)",
-            guideH3Item3: "<strong>Action (How)</strong> — How users interact with it. (e.g., Click a planet to see details)",
-            guideH3Item4: "<strong>Additional Notes</strong> — Anything else to add. (Optional)",
+            guideH3Item2: "<strong>What does it do?</strong> — What this feature does. (e.g., Shows planet information)",
+            guideH3Item3: "<strong>How do you use it?</strong> — How users interact with it. (e.g., Tap a planet to see details)",
+            guideH3Item4: "<strong>Anything to add?</strong> — Anything else you want to add. (Optional)",
             guideH4: '<span class="material-symbols-rounded">tune</span> 4. Extra Features (Optional)',
-            guideH4Item1: "Nice-to-have features. (e.g., background music, save score, tutorial)",
+            guideH4Item1: "Nice-to-have features. (e.g., background music, save score, how-to guide)",
             guideH5: '<span class="material-symbols-rounded">smartphone</span> 5. Build Your Screens',
             guideH5Item1: "Tap ‘Add a New Screen’ to create a phone screen, then type its name and what it does right on the screen. Make it fit your app!",
             guideH5Item2: "Use the arrows (◀ ▶) to reorder screens — numbers update automatically. Leave it blank and the AI will decide for you.",
@@ -1353,9 +1363,9 @@
             guideDevP3: "Author of [World's Easiest Musical Class] & [Musical Creation Note].",
             guideDevP4: "Also interested in warm-hearted digital education.",
             guideBtnConfirm: "Got it",
-            tplWhat: "What",
-            tplHow: "How",
-            tplCond: "Notes",
+            tplWhat: "What it does",
+            tplHow: "How to use",
+            tplCond: "More",
             tplDelete: "Delete",
             // 알림 메시지
             alertMaxColor: "You can select up to 5 main colors.",
